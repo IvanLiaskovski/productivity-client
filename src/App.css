@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bgTop: #363570;
+  --bgBottom: #282758;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bgTop) 0%, var(--bgBottom) 85.42%)
+    no-repeat 100%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+.react-datepicker-wrapper input::before {
+  content: "\A";
+  border-style: solid;
+  border-width: 10px 15px 10px 0;
+  border-color: transparent #dd4397 transparent transparent;
+  position: absolute;
+  left: -15px;
+  z-index: 999;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.background-main-type {
+  background: linear-gradient(180deg, var(--bgTop) 0%, var(--bgBottom) 85.42%);
+}
