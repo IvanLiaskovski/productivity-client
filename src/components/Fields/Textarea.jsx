@@ -54,8 +54,8 @@ const Textarea = forwardRef(
 );
 
 Textarea.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
   isTransparent: PropTypes.bool,
