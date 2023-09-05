@@ -27,8 +27,14 @@ const SwitchBtn = ({
         onClick={onClick}
         className=" relative ml-2 flex h-6 w-11 rounded-xl bg-bgBottom p-1"
       >
-        <div className={switchCircleWrapperStyles}>
-          <div className={switchCircleStyles}></div>
+        <div
+          className={switchCircleWrapperStyles}
+          data-testid="switch-btn-wrapper"
+        >
+          <div
+            className={switchCircleStyles}
+            data-testid="switch-btn-circle"
+          ></div>
         </div>
       </button>
     </div>
