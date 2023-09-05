@@ -1,11 +1,9 @@
 import PropTypes from "prop-types";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 
 const OpenCreatePanelContext = createContext(false);
 
-const OpenCreatePanelProvider = ({ children }) => {
-  const [isOpen, setOpen] = useState();
-
+const OpenCreatePanelProvider = ({ isOpen, setOpen, children }) => {
   return (
     <OpenCreatePanelContext.Provider value={{ isOpen, setOpen }}>
       {children}
@@ -14,6 +12,8 @@ const OpenCreatePanelProvider = ({ children }) => {
 };
 
 OpenCreatePanelProvider.propTypes = {
+  isOpen: PropTypes.bool,
+  setOpen: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
