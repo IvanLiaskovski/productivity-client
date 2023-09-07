@@ -1,42 +1,46 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bgTop: #363570;
+  --bgBottom: #282758;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bgTop) 0%, var(--bgBottom) 85.42%)
+    no-repeat 100%;
+  box-sizing: border-box;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.react-datepicker-wrapper input::before {
+  content: "\A";
+  border-style: solid;
+  border-width: 10px 15px 10px 0;
+  border-color: transparent #dd4397 transparent transparent;
+  position: absolute;
+  left: -15px;
+  z-index: 999;
 }
 
-.card {
-  padding: 2em;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-.read-the-docs {
-  color: #888;
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.background-main-type {
+  background: linear-gradient(180deg, var(--bgTop) 0%, var(--bgBottom) 85.42%);
 }
