@@ -3,9 +3,11 @@ import { useContext, createContext, useState } from "react";
 
 const TasksDateRangeContext = createContext(new Date());
 
-export const TasksDateRangeProvider = ({ value = new Date(), children }) => {
-  const [date, setDate] = useState(value);
-
+export const TasksDateRangeProvider = ({
+  date = new Date(),
+  setDate,
+  children,
+}) => {
   return (
     <TasksDateRangeContext.Provider value={{ date, setDate }}>
       {children}
@@ -14,7 +16,8 @@ export const TasksDateRangeProvider = ({ value = new Date(), children }) => {
 };
 
 TasksDateRangeProvider.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  setDate: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
