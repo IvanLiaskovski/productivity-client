@@ -24,7 +24,8 @@ const CompleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
   return (
     <animated.div
       className="relative -z-10 h-6 w-6 rounded-full bg-green-200 transition-colors duration-150 hover:bg-green-400"
-      style={{ ...springStyles }}
+      style={springStyles}
+      data-testid="animation-wrapper"
     >
       <TaskActionBtn onClick={handleCompleteTask} isActionStart={isActionStart}>
         <MdDone />
