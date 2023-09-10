@@ -18,7 +18,7 @@ const TaskActions = ({ taskId }) => {
   };
 
   return (
-    <div id="task-actions" className={wrapperStyles}>
+    <div data-testid="task-actions" id="task-actions" className={wrapperStyles}>
       <CompleteTaskBtn
         taskId={taskId}
         startAction={handleStartAction}
