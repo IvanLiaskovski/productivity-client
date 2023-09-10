@@ -24,7 +24,7 @@ const PriorityBtn = ({
   };
 
   return (
-    <button className={styles} onClick={setPriorityHandle}>
+    <button title={priority} className={styles} onClick={setPriorityHandle}>
       {children}
     </button>
   );
