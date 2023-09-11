@@ -9,6 +9,11 @@ const AllTheProviders = ({ children }) => {
 const customRender = (ui, options) =>
   render(ui, { wrapper: AllTheProviders, ...options });
 
+const storeWrapper = ({ children }) => (
+  <Provider store={store}>{children}</Provider>
+);
+
 export * from "@testing-library/react";
 
 export { customRender as render };
+export { storeWrapper };
