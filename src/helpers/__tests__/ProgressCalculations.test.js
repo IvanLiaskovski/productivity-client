@@ -10,7 +10,7 @@ const mockTasksRangeDateContext = {
   setDate: jest.fn((newDate) => (mockTasksRangeDateContext.date = newDate)),
 };
 
-test("Sort tasks by priority", () => {
+test("Count the percentage of tasks", () => {
   const wrapper = ({ children }) => (
     <Provider store={store}>
       <TasksDateRangeProvider {...mockTasksRangeDateContext}>
