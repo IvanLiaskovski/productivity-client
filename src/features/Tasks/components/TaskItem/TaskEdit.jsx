@@ -5,6 +5,8 @@ import { updateTask } from "../../tasksSlice";
 
 import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
+import TaskActions from "./TaskActions";
+import { twMerge } from "tailwind-merge";
 
 const TaskEdit = ({
   id,
@@ -13,9 +15,13 @@ const TaskEdit = ({
   setOpen,
 }) => {
   const dispatch = useDispatch();
-
   const [content, setContent] = useState(contentProps);
   const [priority, setPriority] = useState(priorityProps);
+  const [isActionStart, setActionStart] = useState(false);
+  const panelWrapperStyles = twMerge(
+    "relative z-30",
+    isActionStart && "opacity-80",
+  );
 
   function saveTask() {
     dispatch(
@@ -30,14 +36,25 @@ const TaskEdit = ({
   }
 
   return (
-    <AppearAnimation className="h-auto p-2 md:p-4" animationType="fade">
-      <TaskManagementPanel
-        content={content}
-        priority={priority}
-        setContent={setContent}
-        setPriority={setPriority}
-        onSave={saveTask}
-        priorityBackground="dark"
+    <AppearAnimation
+      className="group/actions relative h-auto p-2 md:p-4"
+      animationType="fade"
+    >
+      <div className={panelWrapperStyles}>
+        <TaskManagementPanel
+          content={content}
+          priority={priority}
+          setContent={setContent}
+          setPriority={setPriority}
+          onSave={saveTask}
+          priorityBackground="dark"
+        />
+      </div>
+      <TaskActions
+        taskId={id}
+        isActionStart={isActionStart}
+        setActionStart={setActionStart}
+        isEdit
       />
     </AppearAnimation>
   );
