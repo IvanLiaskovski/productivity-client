@@ -11,7 +11,6 @@ const TaskManagementPanel = ({
   priority,
   setContent,
   setPriority,
-  onToggle,
   onSave,
   textColor,
   priorityBackground,
@@ -42,7 +41,6 @@ const TaskManagementPanel = ({
       <div className="mt-4 flex justify-end">
         <div className="flex gap-1 pr-2">
           <PriorityPanel
-            onToggle={onToggle}
             activePriority={priority}
             priorityHandler={setPriority}
             backgroundColor={priorityBackground}
@@ -63,7 +61,6 @@ TaskManagementPanel.propTypes = {
   priority: PropTypes.string,
   setContent: PropTypes.func,
   setPriority: PropTypes.func,
-  onToggle: PropTypes.func,
   onSave: PropTypes.func,
   textColor: PropTypes.string,
   priorityBackground: PropTypes.string,

@@ -23,7 +23,7 @@ const PriorityMark = ({
 
   return (
     <span className="absolute left-3 top-1/2 z-10 flex h-3 w-3 -translate-y-1/2">
-      <span className={priorityMarkStyles}></span>
+      <span className={priorityMarkStyles} data-testid="priority-mark"></span>
       <span className={priorityMarkCircleStyles}></span>
     </span>
   );

@@ -31,6 +31,7 @@ const ProductivityBar = () => {
         <animated.div
           style={springStyles}
           className="relative h-full w-1/2 overflow-visible rounded bg-blue-500 lg:rounded-none"
+          data-testid="productivity-line"
         >
           {isScreenLarge && (
             <animated.div

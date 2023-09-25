@@ -8,7 +8,7 @@ const SaveBtn = ({ slideFrom, slideTo, onClick, className }) => {
   );
 
   return (
-    <button className={styles} onClick={onClick}>
+    <button title="Save" className={styles} onClick={onClick}>
       <div className="transition-all duration-300 group-hover:-translate-y-10 group-hover:translate-x-10">
         {slideFrom}
       </div>

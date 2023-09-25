@@ -16,7 +16,7 @@ const TaskItem = memo(({ taskId, isOpen, setOpen }) => {
   );
 
   return (
-    <div className={styles}>
+    <div className={styles} data-testid="task-item-wrapper">
       {isOpen ? (
         <TaskEdit setOpen={setOpen} {...task} />
       ) : (

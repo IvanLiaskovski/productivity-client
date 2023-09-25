@@ -25,7 +25,8 @@ const DeleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
   return (
     <animated.div
       className="relative -z-10 h-6 w-6 rounded-full bg-red-300 transition-colors duration-150 hover:bg-red-400"
-      style={{ ...springStyles }}
+      style={springStyles}
+      data-testid="animation-wrapper"
     >
       <TaskActionBtn onClick={handleDeleteTask} isActionStart={isActionStart}>
         <RxCross2 className="text-[14px] font-black text-bgTop" />
