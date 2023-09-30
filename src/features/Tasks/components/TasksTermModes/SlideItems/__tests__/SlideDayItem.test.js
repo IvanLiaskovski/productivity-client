@@ -1,8 +1,8 @@
-import { render } from "../../../../../utils/tests/test-util";
+import { render } from "../../../../../../utils/tests/test-util";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { TasksDateRangeProvider } from "../../../context/TasksDateRangeContext";
-import SlideItem from "../SlideItem";
+import { TasksDateProvider } from "../../../../context/TasksDateContext";
+import SlideDayItem from "../SlideDayItem";
 
 const mockTasksRangeDateContext = {
   date: new Date(),
@@ -11,9 +11,9 @@ const mockTasksRangeDateContext = {
 
 test("Change view date", async () => {
   render(
-    <TasksDateRangeProvider {...mockTasksRangeDateContext}>
-      <SlideItem day={"23"} weekName="Sunday" />
-    </TasksDateRangeProvider>,
+    <TasksDateProvider {...mockTasksRangeDateContext}>
+      <SlideDayItem day={"23"} weekName="Sunday" />
+    </TasksDateProvider>,
   );
 
   const day = screen.getByText("23");
@@ -29,9 +29,9 @@ test("Change view date", async () => {
 
 test("Skip change view date if swipe", async () => {
   render(
-    <TasksDateRangeProvider {...mockTasksRangeDateContext}>
-      <SlideItem day={"23"} weekName="Sunday" isSwipe />
-    </TasksDateRangeProvider>,
+    <TasksDateProvider {...mockTasksRangeDateContext}>
+      <SlideDayItem day={"23"} weekName="Sunday" isSwipe />
+    </TasksDateProvider>,
   );
 
   const day = screen.getByText("23");
