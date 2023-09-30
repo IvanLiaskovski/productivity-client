@@ -6,7 +6,7 @@ import {
 import { v4 as uuid } from "uuid";
 import { sortTasks } from "./helpers/tasksHelpers";
 import { INITAIAL_TASKS } from "../../data/initialTasksData";
-import { formatDate } from "../../helpers/formatDate";
+import moment from "moment";
 
 const tasksAdapter = createEntityAdapter({});
 const initialTasks = localStorage.getItem("productivityTasks")?.length
@@ -39,7 +39,7 @@ const tasksSlice = createSlice({
           ...data,
           id: uuid(),
           isCompleted: false,
-          date: formatDate(data.date),
+          date: moment(data.date).format("YYYY-MM-DD"),
         },
       }),
     },

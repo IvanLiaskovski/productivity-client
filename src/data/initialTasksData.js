@@ -1,4 +1,4 @@
-import { formatDate } from "../helpers/formatDate";
+import moment from "moment";
 
 export const INITAIAL_TASKS = {
   ids: [1, 2, 3],
@@ -9,7 +9,7 @@ export const INITAIAL_TASKS = {
       priority: "urgent",
       isCompleted: false,
       order: 1,
-      date: formatDate(new Date()),
+      date: moment(new Date()).format("YYYY-MM-DD"),
       type: "day",
     },
     2: {
@@ -17,7 +17,7 @@ export const INITAIAL_TASKS = {
       content: "Write code",
       isCompleted: false,
       order: 3,
-      date: formatDate(new Date()),
+      date: moment(new Date()).format("YYYY-MM-DD"),
       type: "day",
     },
     3: {
@@ -26,7 +26,7 @@ export const INITAIAL_TASKS = {
       priority: "low",
       isCompleted: false,
       order: 2,
-      date: formatDate(new Date()),
+      date: moment(new Date()).format("YYYY-MM-DD"),
       type: "day",
     },
   },
