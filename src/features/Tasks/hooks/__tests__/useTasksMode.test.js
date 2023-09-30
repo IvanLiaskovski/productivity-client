@@ -1,5 +1,5 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
-import { TasksDateRangeProvider } from "../../context/TasksDateRangeContext";
+import { TasksDateProvider } from "../../context/TasksDateContext";
 import { Provider } from "react-redux";
 import store from "../../../../app/store";
 import { useTasksMode } from "../useTasksMode";
@@ -12,9 +12,9 @@ const mockTasksRangeDateContext = {
 test("useTasksMode Hook - Mode Change", () => {
   const wrapper = ({ children }) => (
     <Provider store={store}>
-      <TasksDateRangeProvider {...mockTasksRangeDateContext}>
+      <TasksDateProvider {...mockTasksRangeDateContext}>
         {children}
-      </TasksDateRangeProvider>
+      </TasksDateProvider>
     </Provider>
   );
   const { result } = renderHook(() => useTasksMode(), { wrapper });

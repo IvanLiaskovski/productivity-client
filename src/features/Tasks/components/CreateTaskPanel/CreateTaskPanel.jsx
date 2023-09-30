@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTasksDateRangeContext } from "../../context/TasksDateRangeContext";
+import { useTasksDateContext } from "../../context/TasksDateContext";
 import { useOpenCreatePanelContext } from "../../../../context/OpenCreatePanelContext";
 import { useDispatch } from "react-redux";
 import { createTask } from "../../tasksSlice";
@@ -13,7 +13,7 @@ const CreateTaskPanel = () => {
   const dispatch = useDispatch();
 
   const { isOpen, setOpen } = useOpenCreatePanelContext();
-  const { date } = useTasksDateRangeContext();
+  const { date } = useTasksDateContext();
 
   const [content, setContent] = useState("");
   const [priority, setPriority] = useState("common");

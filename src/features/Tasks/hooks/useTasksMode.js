@@ -1,9 +1,9 @@
-import { useTasksDateRangeContext } from "../context/TasksDateRangeContext";
+import { useTasksDateContext } from "../context/TasksDateContext";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTasksMode, setTasksMode } from "../tasksSlice";
 
 export function useTasksMode() {
-  const { setDate } = useTasksDateRangeContext();
+  const { setDate } = useTasksDateContext();
   const mode = useSelector(selectTasksMode);
   const dispatch = useDispatch();
 

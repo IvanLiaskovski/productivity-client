@@ -1,21 +1,27 @@
 import { useMemo } from "react";
-import { useTasksDateRangeContext } from "../../context/TasksDateRangeContext";
+import { useTasksDateContext } from "../../context/TasksDateContext";
+import { useTasksDatesRangeContext } from "../../context/TasksDatesRangeContext";
 
 import DatePicker from "react-datepicker";
 import PickerInput from "./DatePickerFields/PickerInput";
 import { VscTriangleDown } from "react-icons/vsc";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const TaskDayPicker = () => {
-  const { date, setDate } = useTasksDateRangeContext();
+  const { date, setDate } = useTasksDateContext();
+  const { setDatesRange } = useTasksDatesRangeContext();
 
   const pickerSettings = useMemo(() => {
     return {
       selected: new Date(date),
-      onChange: (date) => setDate(new Date(date)),
+      onChange: (date) => {
+        setDate(moment(date).format("YYYY-MM-DD"));
+        setDatesRange(moment(date).format("YYYY-MM-DD"));
+      },
       dateFormat: "MMMM d, yyyy",
     };
-  }, [date, setDate]);
+  }, [date, setDatesRange, setDate]);
 
   return (
     <DatePicker

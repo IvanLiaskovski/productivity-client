@@ -4,7 +4,7 @@ import {
   createTestTask,
   removeTestTask,
 } from "../../../../../utils/tests/storeTestTasks";
-import { TasksDateRangeProvider } from "../../../context/TasksDateRangeContext";
+import { TasksDateProvider } from "../../../context/TasksDateContext";
 import TasksDayList from "../TasksDayList";
 
 const testTaskContents = ["Test", "Test1", "Test2"];
@@ -22,9 +22,9 @@ afterAll(() => {
 
 test("TasksDayList render tasks list", () => {
   render(
-    <TasksDateRangeProvider>
+    <TasksDateProvider>
       <TasksDayList />
-    </TasksDateRangeProvider>,
+    </TasksDateProvider>,
   );
 
   testTaskContents.forEach((content) => {

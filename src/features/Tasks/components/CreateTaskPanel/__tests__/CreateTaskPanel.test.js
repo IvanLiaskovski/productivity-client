@@ -3,7 +3,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CreateTaskPanel from "../CreateTaskPanel";
 import OpenCreatePanelProvider from "../../../../../context/OpenCreatePanelContext";
-import { TasksDateRangeProvider } from "../../../context/TasksDateRangeContext";
+import { TasksDateProvider } from "../../../context/TasksDateContext";
 import store from "../../../../../app/store";
 import { removeTask } from "../../../tasksSlice";
 
@@ -20,11 +20,11 @@ afterAll(() => {
 
 test("Create a task with a specific priority", async () => {
   render(
-    <TasksDateRangeProvider>
+    <TasksDateProvider>
       <OpenCreatePanelProvider {...mockOpenPanelContext}>
         <CreateTaskPanel />
       </OpenCreatePanelProvider>
-    </TasksDateRangeProvider>,
+    </TasksDateProvider>,
   );
 
   const textarea = screen.getByRole("textbox");
@@ -42,11 +42,11 @@ test("Create a task with a specific priority", async () => {
 
 test("Create empty task warning", async () => {
   render(
-    <TasksDateRangeProvider>
+    <TasksDateProvider>
       <OpenCreatePanelProvider {...mockOpenPanelContext}>
         <CreateTaskPanel />
       </OpenCreatePanelProvider>
-    </TasksDateRangeProvider>,
+    </TasksDateProvider>,
   );
 
   const saveBtn = screen.getByTitle("Save");

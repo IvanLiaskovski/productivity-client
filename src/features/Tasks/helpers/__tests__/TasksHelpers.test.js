@@ -4,7 +4,7 @@ import { createMonthDaysArray } from "../tasksHelpers";
 import { sortTasks } from "../tasksHelpers";
 import store from "../../../../app/store";
 import { Provider } from "react-redux";
-import { TasksDateRangeProvider } from "../../context/TasksDateRangeContext";
+import { TasksDateProvider } from "../../context/TasksDateContext";
 
 const mockTasksRangeDateContext = {
   date: new Date(),
@@ -26,9 +26,9 @@ test("Create month days array", () => {
 test("Sort tasks by priority", () => {
   const wrapper = ({ children }) => (
     <Provider store={store}>
-      <TasksDateRangeProvider {...mockTasksRangeDateContext}>
+      <TasksDateProvider {...mockTasksRangeDateContext}>
         {children}
-      </TasksDateRangeProvider>
+      </TasksDateProvider>
     </Provider>
   );
   const { result } = renderHook(() => useGetTasks(), { wrapper });
