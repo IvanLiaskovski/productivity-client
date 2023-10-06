@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useTasksDatesRangeContext } from "../context/TasksDatesRangeContext";
 
-const useMoveDateRange = (weeksAmount) => {
+const useMoveDateRange = () => {
   const { datesRange, setDatesRange } = useTasksDatesRangeContext();
 
   function moveDate(weeksAmount, allowChange) {
