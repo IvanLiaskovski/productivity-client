@@ -17,7 +17,7 @@ test("Change view date", async () => {
   );
 
   const day = screen.getByText("23");
-  const week = screen.getByText("Sunday");
+  const week = screen.getByText("Sun.");
 
   expect(day).toBeInTheDocument();
   expect(week).toBeInTheDocument();

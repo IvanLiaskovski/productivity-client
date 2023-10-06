@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
-import { twMerge } from "tailwind-merge";
 import { useTasksDateContext } from "../../../context/TasksDateContext";
+import { useMediaQuery } from "react-responsive";
+import { twMerge } from "tailwind-merge";
 
 const SlideDayItem = ({ day, weekName, itemDate, isSwipe }) => {
   const { date, setDate } = useTasksDateContext();
 
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
   const isActive = itemDate === date;
 
   const styles = twMerge(
@@ -23,7 +25,9 @@ const SlideDayItem = ({ day, weekName, itemDate, isSwipe }) => {
   return (
     <div onClick={changeDate}>
       <div className="flex flex-col items-center">
-        <span className="text-xs">{weekName}</span>
+        <span className="text-xs">
+          {isScreenMedium ? weekName : `${String(weekName).slice(0, 3)}.`}
+        </span>
         <div className={styles}>{day}</div>
       </div>
     </div>
