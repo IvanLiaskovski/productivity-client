@@ -17,8 +17,8 @@ export const TasksDatesRangeProvider = ({
 };
 
 TasksDatesRangeProvider.propTypes = {
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  setDate: PropTypes.func,
+  datesRange: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  setDatesRange: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

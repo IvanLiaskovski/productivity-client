@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
 import { selectTaskIdsByDate, selectTasksMode } from "../tasksSlice";
-import { useTasksDateContext } from "../context/TasksDateContext";
 import moment from "moment";
 
-export function useGetTaskIds() {
-  const { date } = useTasksDateContext();
+export function useGetTaskIds(date) {
   const mode = useSelector(selectTasksMode);
 
   const tasks = useSelector((state) =>
