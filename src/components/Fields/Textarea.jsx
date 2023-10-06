@@ -63,4 +63,6 @@ Textarea.propTypes = {
   className: PropTypes.string,
 };
 
+Textarea.displayName = "Textarea";
+
 export default Textarea;
