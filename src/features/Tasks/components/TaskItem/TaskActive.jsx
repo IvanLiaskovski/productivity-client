@@ -22,7 +22,7 @@ const TaskActive = ({ taskId, content, priority, setOpen }) => {
   return (
     <div className={styles} onClick={openTaskHandle}>
       <TaskSlideActions taskId={taskId}>
-        <TaskContent content={content} />
+        <TaskContent taskId={taskId} content={content} />
         <PriorityMark priority={priority} />
       </TaskSlideActions>
       {isScreenLarge && (
