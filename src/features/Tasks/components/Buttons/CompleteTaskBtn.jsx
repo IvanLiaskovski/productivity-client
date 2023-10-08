@@ -6,7 +6,12 @@ import TaskActionBtn from "./TaskActionBtn";
 import { MdDone } from "react-icons/md";
 import { twMerge } from "tailwind-merge";
 
-const CompleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
+const CompleteTaskBtn = ({
+  taskId,
+  startAction,
+  onAfterAction,
+  isActionStart,
+}) => {
   const completeTask = useTaskComplete(taskId);
   const isWeek = useCheckTasksURL("week");
 
@@ -15,11 +20,16 @@ const CompleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
     isWeek ? "h-4 w-4" : "h-6 w-6",
   );
 
+  const handleCompleteAction = () => {
+    completeTask();
+    onAfterAction();
+  };
+
   const [springStyles, springApi] = useSpring(() => ({
     from: { transform: "scale(1)" },
     reset: true,
     onStart: startAction,
-    onRest: completeTask,
+    onRest: handleCompleteAction,
   }));
 
   const handleCompleteTask = () => {
@@ -44,6 +54,7 @@ const CompleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
 CompleteTaskBtn.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   startAction: PropTypes.func,
+  onAfterAction: PropTypes.func,
   isActionStart: PropTypes.bool,
 };
 
