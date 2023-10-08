@@ -4,7 +4,7 @@ import TaskCompleted from "./TaskCompleted";
 
 const TaskShow = ({ id, content, priority, isCompleted, setOpen }) => {
   if (isCompleted) {
-    return <TaskCompleted content={content} priority={priority} />;
+    return <TaskCompleted taskId={id} content={content} priority={priority} />;
   }
 
   return (

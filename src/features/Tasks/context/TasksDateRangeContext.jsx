@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext } from "react";
 
 const TasksDateRangeContext = createContext(new Date());
 
