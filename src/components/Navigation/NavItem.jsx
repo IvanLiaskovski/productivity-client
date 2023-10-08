@@ -1,22 +1,26 @@
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-const NavItem = ({ isActive, className, children }) => {
+const NavItem = ({ title, url, className, children }) => {
   const styles = twMerge(
-    "p-6 background-main-type flex justify-center items-center rounded-t-2xl text-4xl border-b-4 md:w-full md:mt-4 md:rounded-2xl",
-    isActive ? "border-white" : "border-transparent",
+    "p-6 background-main-type flex justify-center items-center rounded-t-2xl text-4xl border-b-4 md:w-full md:mt-4 md:rounded-2xl border-transparent",
     className,
   );
 
+  const setActiveStyles = ({ isActive }) =>
+    isActive ? twMerge(styles, "border-white") : styles;
+
   return (
-    <a href="#" className={styles}>
+    <NavLink to={url} className={setActiveStyles} title={title}>
       {children}
-    </a>
+    </NavLink>
   );
 };
 
 NavItem.propTypes = {
-  isActive: PropTypes.bool,
+  title: PropTypes.string,
+  url: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
