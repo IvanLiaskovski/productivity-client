@@ -1,4 +1,4 @@
-import { useTasksDateRangeContext } from "../../context/TasksDateRangeContext";
+import { useTasksDateRangeContext } from "../../context/TasksDateContext";
 
 import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs";

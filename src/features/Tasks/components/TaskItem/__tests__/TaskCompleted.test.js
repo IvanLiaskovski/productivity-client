@@ -1,4 +1,5 @@
-import { screen, render } from "@testing-library/react";
+import { render } from "../../../../../utils/tests/test-util";
+import { screen } from "@testing-library/react";
 import TaskCompleted from "../TaskCompleted";
 
 const testContent = "Test react task";

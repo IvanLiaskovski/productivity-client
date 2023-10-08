@@ -32,7 +32,7 @@ const NavItemGroup = () => {
       <nav className="mx-auto max-w-md  px-4 text-white md:px-3">
         <ul className="flex list-none justify-between  gap-x-2 md:flex-col md:justify-start md:gap-0">
           {navItems.map(({ name, url, content }) => (
-            <li>
+            <li key={name}>
               <NavItem url={url} title={name}>
                 {content}
               </NavItem>

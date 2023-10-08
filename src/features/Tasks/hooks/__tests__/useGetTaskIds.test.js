@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { Provider } from "react-redux";
 import store from "../../../../app/store";
-import { TasksDateRangeProvider } from "../../context/TasksDateRangeContext";
+import { TasksDateProvider } from "../../context/TasksDateContext";
 import { useGetTaskIds } from "../useGetTaskIds";
 
 const mockTasksRangeDateContext = {
@@ -12,9 +12,9 @@ const mockTasksRangeDateContext = {
 test("useGetTaskIds correctly retrieves task IDs from Redux store", () => {
   const wrapper = ({ children }) => (
     <Provider store={store}>
-      <TasksDateRangeProvider {...mockTasksRangeDateContext}>
+      <TasksDateProvider {...mockTasksRangeDateContext}>
         {children}
-      </TasksDateRangeProvider>
+      </TasksDateProvider>
     </Provider>
   );
   const { result } = renderHook(() => useGetTaskIds(), { wrapper });
