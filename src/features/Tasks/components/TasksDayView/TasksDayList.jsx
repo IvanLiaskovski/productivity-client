@@ -63,6 +63,7 @@ const TasksDayList = ({ tasksDate, allowTooltip = true }) => {
 
 TasksDayList.propTypes = {
   tasksDate: PropTypes.string,
+  allowTooltip: PropTypes.bool,
 };
 
 const countAnimationDelay = (index) => (index * 20 < 800 ? index * 20 : 800);

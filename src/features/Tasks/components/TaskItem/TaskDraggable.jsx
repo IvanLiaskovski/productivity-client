@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
 import { useDraggable } from "@dnd-kit/core";
 
@@ -13,6 +14,15 @@ const TaskDraggable = ({ taskId, className, children }) => {
       {children}
     </div>
   );
+};
+
+TaskDraggable.propTypes = {
+  taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  className: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 export default TaskDraggable;
