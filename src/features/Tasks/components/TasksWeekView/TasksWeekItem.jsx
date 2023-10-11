@@ -1,17 +1,20 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { useDroppable } from "@dnd-kit/core";
 import { twMerge } from "tailwind-merge";
 import TasksDayList from "../TasksDayView/TasksDayList";
 import CreateTask from "../CreateTask/CreateTask";
 import TaskModalLayout from "../Layouts/TaskModalLayout";
 import CreateBtn from "../../../../components/Buttons/CreateBtn";
 import { FaPlus } from "react-icons/fa";
-import { useState } from "react";
 
-const TasksWeekItem = ({ tasksDate, className }) => {
+const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
   const [isOpen, setOpen] = useState(false);
+  const { isOver, setNodeRef } = useDroppable({ id: tasksDate });
 
   const styles = twMerge(
     "flex justify-center border-x-2 border-block border-r-transparent border-opacity-80 px-2 first:border-transparent",
+    isOver && "bg-blue-100",
     className,
   );
 
@@ -26,11 +29,11 @@ const TasksWeekItem = ({ tasksDate, className }) => {
   };
 
   return (
-    <div className={styles} onDoubleClick={openCreateModal}>
+    <div className={styles} ref={setNodeRef} onDoubleClick={openCreateModal}>
       <CreateBtn className="mb-2 hidden w-full rounded-lg border-4 py-1 text-blue-100">
         <FaPlus />
       </CreateBtn>
-      <TasksDayList tasksDate={tasksDate} />
+      <TasksDayList tasksDate={tasksDate} allowTooltip={allowTooltip} />
       {isOpen && (
         <TaskModalLayout onClose={closeCreateModal}>
           <CreateTask
@@ -47,6 +50,7 @@ const TasksWeekItem = ({ tasksDate, className }) => {
 
 TasksWeekItem.propTypes = {
   tasksDate: PropTypes.string,
+  allowTooltip: PropTypes.bool,
   className: PropTypes.string,
 };
 
