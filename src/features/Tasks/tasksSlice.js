@@ -76,9 +76,12 @@ export const selectTaskIdsByDate = createSelector(
 export const selectTasksByDate = createSelector(
   [selectTasks, (_, date) => date],
   (tasks, date) => {
-    return sortTasks(
-      Object.values(tasks.entities).filter((task) => task?.date === date),
-    );
+    tasks = Object.values(tasks.entities);
+
+    if (Array.isArray(date)) {
+      return sortTasks(tasks.filter((task) => date.includes(task?.date)));
+    }
+    return sortTasks(tasks.filter((task) => task?.date === date));
   },
 );
 
