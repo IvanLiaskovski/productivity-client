@@ -8,17 +8,23 @@ import { FaRegPaperPlane } from "react-icons/fa";
 
 const TaskManagementPanel = ({
   content,
+  description,
   priority,
   setContent,
+  setDescription,
   setPriority,
   onSave,
-  textColor,
+  mode,
   priorityBackground,
 }) => {
   const fieldRef = useRef();
 
   const handleChangeContent = (e) => {
     setContent(e.target.value);
+  };
+
+  const handleCahngeDescription = (e) => {
+    setDescription(e.target.value);
   };
 
   const saveHandle = () => {
@@ -29,12 +35,22 @@ const TaskManagementPanel = ({
   return (
     <>
       <Textarea
+        title="Name:"
         value={content}
         onChange={handleChangeContent}
         autoFocus
-        isTransparent
-        textColor={textColor}
+        mode={mode}
         placeholder="Type task..."
+        className="max-h-full md:max-h-max"
+        ref={fieldRef}
+      />
+      <Textarea
+        title="Description:"
+        value={description}
+        onChange={handleCahngeDescription}
+        autoFocus
+        mode={mode}
+        placeholder="Type description..."
         className="max-h-full md:max-h-max"
         ref={fieldRef}
       />
@@ -58,11 +74,13 @@ const TaskManagementPanel = ({
 
 TaskManagementPanel.propTypes = {
   content: PropTypes.string,
+  description: PropTypes.string,
   priority: PropTypes.string,
   setContent: PropTypes.func,
+  setDescription: PropTypes.func,
   setPriority: PropTypes.func,
   onSave: PropTypes.func,
-  textColor: PropTypes.string,
+  mode: PropTypes.string,
   priorityBackground: PropTypes.string,
 };
 

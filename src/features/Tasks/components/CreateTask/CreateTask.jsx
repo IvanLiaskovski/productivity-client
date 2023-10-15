@@ -3,11 +3,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createTask } from "../../tasksSlice";
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
-import { PRIORITY_ARR } from "../../../../data/priorityData";
 
 const CreateTask = ({
   date,
-  textColor = "light",
+  mode = "light",
   priorityBackground,
   setIsEmpty,
   onAfterSave = () => {},
@@ -15,6 +14,7 @@ const CreateTask = ({
   const dispatch = useDispatch();
 
   const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("common");
 
   const handleTaskCreation = () => {
@@ -28,6 +28,7 @@ const CreateTask = ({
     dispatch(
       createTask({
         content,
+        description,
         priority,
         date,
       }),
@@ -43,8 +44,10 @@ const CreateTask = ({
       priority={priority}
       setContent={setContent}
       setPriority={setPriority}
+      description={description}
+      setDescription={setDescription}
       onSave={handleTaskCreation}
-      textColor={textColor}
+      mode={mode}
       priorityBackground={priorityBackground}
     />
   );
@@ -52,8 +55,8 @@ const CreateTask = ({
 
 CreateTask.propTypes = {
   date: PropTypes.string,
-  textColor: PropTypes.oneOf(["light", "dark"]),
-  priorityBackground: PropTypes.oneOf(PRIORITY_ARR),
+  mode: PropTypes.oneOf(["light", "dark"]),
+  priorityBackground: PropTypes.oneOf(["light", "dark"]),
   setIsEmpty: PropTypes.func,
   onAfterSave: PropTypes.func,
 };

@@ -30,7 +30,14 @@ const TaskItem = memo(({ taskId, hideActions, isOpen, setOpen }) => {
           <TaskEdit setOpen={setOpen} {...task} />
         </TaskModalLayout>
       ) : (
-        <TaskShow setOpen={setOpen} {...task} hideActions={hideActions} />
+        <TaskShow
+          id={task?.id}
+          content={task?.content}
+          priority={task?.priority}
+          isCompleted={isCompleted}
+          setOpen={setOpen}
+          hideActions={hideActions}
+        />
       )}
     </div>
   );
