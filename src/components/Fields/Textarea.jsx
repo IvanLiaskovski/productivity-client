@@ -5,21 +5,28 @@ import { twMerge } from "tailwind-merge";
 const Textarea = forwardRef(
   (
     {
+      title,
       value,
       onChange,
       placeholder,
       autoFocus,
       isTransparent,
-      textColor,
+      mode,
       className,
     },
     ref,
   ) => {
-    const styles = twMerge(
-      "h-auto min-h-[40px] w-full resize-none overflow-hidden rounded-lg outline-none",
+    const textareaStyles = twMerge(
+      "h-auto min-h-[40px] w-full px-2 py-1 resize-none overflow-hidden rounded-xl outline-none ",
+      mode === "light"
+        ? "bg-primary-200 text-primary-900 shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset] placeholder:text-gray-500"
+        : "bg-block bg-opacity-95 text-blue-100 shadow-[0px_-2px_10px_0px_rgba(0,0,0,0.4)_inset] placeholder:text-gray-300",
       isTransparent ? "bg-transparent" : "",
-      textColor === "light" ? "text-blue-100" : "text-black",
       className,
+    );
+
+    const labelStyles = twMerge(
+      mode === "light" ? "text-blue-100" : "text-primary-900",
     );
 
     const heightFitContent = (e) => {
@@ -39,27 +46,34 @@ const Textarea = forwardRef(
     };
 
     return (
-      <textarea
-        className={styles}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        autoFocus={autoFocus}
-        onFocus={focusHandle}
-        onInput={heightFitContent}
-        ref={ref}
-      />
+      <div className="text-left">
+        <label className={labelStyles} htmlFor={`field-${title}`}>
+          {title}
+        </label>
+        <textarea
+          id={`field-${title}`}
+          className={textareaStyles}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          autoFocus={autoFocus}
+          onFocus={focusHandle}
+          onInput={heightFitContent}
+          ref={ref}
+        />
+      </div>
     );
   },
 );
 
 Textarea.propTypes = {
+  title: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
   isTransparent: PropTypes.bool,
-  textColor: PropTypes.string,
+  mode: PropTypes.string,
   className: PropTypes.string,
 };
 

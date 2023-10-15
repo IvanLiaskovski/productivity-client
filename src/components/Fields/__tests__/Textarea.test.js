@@ -36,7 +36,7 @@ test("Textarea style props dependence props test", () => {
   render(
     <Textarea
       isTransparent
-      textColor="light"
+      mode="light"
       className="mt-2"
       onChange={changeEventMock}
     />,
@@ -45,5 +45,5 @@ test("Textarea style props dependence props test", () => {
   const textarea = screen.getByRole("textbox");
 
   expect(textarea).toBeInTheDocument();
-  expect(textarea).toHaveClass("bg-transparent", "text-blue-100", "mt-2");
+  expect(textarea).toHaveClass("bg-transparent", "text-primary-900", "mt-2");
 });
