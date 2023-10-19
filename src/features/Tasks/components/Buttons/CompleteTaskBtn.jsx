@@ -9,7 +9,7 @@ import { twMerge } from "tailwind-merge";
 const CompleteTaskBtn = ({
   taskId,
   startAction,
-  onAfterAction,
+  onAfterAction = () => false,
   isActionStart,
 }) => {
   const completeTask = useTaskComplete(taskId);
