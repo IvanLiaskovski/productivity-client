@@ -9,7 +9,7 @@ import TaskSlideActions from "./TaskSlideActions";
 import TaskContent from "./TaskContent";
 
 const TaskActive = ({ taskId, content, priority, hideActions, setOpen }) => {
-  const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
 
   const [isActionStart, setActionStart] = useState(false);
   const styles = twMerge("group/actions relative cursor-pointer");
@@ -25,7 +25,7 @@ const TaskActive = ({ taskId, content, priority, hideActions, setOpen }) => {
         <TaskContent taskId={taskId} content={content} />
         <PriorityMark taskId={taskId} priority={priority} />
       </TaskSlideActions>
-      {isScreenLarge && !hideActions && (
+      {isScreenMedium && !hideActions && (
         <TaskActions
           taskId={taskId}
           isActionStart={isActionStart}
