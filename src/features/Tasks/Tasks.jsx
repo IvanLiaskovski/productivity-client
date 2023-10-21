@@ -7,8 +7,10 @@ import TasksHeader from "./components/TasksHeader/TasksHeader";
 import TasksNavigation from "./components/TasksNavigation/TasksNavigation";
 import TasksDayView from "./components/TasksDayView/TasksDayView";
 import TasksWeekView from "./components/TasksWeekView/TasksWeekView";
+import TasksMonthView from "./components/TasksMonthView/TasksMonthView";
 import moment from "moment";
 import { useMediaQuery } from "react-responsive";
+import useCheckTasksURL from "./hooks/useCheckTasksURL";
 
 function Tasks() {
   const [isManualChange, setManualChange] = useState(false);
@@ -16,6 +18,7 @@ function Tasks() {
   const [date, setDate] = useState(new Date(moment().format("YYYY-MM-DD")));
   const isMediumScreen = useMediaQuery({ query: "(min-width: 768px)" });
   const location = useLocation();
+  const isMonth = useCheckTasksURL("month");
 
   useEffect(() => {
     setDate(taskDate);
@@ -30,7 +33,7 @@ function Tasks() {
         <TasksDateProvider date={taskDate} setDate={setTaskDate}>
           <div className="md:w-[100vw - 128px] md:ml-[128px] md:pb-7">
             <div className="container mx-auto px-4 pt-14 md:flex md:min-h-screen md:max-w-[80vw] md:flex-col md:px-5">
-              <TasksHeader />
+              {!isMonth && <TasksHeader />}
               {isMediumScreen && <TasksNavigation />}
               <Routes>
                 <Route path="/day" element={<TasksDayView />} />
@@ -39,6 +42,16 @@ function Tasks() {
                   element={
                     isMediumScreen ? (
                       <TasksWeekView />
+                    ) : (
+                      <Navigate to="/task/day" />
+                    )
+                  }
+                />
+                <Route
+                  path="/month"
+                  element={
+                    isMediumScreen ? (
+                      <TasksMonthView />
                     ) : (
                       <Navigate to="/task/day" />
                     )
