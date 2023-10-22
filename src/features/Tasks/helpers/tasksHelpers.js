@@ -57,12 +57,16 @@ export function createWeekDatesRange(date, onlyDates) {
   return datesArray;
 }
 
-export function createMonthDatesRange(date, onlyDates) {
+export function createMonthDatesRange(date, onlyDates, weekMissingDays = true) {
   const currentDate = moment(date);
   const datesArray = [];
 
-  const startOfMonth = currentDate.clone().startOf("month").startOf("isoWeek");
-  const endOfMonth = currentDate.clone().endOf("month").endOf("isoWeek");
+  const startOfMonth = weekMissingDays
+    ? currentDate.clone().startOf("month").startOf("isoWeek")
+    : currentDate.clone().startOf("month");
+  const endOfMonth = weekMissingDays
+    ? currentDate.clone().endOf("month").endOf("isoWeek")
+    : currentDate.clone().endOf("month");
 
   while (startOfMonth.isSameOrBefore(endOfMonth, "day")) {
     let dateItem;
