@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import { useOpenCreatePanelContext } from "../../../../context/OpenCreatePanelContext";
@@ -7,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 
 import CreateTask from "../CreateTask/CreateTask";
 
-const CreateTaskPanel = () => {
+const CreateTaskPanel = ({ taskType = "day" }) => {
   const { isOpen, setOpen } = useOpenCreatePanelContext();
   const { date } = useTasksDateContext();
 
@@ -41,6 +42,7 @@ const CreateTaskPanel = () => {
           <div className={wrapperStyles} data-testid="create-task-wrapper">
             <CreateTask
               date={date}
+              type={taskType}
               setIsEmpty={setIsEmpty}
               onAfterSave={closePanel}
             />
@@ -48,6 +50,10 @@ const CreateTaskPanel = () => {
         </animated.div>
       ),
   );
+};
+
+CreateTaskPanel.propTypes = {
+  taskType: PropTypes.oneOf(["day", "year"]),
 };
 
 export default CreateTaskPanel;

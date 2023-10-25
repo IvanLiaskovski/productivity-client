@@ -25,13 +25,11 @@ const tasksSlice = createSlice({
   reducers: {
     createTask: {
       reducer: (state, action) => {
-        const { date } = action.payload;
-        const mode = state.mode;
+        const { date, type } = action.payload;
 
         tasksAdapter.addOne(state, {
           ...action.payload,
-          date: mode === "year" ? new Date(date).getFullYear() : date,
-          type: mode,
+          date: type === "year" ? moment(date).format("YYYY") : date,
         });
       },
       prepare: (data) => ({
@@ -59,10 +57,10 @@ export const selectTasksMode = (state) => state.tasks.mode;
 export const selectTasksOnlyActive = (state) => state.tasks.onlyActive;
 
 export const selectTaskIdsByDate = createSelector(
-  [selectTasks, (_, date) => date],
-  (tasks, date) => {
+  [selectTasks, (_, date) => date, (_, date, type) => type],
+  (tasks, date, type) => {
     let taskArray = Object.values(tasks.entities).filter(
-      (task) => task?.date === date,
+      (task) => task?.date === date && task?.type === type,
     );
 
     if (tasks.onlyActive) {

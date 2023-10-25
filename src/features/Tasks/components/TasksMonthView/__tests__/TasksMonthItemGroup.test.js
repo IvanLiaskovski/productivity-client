@@ -16,8 +16,8 @@ const tasksIds = [];
 const tasks = createFakeTask("day", currentDate);
 
 beforeEach(() => {
-  tasks.forEach(({ content, date }) => {
-    tasksIds.push(createTestTask(content, date));
+  tasks.forEach(({ content, date, type }) => {
+    tasksIds.push(createTestTask(content, date, type));
   });
 });
 

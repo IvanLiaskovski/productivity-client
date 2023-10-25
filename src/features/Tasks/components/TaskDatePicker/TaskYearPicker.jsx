@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useMemo } from "react";
 import { useTasksDateContext } from "../../context/TasksDateContext";
 
@@ -12,7 +13,7 @@ const TaskYearPicker = () => {
   const pickerSettings = useMemo(() => {
     return {
       selected: new Date(date),
-      onChange: (date) => setDate(date),
+      onChange: (date) => setDate(moment(date).format("YYYY-MM-DD")),
       showYearPicker: true,
       dateFormat: "yyyy",
     };
@@ -20,10 +21,11 @@ const TaskYearPicker = () => {
 
   return (
     <DatePicker
+      className="relative z-50"
       {...pickerSettings}
       customInput={
-        <PickerInput>
-          <span className="-translatex-1/2 absolute -right-2/4 top-1/2 -translate-y-1/2">
+        <PickerInput className="rounded-md bg-block p-2 shadow-md">
+          <span className="-translatex-1/2 absolute -right-7 top-1/2 -translate-y-1/2 rounded-md bg-block p-3 shadow-md">
             <VscTriangleDown />
           </span>
         </PickerInput>

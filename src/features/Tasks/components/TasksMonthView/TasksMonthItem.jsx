@@ -18,6 +18,7 @@ const TasksMonthItem = ({ date, day, allowTooltip, className }) => {
         <h5 className="text-blue-100">{day}.</h5>
         <TasksDayList
           tasksDate={date}
+          tasksType="day"
           allowTooltip={allowTooltip}
           className="max-h-[400px]"
         />

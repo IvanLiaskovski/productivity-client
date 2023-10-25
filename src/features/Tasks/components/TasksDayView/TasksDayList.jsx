@@ -7,8 +7,13 @@ import TaskDraggable from "../TaskItem/TaskDraggable";
 import TaskTooltip from "../TaskTooltip/TaskTooltip";
 import { twMerge } from "tailwind-merge";
 
-const TasksDayList = ({ tasksDate, allowTooltip = true, className }) => {
-  const tasks = useGetTaskIds(tasksDate);
+const TasksDayList = ({
+  tasksDate,
+  tasksType = "day",
+  allowTooltip = true,
+  className,
+}) => {
+  const tasks = useGetTaskIds(tasksDate, tasksType);
   const [editableTaskId, setEditableTaskId] = useState("");
 
   const styles = twMerge(
@@ -69,6 +74,7 @@ const TasksDayList = ({ tasksDate, allowTooltip = true, className }) => {
 
 TasksDayList.propTypes = {
   tasksDate: PropTypes.string,
+  tasksType: PropTypes.oneOf(["day", "year"]),
   allowTooltip: PropTypes.bool,
   className: PropTypes.string,
 };

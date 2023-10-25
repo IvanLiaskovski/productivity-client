@@ -6,6 +6,7 @@ import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
 
 const CreateTask = ({
   date,
+  type = "day",
   mode = "light",
   priorityBackground,
   setIsEmpty,
@@ -31,6 +32,7 @@ const CreateTask = ({
         description,
         priority,
         date,
+        type,
       }),
     );
 
@@ -55,6 +57,7 @@ const CreateTask = ({
 
 CreateTask.propTypes = {
   date: PropTypes.string,
+  type: PropTypes.oneOf(["day", "year"]),
   mode: PropTypes.oneOf(["light", "dark"]),
   priorityBackground: PropTypes.oneOf(["light", "dark"]),
   setIsEmpty: PropTypes.func,

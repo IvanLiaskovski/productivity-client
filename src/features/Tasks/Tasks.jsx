@@ -10,6 +10,7 @@ import TasksNavigation from "./components/TasksNavigation/TasksNavigation";
 import TasksDayView from "./components/TasksDayView/TasksDayView";
 import TasksWeekView from "./components/TasksWeekView/TasksWeekView";
 import TasksMonthView from "./components/TasksMonthView/TasksMonthView";
+import TasksYearView from "./components/TasksYearView/TasksYearView";
 
 function Tasks() {
   const [isManualChange, setManualChange] = useState(false);
@@ -55,6 +56,7 @@ function Tasks() {
                     )
                   }
                 />
+                <Route path="/year" element={<TasksYearView />} />
                 <Route index element={<Navigate to="/task/day" replace />} />
               </Routes>
             </div>
