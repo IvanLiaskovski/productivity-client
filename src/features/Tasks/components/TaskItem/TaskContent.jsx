@@ -6,19 +6,22 @@ import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimatio
 
 const TaskContent = ({ taskId, content = "..." }) => {
   const isWeek = useCheckTasksURL("week");
+  const isMonth = useCheckTasksURL("month");
   const isScreenSmall = useMediaQuery({ query: "(max-width: 767px)" });
   const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
   const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
 
   const styles = twMerge(
     "relative z-20 break-words whitespace-break-spaces bg-transparent font-sans",
-    isWeek ? "px-3 xl:px-4 md:py-1 xl:py-2 md:text-xs xl:text-sm" : "px-8 py-2",
+    isWeek || isMonth
+      ? "px-3 xl:px-4 md:py-1 xl:py-2 md:text-xs xl:text-base"
+      : "px-8 py-2",
   );
 
   const contentValue =
-    isScreenLarge && isWeek && content.length > 52
+    isScreenLarge && (isWeek || isMonth) && content.length > 52
       ? `${String(content).slice(0, 52)}...`
-      : !isScreenLarge && isWeek && content.length > 12
+      : !isScreenLarge && (isWeek || isMonth) && content.length > 12
       ? `${String(content).slice(0, 12)}...`
       : content.length > 172
       ? `${String(content).slice(0, 172)}...`

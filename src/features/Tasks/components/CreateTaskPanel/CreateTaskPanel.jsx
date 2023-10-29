@@ -18,8 +18,8 @@ const CreateTaskPanel = ({ taskType = "day" }) => {
   const isVisible = isMediumScreen || isOpen;
 
   const wrapperStyles = twMerge(
-    `shadow-inset create-panel flex-end flex h-full w-full flex-col justify-between rounded-t-3xl bg-block p-4 
-    shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset] transition-all duration-500 lg:rounded-3xl lg:p-6`,
+    `create-panel flex-end flex w-full flex-col rounded-t-3xl bg-block p-4 
+    shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset] transition-all duration-500 md:rounded-3xl lg:p-6`,
     isEmpty && "shadow-red-600",
   );
 
@@ -36,7 +36,7 @@ const CreateTaskPanel = ({ taskType = "day" }) => {
     (styles, isVisible) =>
       isVisible && (
         <animated.div
-          className="fixed bottom-0 left-0 z-40 h-1/3 w-screen sm:fixed md:relative md:mt-6 md:w-full md:self-end md:justify-self-end lg:relative lg:z-0 lg:h-auto"
+          className="fixed bottom-0 left-0 z-40 w-screen sm:fixed md:relative md:mt-6 md:w-full md:self-end md:justify-self-end lg:relative lg:z-0 lg:h-auto"
           style={styles}
         >
           <div className={wrapperStyles} data-testid="create-task-wrapper">

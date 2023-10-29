@@ -10,10 +10,11 @@ const PriorityMark = ({
   className,
 }) => {
   const isWeek = useCheckTasksURL("week");
+  const isMonth = useCheckTasksURL("month");
 
   const wrapperStyles = twMerge(
     "absolute  top-1/2 z-10 flex -translate-y-1/2",
-    isWeek
+    isWeek || isMonth
       ? "left-[3px] xl:left-1 h-1.5 w-1.5 lg:h-2 lg:w-2"
       : "left-3 h-3 w-3",
   );
@@ -27,7 +28,7 @@ const PriorityMark = ({
 
   const priorityMarkCircleStyles = twMerge(
     "relative inline-flex h-1.5 w-1.5 lg:h-3 lg:w-3 rounded-full",
-    isWeek && "lg:h-2 lg:w-2",
+    isWeek || isMonth ? "lg:h-2 lg:w-2" : "h-3 w-3",
     PRIORITY_COLORS.bg[priority],
     circleClassName,
   );

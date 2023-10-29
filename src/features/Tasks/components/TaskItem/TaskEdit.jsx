@@ -21,7 +21,7 @@ const TaskEdit = ({
   const [isActionStart, setActionStart] = useState(false);
 
   const panelWrapperStyles = twMerge(
-    "relative z-30",
+    "relative z-20 p-2",
     isActionStart && "opacity-80",
   );
 
@@ -40,6 +40,11 @@ const TaskEdit = ({
     closeEdit();
   }
 
+  const handleStartAction = () => {
+    setActionStart(true);
+    closeEdit();
+  };
+
   return (
     <>
       <div className={panelWrapperStyles}>
@@ -57,7 +62,7 @@ const TaskEdit = ({
       <TaskActions
         taskId={id}
         isActionStart={isActionStart}
-        setActionStart={setActionStart}
+        setActionStart={handleStartAction}
         onAfterAction={closeEdit}
         isEdit
       />

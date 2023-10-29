@@ -10,10 +10,12 @@ import { RxCross2 } from "react-icons/rx";
 const DeleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
   const deleteTask = useTaskDelete(taskId);
   const isWeek = useCheckTasksURL("week");
+  const isMonth = useCheckTasksURL("month");
 
   const styles = twMerge(
-    "relative -z-10 rounded-full bg-red-300 transition-colors duration-150 hover:bg-red-400",
-    isWeek ? "h-4 w-4" : "h-6 w-6",
+    "relative -z-10 rounded-full bg-red-300 transition-colors duration-150",
+    isWeek || isMonth ? "h-4 w-4" : "h-6 w-6",
+    !isActionStart && "hover:bg-red-400",
   );
 
   const [springStyles, springApi] = useSpring(() => ({

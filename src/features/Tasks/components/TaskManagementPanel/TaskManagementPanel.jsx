@@ -17,7 +17,7 @@ const TaskManagementPanel = ({
   mode,
   priorityBackground,
 }) => {
-  const fieldRef = useRef();
+  const taskNameRef = useRef();
 
   const handleChangeContent = (e) => {
     setContent(e.target.value);
@@ -29,7 +29,7 @@ const TaskManagementPanel = ({
 
   const saveHandle = () => {
     onSave();
-    fieldRef.current.focus();
+    taskNameRef.current.focus();
   };
 
   return (
@@ -41,8 +41,8 @@ const TaskManagementPanel = ({
         autoFocus
         mode={mode}
         placeholder="Type task..."
-        className="max-h-full md:max-h-max"
-        ref={fieldRef}
+        className="mt-2 max-h-full md:max-h-max"
+        ref={taskNameRef}
       />
       <Textarea
         title="Description:"
@@ -52,7 +52,6 @@ const TaskManagementPanel = ({
         mode={mode}
         placeholder="Type description..."
         className="max-h-full md:max-h-max"
-        ref={fieldRef}
       />
       <div className="mt-4 flex justify-end">
         <div className="flex gap-1 pr-2">

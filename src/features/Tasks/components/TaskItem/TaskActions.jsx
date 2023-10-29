@@ -16,12 +16,13 @@ const TaskActions = ({
   const isScreenSmall = useMediaQuery({ query: "(max-width: 768px)" });
   const isAlwaysVisible = isScreenSmall && isEdit;
   const isWeek = useCheckTasksURL("week");
+  const isMonth = useCheckTasksURL("month");
 
   const wrapperStyles = twMerge(
     "absolute top-0 flex h-3/4 -translate-y-full justify-center gap-1 bg-bgTop transition-transform duration-300 group-hover/actions:translate-y-0",
     isActionStart ? "z-0 !-translate-y-full" : "z-20",
     isAlwaysVisible && "!translate-y-0",
-    isWeek
+    isWeek | isMonth
       ? "right-3 max-h-5 w-12 rounded-b-xl"
       : "right-5 max-h-8 w-16 rounded-b-2xl",
   );

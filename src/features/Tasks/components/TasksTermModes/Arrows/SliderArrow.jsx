@@ -13,7 +13,7 @@ const SliderArrow = ({
 }) => {
   const moveDate = useMoveDateRange();
   const styles = twMerge(
-    "absolute  top-1/2 h-4 w-4 -translate-y-1/2 text-primary-900 transition-colors hover:text-blue-300",
+    "absolute top-1/2 -translate-y-1/2 text-primary-900 transition-colors hover:text-blue-300",
     className,
   );
 

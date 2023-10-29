@@ -4,7 +4,6 @@ import { useTasksDatesRangeContext } from "../../context/TasksDatesRangeContext"
 import { useManualDateChangeContext } from "../../context/TasksManualDateChangeContext";
 import DatePicker from "react-datepicker";
 import PickerInput from "./DatePickerFields/PickerInput";
-import { VscTriangleDown } from "react-icons/vsc";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
@@ -29,13 +28,7 @@ const TaskDayPicker = () => {
     <DatePicker
       className="relative z-50"
       {...pickerSettings}
-      customInput={
-        <PickerInput>
-          <span className="-translatex-1/2 absolute -right-1/4 top-1/2 -translate-y-1/2">
-            <VscTriangleDown />
-          </span>
-        </PickerInput>
-      }
+      customInput={<PickerInput />}
     />
   );
 };

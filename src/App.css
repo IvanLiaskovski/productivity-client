@@ -23,6 +23,12 @@ body {
   font-size: 16px;
 }
 
+.fix-blurry {
+  backface-visibility: hidden;
+  transform: perspective(1px) translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
 .react-datepicker-popper {
   z-index: 9999;
 }

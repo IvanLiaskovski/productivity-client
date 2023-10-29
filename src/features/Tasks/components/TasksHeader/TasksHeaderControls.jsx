@@ -1,33 +1,42 @@
 import { useMediaQuery } from "react-responsive";
-import { useTasksMode } from "../../hooks/useTasksMode";
+import useCheckTasksURL from "../../hooks/useCheckTasksURL";
 
 import ActiveTasksSwitch from "../Buttons/ActiveTasksSwitch";
 import ModeBtn from "../../../../components/Buttons/ModeBtn";
 import SettingsBtn from "../../../../components/Buttons/SettingsBtn";
 import TaskDayPicker from "../TaskDatePicker/TaskDayPicker";
+import TaskMonthPicker from "../TaskDatePicker/TaskMonthPicker";
 import TaskYearPicker from "../TaskDatePicker/TaskYearPicker";
 
 const TasksHeaderControls = () => {
-  const [mode, changeMode] = useTasksMode();
-  const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
 
-  const isYear = mode === "year";
-  const isDay = mode === "day";
+  const isDay = useCheckTasksURL("day");
+  const isMonth = useCheckTasksURL("month");
+  const isYear = useCheckTasksURL("year");
 
   return (
     <div>
       <div className="w-100 flex items-center justify-between font-sans lg:justify-start">
-        <div>{isYear ? <TaskYearPicker /> : <TaskDayPicker />}</div>
-        {isScreenLarge ? (
-          <div className="lg:ml-11 lg:pb-2">
+        <div>
+          {isYear ? (
+            <TaskYearPicker />
+          ) : isMonth ? (
+            <TaskMonthPicker />
+          ) : (
+            <TaskDayPicker />
+          )}
+        </div>
+        {isScreenMedium ? (
+          <div className="lg:ml-5 lg:pb-2">
             <ActiveTasksSwitch />
           </div>
         ) : (
           <div className="flex gap-3">
-            <ModeBtn onClick={changeMode("day")} isActive={isDay}>
+            <ModeBtn to="/task/day" isActive={isDay}>
               Day
             </ModeBtn>
-            <ModeBtn onClick={changeMode("year")} isActive={isYear}>
+            <ModeBtn to="/task/year" isActive={isYear}>
               Year
             </ModeBtn>
             <SettingsBtn />

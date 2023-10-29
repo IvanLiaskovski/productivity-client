@@ -24,10 +24,11 @@ const TasksWeekSlider = ({ SlideItem }) => {
   const [isSettingDate, setIsSettingDate] = useState(false);
   const moveDate = useMoveDateRange();
   const isScreenMedium = useMediaQuery({ query: "(min-width: 	768px)" });
+  let timeOut;
 
   const sliderRef = useRef();
   const styles = twMerge(
-    "w-full z-0 my-2 rounded-lg bg-block text-center text-white px-2 py-3 lg:px-10 lg:py-4",
+    "relative w-full z-0 my-2 rounded-lg bg-block text-center text-white px-2 py-3 lg:px-10 lg:py-4",
   );
 
   useEffect(() => {
@@ -67,7 +68,13 @@ const TasksWeekSlider = ({ SlideItem }) => {
             setIsSettingDate(false);
             return;
           }
+
           setIsSwipe(true);
+
+          clearTimeout(timeOut);
+          timeOut = setTimeout(() => {
+            setIsSwipe(false);
+          }, 1000);
         }}
         afterChange={(index) => {
           setIsSwipe(false);
@@ -94,7 +101,7 @@ const TasksWeekSlider = ({ SlideItem }) => {
 };
 
 TasksWeekSlider.propTypes = {
-  SlideItem: PropTypes.element,
+  SlideItem: PropTypes.elementType,
 };
 
 export default TasksWeekSlider;
