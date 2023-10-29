@@ -1,10 +1,11 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { useGetTaskIds } from "../../hooks/useGetTaskIds";
 import { useTransition, animated } from "react-spring";
 import TaskItem from "../TaskItem/TaskItem";
 
-const TasksDayList = () => {
-  const tasks = useGetTaskIds(true);
+const TasksDayList = ({ tasksDate }) => {
+  const tasks = useGetTaskIds(tasksDate);
   const [editableTaskId, setEditableTaskId] = useState("");
 
   const transitions = useTransition(tasks, {
@@ -34,7 +35,7 @@ const TasksDayList = () => {
   });
 
   return (
-    <div className="scrollbar-hide max-h-[60vh] overflow-auto">
+    <div className="scrollbar-hide max-h-[60vh] w-full overflow-x-auto">
       {transitions(
         (styles, taskId) =>
           taskId && (
@@ -54,6 +55,10 @@ const TasksDayList = () => {
       )}
     </div>
   );
+};
+
+TasksDayList.propTypes = {
+  tasksDate: PropTypes.string,
 };
 
 const countAnimationDelay = (index) => (index * 20 < 800 ? index * 20 : 800);

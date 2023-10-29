@@ -15,7 +15,7 @@ const TaskCompleted = ({ taskId, content, priority }) => {
     }
   };
   return (
-    <div onClick={unDoTaskHandle} className="group cursor-pointer px-8 py-2">
+    <div onClick={unDoTaskHandle} className="group cursor-pointer">
       <TaskContent content={content} />
       <PriorityMark priority={priority} isCompleted />
       {!isScreenSmall && <TaskUnDo taskId={taskId} />}

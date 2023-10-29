@@ -34,7 +34,5 @@ test("Sort tasks by priority", () => {
   const { result } = renderHook(() => useGetTasks(), { wrapper });
   const tasks = sortTasks(result.current);
 
-  console.log(tasks);
-
   expect(tasks[0].priority).toBe("urgent");
 });

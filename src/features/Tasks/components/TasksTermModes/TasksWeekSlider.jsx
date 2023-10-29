@@ -1,17 +1,18 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { useTasksDatesRangeContext } from "../../context/TasksDatesRangeContext";
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import useMoveDateRange from "../../hooks/useMoveDateRange";
+import { useMediaQuery } from "react-responsive";
 import { createWeekDatesRange } from "../../helpers/tasksHelpers";
 import { twMerge } from "tailwind-merge";
 
 import Slider from "react-slick";
 import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
-import LeftArrow from "./Arrows/LeftArrow";
 import RightArrow from "./Arrows/RightArrow";
+import LeftArrow from "./Arrows/LeftArrow";
 
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const TasksWeekSlider = ({ SlideItem }) => {
   const { datesRange } = useTasksDatesRangeContext();
@@ -19,6 +20,7 @@ const TasksWeekSlider = ({ SlideItem }) => {
   const [slides, setSlides] = useState(createWeekDatesRange(datesRange));
   const [isSwipe, setIsSwipe] = useState(false);
   const moveDate = useMoveDateRange();
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 	768px)" });
 
   const sliderRef = useRef();
   const styles = twMerge(
@@ -50,7 +52,7 @@ const TasksWeekSlider = ({ SlideItem }) => {
   return (
     <AppearAnimation animationType="fade">
       <Slider
-        arrows={true}
+        arrows={isScreenMedium}
         draggable
         slidesToShow={7}
         slidesToScroll={7}
@@ -74,6 +76,10 @@ const TasksWeekSlider = ({ SlideItem }) => {
       </Slider>
     </AppearAnimation>
   );
+};
+
+TasksWeekSlider.propTypes = {
+  SlideItem: PropTypes.element,
 };
 
 export default TasksWeekSlider;
