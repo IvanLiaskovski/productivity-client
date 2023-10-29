@@ -53,6 +53,8 @@ test("Verify styling changes and startAction call on complete button click", asy
 
   await userEvent.click(completeBtn);
 
-  expect(mockStartAction).toBeCalled();
-  waitFor(() => expect(wrapper).toHaveStyle("transform: scale(99)"));
+  waitFor(() => {
+    expect(mockStartAction).toBeCalled();
+    expect(wrapper).toHaveStyle("transform: scale(99)");
+  });
 });

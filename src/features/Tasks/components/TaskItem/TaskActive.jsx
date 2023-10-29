@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { twMerge } from "tailwind-merge";
 
 import PriorityMark from "../Priority/PriorityMark";
 import TaskActions from "./TaskActions";
@@ -9,21 +11,27 @@ import TaskContent from "./TaskContent";
 const TaskActive = ({ taskId, content, priority, setOpen }) => {
   const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
 
+  const [isActionStart, setActionStart] = useState(false);
+  const styles = twMerge("group/actions relative cursor-pointer");
+
   const openTaskHandle = (e) => {
     if (e.target.closest("#task-actions")) return;
     setOpen(taskId);
   };
 
   return (
-    <div
-      className="group relative cursor-pointer px-8 py-2"
-      onClick={openTaskHandle}
-    >
+    <div className={styles} onClick={openTaskHandle}>
       <TaskSlideActions taskId={taskId}>
-        <TaskContent content={content} />
+        <TaskContent taskId={taskId} content={content} />
         <PriorityMark priority={priority} />
       </TaskSlideActions>
-      {isScreenLarge && <TaskActions taskId={taskId} />}
+      {isScreenLarge && (
+        <TaskActions
+          taskId={taskId}
+          isActionStart={isActionStart}
+          setActionStart={setActionStart}
+        />
+      )}
     </div>
   );
 };
@@ -33,6 +41,7 @@ TaskActive.propTypes = {
   content: PropTypes.string,
   priority: PropTypes.string,
   onToggle: PropTypes.func,
+  setOpen: PropTypes.func,
 };
 
 export default TaskActive;

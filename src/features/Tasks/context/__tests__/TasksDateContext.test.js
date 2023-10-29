@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
-import { TasksDateRangeProvider } from "../TasksDateRangeContext";
-import { useTasksDateRangeContext } from "../TasksDateRangeContext";
+import { TasksDateProvider } from "../TasksDateContext";
+import { useTasksDateContext } from "../TasksDateContext";
 
 const mockTasksRangeDateContext = {
   date: new Date(),
@@ -11,12 +11,12 @@ const mockDate = "2023-07-12";
 
 test("TasksDateRangeProvider - set tasks range date", () => {
   const wrapper = ({ children }) => (
-    <TasksDateRangeProvider {...mockTasksRangeDateContext}>
+    <TasksDateProvider {...mockTasksRangeDateContext}>
       {children}
-    </TasksDateRangeProvider>
+    </TasksDateProvider>
   );
 
-  const { result } = renderHook(() => useTasksDateRangeContext(), { wrapper });
+  const { result } = renderHook(() => useTasksDateContext(), { wrapper });
 
   act(() => {
     result.current.setDate(mockDate);

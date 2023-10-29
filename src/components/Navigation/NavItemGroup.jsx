@@ -3,23 +3,43 @@ import IconContextProvider from "../../context/IconsContext";
 import { FaHome, FaTasks, FaMoneyBillAlt } from "react-icons/fa";
 import { GoGraph } from "react-icons/go";
 
+const navItems = [
+  {
+    name: "dashboard",
+    url: "/",
+    content: <FaHome />,
+  },
+  {
+    name: "task",
+    url: "/task",
+    content: <FaTasks />,
+  },
+  {
+    name: "finances",
+    url: "/finances",
+    content: <FaMoneyBillAlt />,
+  },
+  {
+    name: "investing",
+    url: "/investing",
+    content: <GoGraph />,
+  },
+];
+
 const NavItemGroup = () => {
   return (
     <IconContextProvider value={{ className: "text-4xl" }}>
-      <div className="mx-auto flex max-w-md justify-between gap-x-2 px-4 text-white md:flex-col md:justify-start md:gap-0 md:px-3">
-        <NavItem>
-          <FaHome />
-        </NavItem>
-        <NavItem isActive>
-          <FaTasks />
-        </NavItem>
-        <NavItem>
-          <FaMoneyBillAlt />
-        </NavItem>
-        <NavItem>
-          <GoGraph />
-        </NavItem>
-      </div>
+      <nav className="mx-auto max-w-md  px-4 text-white md:px-3">
+        <ul className="flex list-none justify-between  gap-x-2 md:flex-col md:justify-start md:gap-0">
+          {navItems.map(({ name, url, content }) => (
+            <li key={name}>
+              <NavItem url={url} title={name}>
+                {content}
+              </NavItem>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </IconContextProvider>
   );
 };

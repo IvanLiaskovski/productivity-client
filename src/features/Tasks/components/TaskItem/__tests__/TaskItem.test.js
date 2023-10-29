@@ -1,5 +1,5 @@
 import { render } from "../../../../../utils/tests/test-util";
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import TaskItem from "../TaskItem";
 
 test("Open edit task view", () => {

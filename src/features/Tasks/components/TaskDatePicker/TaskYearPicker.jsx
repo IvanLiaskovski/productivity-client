@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useTasksDateRangeContext } from "../../context/TasksDateRangeContext";
+import { useTasksDateContext } from "../../context/TasksDateContext";
 
 import DatePicker from "react-datepicker";
 import PickerInput from "./DatePickerFields/PickerInput";
@@ -7,7 +7,7 @@ import { VscTriangleDown } from "react-icons/vsc";
 import "react-datepicker/dist/react-datepicker.css";
 
 const TaskYearPicker = () => {
-  const { date, setDate } = useTasksDateRangeContext();
+  const { date, setDate } = useTasksDateContext();
 
   const pickerSettings = useMemo(() => {
     return {

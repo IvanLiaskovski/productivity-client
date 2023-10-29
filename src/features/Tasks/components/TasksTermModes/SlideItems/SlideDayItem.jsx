@@ -1,9 +1,13 @@
 import PropTypes from "prop-types";
+import { useTasksDateContext } from "../../../context/TasksDateContext";
+import { useMediaQuery } from "react-responsive";
 import { twMerge } from "tailwind-merge";
-import { useTasksDateRangeContext } from "../../context/TasksDateRangeContext";
 
-const SlideItem = ({ day, weekName, isSwipe, isActive }) => {
-  const { date, setDate } = useTasksDateRangeContext();
+const SlideDayItem = ({ day, weekName, itemDate, isSwipe }) => {
+  const { date, setDate } = useTasksDateContext();
+
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
+  const isActive = itemDate === date;
 
   const styles = twMerge(
     `mt-1 flex h-10 w-9 cursor-pointer items-center justify-center rounded-[10px] border-4 border-transparent 
@@ -15,27 +19,26 @@ const SlideItem = ({ day, weekName, isSwipe, isActive }) => {
 
   const changeDate = () => {
     if (isSwipe) return;
-    const newDate = new Date(date);
-    newDate.setDate(day);
-
-    setDate(newDate);
+    setDate(itemDate);
   };
 
   return (
     <div onClick={changeDate}>
-      <div className="task-slider-item flex flex-col items-center">
-        <span className="text-xs">{weekName}</span>
+      <div className="flex flex-col items-center">
+        <span className="text-xs">
+          {isScreenMedium ? weekName : `${String(weekName).slice(0, 3)}.`}
+        </span>
         <div className={styles}>{day}</div>
       </div>
     </div>
   );
 };
 
-SlideItem.propTypes = {
+SlideDayItem.propTypes = {
   day: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   weekName: PropTypes.string,
+  itemDate: PropTypes.string,
   isSwipe: PropTypes.bool,
-  isActive: PropTypes.bool,
 };
 
-export default SlideItem;
+export default SlideDayItem;

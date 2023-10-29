@@ -2,7 +2,7 @@ import { render } from "../../../../../utils/tests/test-util";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import store from "../../../../../app/store";
-import { TasksDateRangeProvider } from "../../../context/TasksDateRangeContext";
+import { TasksDateProvider } from "../../../context/TasksDateContext";
 import TasksHeaderControls from "../TasksHeaderControls";
 
 const mockTasksRangeDateContext = {
@@ -12,9 +12,9 @@ const mockTasksRangeDateContext = {
 
 test("Change tasks mode", async () => {
   render(
-    <TasksDateRangeProvider {...mockTasksRangeDateContext}>
+    <TasksDateProvider {...mockTasksRangeDateContext}>
       <TasksHeaderControls />
-    </TasksDateRangeProvider>,
+    </TasksDateProvider>,
   );
 
   const changeToDayMode = screen.getByRole("button", { name: "Day" });

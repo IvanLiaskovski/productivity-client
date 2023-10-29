@@ -1,16 +1,14 @@
 import { useSelector } from "react-redux";
 import { selectTaskIdsByDate, selectTasksMode } from "../tasksSlice";
-import { useTasksDateRangeContext } from "../context/TasksDateRangeContext";
-import { formatDate } from "../../../helpers/formatDate";
+import moment from "moment";
 
-export function useGetTaskIds() {
-  const { date } = useTasksDateRangeContext();
+export function useGetTaskIds(date) {
   const mode = useSelector(selectTasksMode);
 
   const tasks = useSelector((state) =>
     selectTaskIdsByDate(
       state,
-      mode === "year" ? date.getFullYear() : formatDate(date),
+      mode === "year" ? date.getFullYear() : moment(date).format("YYYY-MM-DD"),
     ),
   );
 

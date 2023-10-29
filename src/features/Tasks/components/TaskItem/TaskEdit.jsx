@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../../tasksSlice";
+import { twMerge } from "tailwind-merge";
 
-import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
+import TaskActions from "./TaskActions";
 
 const TaskEdit = ({
   id,
@@ -13,9 +14,16 @@ const TaskEdit = ({
   setOpen,
 }) => {
   const dispatch = useDispatch();
-
   const [content, setContent] = useState(contentProps);
   const [priority, setPriority] = useState(priorityProps);
+  const [isActionStart, setActionStart] = useState(false);
+
+  const panelWrapperStyles = twMerge(
+    "relative z-30",
+    isActionStart && "opacity-80",
+  );
+
+  const closeEdit = () => setOpen(false);
 
   function saveTask() {
     dispatch(
@@ -26,20 +34,29 @@ const TaskEdit = ({
       }),
     );
 
-    setOpen(false);
+    closeEdit();
   }
 
   return (
-    <AppearAnimation className="h-auto p-2 md:p-4" animationType="fade">
-      <TaskManagementPanel
-        content={content}
-        priority={priority}
-        setContent={setContent}
-        setPriority={setPriority}
-        onSave={saveTask}
-        priorityBackground="dark"
+    <>
+      <div className={panelWrapperStyles}>
+        <TaskManagementPanel
+          content={content}
+          priority={priority}
+          setContent={setContent}
+          setPriority={setPriority}
+          onSave={saveTask}
+          priorityBackground="dark"
+        />
+      </div>
+      <TaskActions
+        taskId={id}
+        isActionStart={isActionStart}
+        setActionStart={setActionStart}
+        onAfterAction={closeEdit}
+        isEdit
       />
-    </AppearAnimation>
+    </>
   );
 };
 

@@ -1,22 +1,16 @@
 import { useState } from "react";
-import { useTasksDateRangeContext } from "../../context/TasksDateRangeContext";
+import { useTasksDateContext } from "../../context/TasksDateContext";
 import { useOpenCreatePanelContext } from "../../../../context/OpenCreatePanelContext";
-import { useDispatch } from "react-redux";
-import { createTask } from "../../tasksSlice";
 import { useTransition, animated } from "react-spring";
 import { useMediaQuery } from "react-responsive";
 import { twMerge } from "tailwind-merge";
 
-import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
+import CreateTask from "../CreateTask/CreateTask";
 
 const CreateTaskPanel = () => {
-  const dispatch = useDispatch();
-
   const { isOpen, setOpen } = useOpenCreatePanelContext();
-  const { date } = useTasksDateRangeContext();
+  const { date } = useTasksDateContext();
 
-  const [content, setContent] = useState("");
-  const [priority, setPriority] = useState("common");
   const [isEmpty, setIsEmpty] = useState(false);
 
   const isMediumScreen = useMediaQuery({ query: "(min-width: 	768px)" });
@@ -35,25 +29,7 @@ const CreateTaskPanel = () => {
     config: { duration: 200 },
   });
 
-  const handleTaskCreation = () => {
-    if (!content) {
-      setIsEmpty(true);
-      setTimeout(() => setIsEmpty(false), 1000);
-
-      return;
-    }
-
-    setOpen(false);
-    setContent("");
-
-    dispatch(
-      createTask({
-        content,
-        priority,
-        date,
-      }),
-    );
-  };
+  const closePanel = () => setOpen(false);
 
   return transition(
     (styles, isVisible) =>
@@ -63,13 +39,10 @@ const CreateTaskPanel = () => {
           style={styles}
         >
           <div className={wrapperStyles} data-testid="create-task-wrapper">
-            <TaskManagementPanel
-              content={content}
-              priority={priority}
-              setContent={setContent}
-              setPriority={setPriority}
-              onSave={handleTaskCreation}
-              textColor="light"
+            <CreateTask
+              date={date}
+              setIsEmpty={setIsEmpty}
+              onAfterSave={closePanel}
             />
           </div>
         </animated.div>

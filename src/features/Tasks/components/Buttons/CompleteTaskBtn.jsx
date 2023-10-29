@@ -1,18 +1,35 @@
 import PropTypes from "prop-types";
+import useCheckTasksURL from "../../hooks/useCheckTasksURL";
 import { useSpring, animated } from "react-spring";
 import useTaskComplete from "../../hooks/useTaskComplete";
-
 import TaskActionBtn from "./TaskActionBtn";
 import { MdDone } from "react-icons/md";
+import { twMerge } from "tailwind-merge";
 
-const CompleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
+const CompleteTaskBtn = ({
+  taskId,
+  startAction,
+  onAfterAction,
+  isActionStart,
+}) => {
   const completeTask = useTaskComplete(taskId);
+  const isWeek = useCheckTasksURL("week");
+
+  const styles = twMerge(
+    "relative -z-10 rounded-full bg-green-200 transition-colors duration-150 hover:bg-green-400",
+    isWeek ? "h-4 w-4" : "h-6 w-6",
+  );
+
+  const handleCompleteAction = () => {
+    completeTask();
+    onAfterAction();
+  };
 
   const [springStyles, springApi] = useSpring(() => ({
     from: { transform: "scale(1)" },
     reset: true,
     onStart: startAction,
-    onRest: completeTask,
+    onRest: handleCompleteAction,
   }));
 
   const handleCompleteTask = () => {
@@ -23,7 +40,7 @@ const CompleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
 
   return (
     <animated.div
-      className="relative -z-10 h-6 w-6 rounded-full bg-green-200 transition-colors duration-150 hover:bg-green-400"
+      className={styles}
       style={springStyles}
       data-testid="animation-wrapper"
     >
@@ -37,6 +54,7 @@ const CompleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
 CompleteTaskBtn.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   startAction: PropTypes.func,
+  onAfterAction: PropTypes.func,
   isActionStart: PropTypes.bool,
 };
 

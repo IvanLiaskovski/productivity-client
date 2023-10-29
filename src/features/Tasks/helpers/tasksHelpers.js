@@ -1,4 +1,4 @@
-import { formatDate } from "../../../helpers/formatDate";
+import moment from "moment/moment";
 import { PRIORITY_PRECIOUS } from "../../../data/priorityData";
 
 const getWeekName = (date) => {
@@ -21,7 +21,7 @@ export const createMonthDaysArray = (date) => {
       weekName: getWeekName(currentDate),
       day: currentDate.getDate(),
       year: currentDate.getFullYear(),
-      date: formatDate(currentDate),
+      date: moment(currentDate).format("YYYY-MM-DD"),
     };
 
     datesArray.push(dateObject);
@@ -30,6 +30,27 @@ export const createMonthDaysArray = (date) => {
 
   return datesArray;
 };
+
+export function createWeekDatesRange(date) {
+  const currentDate = moment(date);
+  const datesArray = [];
+
+  const startOfWeek = currentDate.clone().startOf("isoWeek").add(-1, "weeks");
+  const endOfWeek = currentDate.clone().endOf("isoWeek").add(1, "weeks");
+
+  while (startOfWeek.isSameOrBefore(endOfWeek, "day")) {
+    const dateItem = {
+      weekName: startOfWeek.clone().format("dddd"),
+      day: startOfWeek.clone().date(),
+      year: startOfWeek.clone().year(),
+      itemDate: startOfWeek.clone().format("YYYY-MM-DD"),
+    };
+    datesArray.push(dateItem);
+    startOfWeek.add(1, "day");
+  }
+
+  return datesArray;
+}
 
 export function sortTasks(tasks) {
   return tasks
