@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useGetTaskIds } from "../../hooks/useGetTaskIds";
 import { useTransition, animated } from "react-spring";
 import TaskItem from "../TaskItem/TaskItem";
+import TaskTooltip from "../TaskTooltip/TaskTooltip";
 
 const TasksDayList = ({ tasksDate }) => {
   const tasks = useGetTaskIds(tasksDate);
@@ -35,22 +36,21 @@ const TasksDayList = ({ tasksDate }) => {
   });
 
   return (
-    <div className="scrollbar-hide max-h-[60vh] w-full overflow-x-auto">
+    <div className="scrollbar-hide max-h-[60vh] w-full overflow-x-auto overflow-y-visible">
       {transitions(
         (styles, taskId) =>
           taskId && (
-            <animated.div
-              className="h-fit overflow-hidden"
-              style={styles}
-              key={taskId}
-            >
-              <TaskItem
-                taskId={taskId}
-                key={taskId}
-                isOpen={editableTaskId === taskId}
-                setOpen={setEditableTaskId}
-              />
-            </animated.div>
+            <div key={taskId}>
+              <animated.div className="h-fit" style={styles}>
+                <TaskItem
+                  taskId={taskId}
+                  key={taskId}
+                  isOpen={editableTaskId === taskId}
+                  setOpen={setEditableTaskId}
+                />
+              </animated.div>
+              {editableTaskId !== taskId && <TaskTooltip taskId={taskId} />}
+            </div>
           ),
       )}
     </div>

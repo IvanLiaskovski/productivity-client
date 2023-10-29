@@ -4,8 +4,10 @@ import useCheckTasksURL from "../../hooks/useCheckTasksURL";
 import { useMediaQuery } from "react-responsive";
 import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
 
-const TaskContent = ({ content = "..." }) => {
+const TaskContent = ({ taskId, content = "..." }) => {
   const isWeek = useCheckTasksURL("week");
+  const isScreenSmall = useMediaQuery({ query: "(max-width: 767px)" });
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
   const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
 
   const styles = twMerge(
@@ -22,14 +24,29 @@ const TaskContent = ({ content = "..." }) => {
       ? `${String(content).slice(0, 172)}...`
       : content;
 
+  const hideTultip =
+    (content === contentValue && isScreenMedium) || isScreenSmall;
+
   return (
     <AppearAnimation className="relative z-10" animationType="slideDown" reset>
-      <pre className={styles}>{contentValue}</pre>
+      <pre
+        className={styles}
+        data-tooltip-id={`tooltip-${taskId}`}
+        data-tooltip-content={content}
+        data-tooltip-place="bottom-end"
+        data-tooltip-position-strategy="absolute"
+        data-tooltip-float={true}
+        data-tooltip-hidden={hideTultip}
+        data-tooltip-delay-show={500}
+      >
+        {contentValue}
+      </pre>
     </AppearAnimation>
   );
 };
 
 TaskContent.propTypes = {
+  taskId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   content: PropTypes.string,
 };
 
