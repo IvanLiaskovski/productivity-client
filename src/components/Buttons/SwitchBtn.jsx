@@ -8,13 +8,13 @@ const SwitchBtn = ({
   className,
   children,
 }) => {
-  const switchCircleWrapperStyles = twMerge(
+  const switchBallWrapperStyles = twMerge(
     "w-full h-full transition-all",
     isActive ? "translate-x-[calc(100%-16px)]" : "",
     className,
   );
 
-  const switchCircleStyles = twMerge(
+  const switchBallStyles = twMerge(
     "duration-400 absolute h-4 w-4 rounded-full transition-all",
     isActive ? "bg-blue-300" : "bg-block",
     circleClassName,
@@ -28,11 +28,11 @@ const SwitchBtn = ({
         className=" relative ml-2 flex h-6 w-11 rounded-xl bg-bgBottom p-1"
       >
         <div
-          className={switchCircleWrapperStyles}
+          className={switchBallWrapperStyles}
           data-testid="switch-btn-wrapper"
         >
           <div
-            className={switchCircleStyles}
+            className={gswitchBallStyles}
             data-testid="switch-btn-circle"
           ></div>
         </div>
