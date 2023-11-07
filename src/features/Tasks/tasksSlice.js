@@ -15,7 +15,8 @@ const initialTasks = localStorage.getItem("productivityTasks")?.length
 
 const initialState = tasksAdapter.getInitialState({
   ...initialTasks,
-  mode: "day",
+  history: [],
+  lastAction: {},
   onlyActive: false,
 });
 
@@ -43,7 +44,6 @@ const tasksSlice = createSlice({
     },
     updateTask: tasksAdapter.upsertOne,
     removeTask: tasksAdapter.removeOne,
-    setTasksMode: (state, action) => ({ ...state, mode: action.payload }),
     setTasksOnlyActive: (state, action) => ({
       ...state,
       onlyActive: action.payload,
@@ -53,7 +53,6 @@ const tasksSlice = createSlice({
 
 //Selectors
 export const selectTasks = (state) => state.tasks;
-export const selectTasksMode = (state) => state.tasks.mode;
 export const selectTasksOnlyActive = (state) => state.tasks.onlyActive;
 
 export const selectTaskIdsByDate = createSelector(
@@ -100,7 +99,6 @@ export const {
   createTask,
   updateTask,
   removeTask,
-  setTasksMode,
   setTasksOnlyActive,
   setTaskDate,
 } = tasksSlice.actions;
