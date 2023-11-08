@@ -2,11 +2,10 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../../tasksSlice";
+import { twMerge } from "tailwind-merge";
 
-import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
 import TaskActions from "./TaskActions";
-import { twMerge } from "tailwind-merge";
 
 const TaskEdit = ({
   id,
@@ -18,10 +17,13 @@ const TaskEdit = ({
   const [content, setContent] = useState(contentProps);
   const [priority, setPriority] = useState(priorityProps);
   const [isActionStart, setActionStart] = useState(false);
+
   const panelWrapperStyles = twMerge(
     "relative z-30",
     isActionStart && "opacity-80",
   );
+
+  const closeEdit = () => setOpen(false);
 
   function saveTask() {
     dispatch(
@@ -32,14 +34,11 @@ const TaskEdit = ({
       }),
     );
 
-    setOpen(false);
+    closeEdit();
   }
 
   return (
-    <AppearAnimation
-      className="group/actions relative h-auto p-2 md:p-4"
-      animationType="fade"
-    >
+    <>
       <div className={panelWrapperStyles}>
         <TaskManagementPanel
           content={content}
@@ -54,9 +53,10 @@ const TaskEdit = ({
         taskId={id}
         isActionStart={isActionStart}
         setActionStart={setActionStart}
+        onAfterAction={closeEdit}
         isEdit
       />
-    </AppearAnimation>
+    </>
   );
 };
 

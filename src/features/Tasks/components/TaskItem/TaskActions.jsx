@@ -6,7 +6,13 @@ import { useMediaQuery } from "react-responsive";
 import CompleteTaskBtn from "../Buttons/CompleteTaskBtn";
 import DeleteTaskBtn from "../Buttons/DeleteTaskBtn";
 
-const TaskActions = ({ taskId, isActionStart, setActionStart, isEdit }) => {
+const TaskActions = ({
+  taskId,
+  isActionStart,
+  setActionStart,
+  onAfterAction,
+  isEdit,
+}) => {
   const isScreenSmall = useMediaQuery({ query: "(max-width: 768px)" });
   const isAlwaysVisible = isScreenSmall && isEdit;
   const isWeek = useCheckTasksURL("week");
@@ -29,6 +35,7 @@ const TaskActions = ({ taskId, isActionStart, setActionStart, isEdit }) => {
       <CompleteTaskBtn
         taskId={taskId}
         startAction={handleStartAction}
+        onAfterAction={onAfterAction}
         isActionStart={isActionStart}
       />
       <DeleteTaskBtn
@@ -44,6 +51,7 @@ TaskActions.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isActionStart: PropTypes.bool,
   setActionStart: PropTypes.func,
+  onAfterAction: PropTypes.func,
   isEdit: PropTypes.bool,
 };
 

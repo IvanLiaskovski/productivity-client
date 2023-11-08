@@ -2,10 +2,12 @@ import { useMemo } from "react";
 import { useGetTasks } from "../../hooks/useGetTasks";
 import { useMediaQuery } from "react-responsive";
 import { useSpring, animated } from "react-spring";
+import { useTasksDateContext } from "../../context/TasksDateContext";
 import progressCalculations from "../../../../helpers/progressCalculations";
 
 const ProductivityBar = () => {
-  const tasks = useGetTasks();
+  const { date } = useTasksDateContext();
+  const tasks = useGetTasks(date);
   const tasksPercent = useMemo(() => progressCalculations(tasks), [tasks]);
   const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
   const tooltipRightPosition =

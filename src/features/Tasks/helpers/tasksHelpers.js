@@ -31,7 +31,7 @@ export const createMonthDaysArray = (date) => {
   return datesArray;
 };
 
-export function createWeekDatesRange(date) {
+export function createWeekDatesRange(date, onlyDates) {
   const currentDate = moment(date);
   const datesArray = [];
 
@@ -39,12 +39,17 @@ export function createWeekDatesRange(date) {
   const endOfWeek = currentDate.clone().endOf("isoWeek").add(1, "weeks");
 
   while (startOfWeek.isSameOrBefore(endOfWeek, "day")) {
-    const dateItem = {
-      weekName: startOfWeek.clone().format("dddd"),
-      day: startOfWeek.clone().date(),
-      year: startOfWeek.clone().year(),
-      itemDate: startOfWeek.clone().format("YYYY-MM-DD"),
-    };
+    let dateItem;
+    if (onlyDates) {
+      dateItem = startOfWeek.clone().format("YYYY-MM-DD");
+    } else {
+      dateItem = {
+        weekName: startOfWeek.clone().format("dddd"),
+        day: startOfWeek.clone().date(),
+        year: startOfWeek.clone().year(),
+        itemDate: startOfWeek.clone().format("YYYY-MM-DD"),
+      };
+    }
     datesArray.push(dateItem);
     startOfWeek.add(1, "day");
   }
