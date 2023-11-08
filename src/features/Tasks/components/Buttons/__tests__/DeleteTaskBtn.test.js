@@ -52,6 +52,8 @@ test("Verify styling changes and startAction call on delete button click", async
 
   await userEvent.click(deleteBtn);
 
-  expect(mockStartAction).toBeCalled();
-  waitFor(() => expect(wrapper).toHaveStyle("transform: scale(99)"));
+  waitFor(() => {
+    expect(mockStartAction).toBeCalled();
+    expect(wrapper).toHaveStyle("transform: scale(99)");
+  });
 });

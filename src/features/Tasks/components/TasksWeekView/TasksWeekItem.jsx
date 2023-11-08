@@ -40,7 +40,7 @@ const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
             date={tasksDate}
             onAfterSave={setOpen}
             priorityBackground="dark"
-            textColor="dark"
+            mode="dark"
           />
         </TaskModalLayout>
       )}
