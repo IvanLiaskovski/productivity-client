@@ -1,7 +1,7 @@
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import TasksWeekItemGroup from "./TasksWeekItemGroup";
-import TasksWeekSlider from "../TasksTermModes/TasksWeekSlider";
-import SlideWeekItem from "../TasksTermModes/SlideItems/SlideWeekItem";
+import TasksWeekSlider from "../../components/TasksWeekSlider/TasksWeekSlider";
+import SlideWeekItem from "../../components/TasksWeekSlider/SlideItems/SlideWeekItem";
 
 const TasksWeekView = () => {
   const { date } = useTasksDateContext();

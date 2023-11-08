@@ -6,9 +6,9 @@ import { useTransition, animated } from "react-spring";
 import { useMediaQuery } from "react-responsive";
 import { twMerge } from "tailwind-merge";
 
-import CreateTask from "../CreateTask/CreateTask";
+import TaskCreation from "../TaskCreation/TaskCreation";
 
-const CreateTaskPanel = ({ taskType = "day" }) => {
+const TaskCreationPanel = ({ taskType = "day" }) => {
   const { isOpen, setOpen } = useOpenCreatePanelContext();
   const { date } = useTasksDateContext();
 
@@ -40,7 +40,7 @@ const CreateTaskPanel = ({ taskType = "day" }) => {
           style={styles}
         >
           <div className={wrapperStyles} data-testid="create-task-wrapper">
-            <CreateTask
+            <TaskCreation
               date={date}
               type={taskType}
               setIsEmpty={setIsEmpty}
@@ -52,8 +52,8 @@ const CreateTaskPanel = ({ taskType = "day" }) => {
   );
 };
 
-CreateTaskPanel.propTypes = {
+TaskCreationPanel.propTypes = {
   taskType: PropTypes.oneOf(["day", "year"]),
 };
 
-export default CreateTaskPanel;
+export default TaskCreationPanel;

@@ -15,7 +15,7 @@ import LeftArrow from "./Arrows/LeftArrow";
 
 import "slick-carousel/slick/slick.css";
 
-const TasksWeekSlider = ({ SlideItem }) => {
+const TasksTermSlider = ({ SlideItem }) => {
   const { isManualChange, setManualChange } = useManualDateChangeContext();
   const { datesRange } = useTasksDatesRangeContext();
   const { setDate } = useTasksDateContext();
@@ -103,8 +103,8 @@ const TasksWeekSlider = ({ SlideItem }) => {
   );
 };
 
-TasksWeekSlider.propTypes = {
+TasksTermSlider.propTypes = {
   SlideItem: PropTypes.elementType,
 };
 
-export default TasksWeekSlider;
+export default TasksTermSlider;

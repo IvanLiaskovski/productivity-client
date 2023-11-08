@@ -1,8 +1,8 @@
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import TasksDayList from "./TasksDayList";
-import CreateTaskPanel from "../CreateTaskPanel/CreateTaskPanel";
-import TasksWeekSlider from "../TasksTermModes/TasksWeekSlider";
-import SlideDayItem from "../TasksTermModes/SlideItems/SlideDayItem";
+import TaskCreationPanel from "../../components/TaskCreationPanel/TaskCreationPanel";
+import TasksWeekSlider from "../../components/TasksWeekSlider/TasksWeekSlider";
+import SlideDayItem from "../../components/TasksWeekSlider/SlideItems/SlideDayItem";
 
 function TasksDayView() {
   const { date } = useTasksDateContext();
@@ -11,7 +11,7 @@ function TasksDayView() {
     <>
       <TasksWeekSlider SlideItem={SlideDayItem} />
       <TasksDayList tasksDate={date} />
-      <CreateTaskPanel />
+      <TaskCreationPanel />
     </>
   );
 }

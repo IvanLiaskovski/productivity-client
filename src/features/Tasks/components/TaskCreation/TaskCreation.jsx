@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { createTask } from "../../tasksSlice";
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
 
-const CreateTask = ({
+const TaskCreation = ({
   date,
   type = "day",
   mode = "light",
@@ -56,13 +56,13 @@ const CreateTask = ({
   );
 };
 
-CreateTask.propTypes = {
+TaskCreation.propTypes = {
   date: PropTypes.string,
   type: PropTypes.oneOf(["day", "year"]),
   mode: PropTypes.oneOf(["light", "dark"]),
   priorityBackground: PropTypes.oneOf(["light", "dark"]),
-  setIsEmpty: PropTypes.func.isRequired,
+  setIsEmpty: PropTypes.func,
   onAfterSave: PropTypes.func,
 };
 
-export default CreateTask;
+export default TaskCreation;

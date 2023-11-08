@@ -1,13 +1,13 @@
 import { render, screen } from "../../../../../utils/tests/test-util";
 import userEvent from "@testing-library/user-event";
-import CreateTaskModal from "../CreateTaskModal";
+import TaskCreationModal from "../TaskCreationModal";
 
 describe("CreateTaskModal tests", () => {
   test("Upon double-clicking, it should display the child elements and open the 'Create Task' modal", async () => {
     render(
-      <CreateTaskModal>
+      <TaskCreationModal>
         <div className="h-96 w-96" data-testid="create-modal-child"></div>
-      </CreateTaskModal>,
+      </TaskCreationModal>,
     );
 
     const child = screen.getByTestId("create-modal-child");

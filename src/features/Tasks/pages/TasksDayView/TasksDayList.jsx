@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useGetTaskIds } from "../../hooks/useGetTaskIds";
 import { useTransition, animated } from "react-spring";
-import TaskItem from "../TaskItem/TaskItem";
-import TaskDraggable from "../TaskItem/TaskDraggable";
-import TaskTooltip from "../TaskTooltip/TaskTooltip";
+import TaskItem from "../../components/TaskItem/TaskItem";
+import TaskDraggable from "../../components/TaskItem/TaskDraggable";
+import TaskTooltip from "../../components/TaskTooltip/TaskTooltip";
 import { twMerge } from "tailwind-merge";
 
 const TasksDayList = ({

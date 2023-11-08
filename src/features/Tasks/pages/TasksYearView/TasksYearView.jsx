@@ -1,13 +1,13 @@
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import TasksDayList from "../TasksDayView/TasksDayList";
-import CreateTaskPanel from "../CreateTaskPanel/CreateTaskPanel";
+import TaskCreationPanel from "../../components/TaskCreationPanel/TaskCreationPanel";
 const TasksYearView = () => {
   const { date } = useTasksDateContext();
 
   return (
     <>
       <TasksDayList tasksType="year" tasksDate={date} />
-      <CreateTaskPanel taskType="year" />
+      <TaskCreationPanel taskType="year" />
     </>
   );
 };

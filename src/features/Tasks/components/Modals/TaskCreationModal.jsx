@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import TaskModalLayout from "../Layouts/TaskModalLayout";
-import CreateTask from "../CreateTask/CreateTask";
+import TaskCreation from "../TaskCreation/TaskCreation";
 import { twMerge } from "tailwind-merge";
 
-const CreateTaskModal = ({ date, className, children }) => {
+const TaskCreationModal = ({ date, className, children }) => {
   const [isOpen, setOpen] = useState();
   const styles = twMerge("h-full w-full", className);
 
@@ -23,7 +23,7 @@ const CreateTaskModal = ({ date, className, children }) => {
       {children}
       {isOpen && (
         <TaskModalLayout onClose={closeCreationModal}>
-          <CreateTask
+          <TaskCreation
             date={date}
             onAfterSave={setOpen}
             priorityBackground="dark"
@@ -35,7 +35,7 @@ const CreateTaskModal = ({ date, className, children }) => {
   );
 };
 
-CreateTaskModal.propTypes = {
+TaskCreationModal.propTypes = {
   date: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
@@ -44,4 +44,4 @@ CreateTaskModal.propTypes = {
   ]),
 };
 
-export default CreateTaskModal;
+export default TaskCreationModal;

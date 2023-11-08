@@ -1,10 +1,10 @@
 import { useMediaQuery } from "react-responsive";
 import { Routes, Route, Navigate } from "react-router";
 
-import TasksDayView from "./components/TasksDayView/TasksDayView";
-import TasksWeekView from "./components/TasksWeekView/TasksWeekView";
-import TasksMonthView from "./components/TasksMonthView/TasksMonthView";
-import TasksYearView from "./components/TasksYearView/TasksYearView";
+import TasksDayView from "./pages/TasksDayView/TasksDayView";
+import TasksWeekView from "./pages/TasksWeekView/TasksWeekView";
+import TasksMonthView from "./pages/TasksMonthView/TasksMonthView";
+import TasksYearView from "./pages/TasksYearView/TasksYearView";
 
 const TasksRoutes = () => {
   const isMediumScreen = useMediaQuery({ query: "(min-width: 768px)" });

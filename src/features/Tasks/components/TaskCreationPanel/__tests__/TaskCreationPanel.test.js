@@ -1,7 +1,7 @@
 import { render } from "../../../../../utils/tests/test-util";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import CreateTaskPanel from "../CreateTaskPanel";
+import TaskCreationPanel from "../TaskCreationPanel";
 import OpenCreatePanelProvider from "../../../../../context/OpenCreatePanelContext";
 import { TasksDateProvider } from "../../../context/TasksDateContext";
 import store from "../../../../../app/store";
@@ -22,7 +22,7 @@ test("Create a task with a specific priority", async () => {
   render(
     <TasksDateProvider>
       <OpenCreatePanelProvider {...mockOpenPanelContext}>
-        <CreateTaskPanel />
+        <TaskCreationPanel />
       </OpenCreatePanelProvider>
     </TasksDateProvider>,
   );
@@ -44,7 +44,7 @@ test("Create empty task warning", async () => {
   render(
     <TasksDateProvider>
       <OpenCreatePanelProvider {...mockOpenPanelContext}>
-        <CreateTaskPanel />
+        <TaskCreationPanel />
       </OpenCreatePanelProvider>
     </TasksDateProvider>,
   );

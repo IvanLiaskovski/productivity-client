@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import TasksDayList from "../TasksDayView/TasksDayList";
 import CreateBtn from "../../../../components/Buttons/CreateBtn";
 import { FaPlus } from "react-icons/fa";
-import CreateTaskModal from "../Modals/CreateTaskModal";
+import TaskCreationModal from "../../components/Modals/TaskCreationModal";
 
 const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
   const { isOver, setNodeRef } = useDroppable({ id: tasksDate });
@@ -17,12 +17,12 @@ const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
 
   return (
     <div ref={setNodeRef} className={styles}>
-      <CreateTaskModal date={tasksDate}>
+      <TaskCreationModal date={tasksDate}>
         <CreateBtn className="mb-2 hidden w-full rounded-lg border-4 py-1 text-blue-100">
           <FaPlus />
         </CreateBtn>
         <TasksDayList tasksDate={tasksDate} allowTooltip={allowTooltip} />
-      </CreateTaskModal>
+      </TaskCreationModal>
     </div>
   );
 };
