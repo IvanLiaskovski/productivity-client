@@ -3,9 +3,10 @@ import { useState } from "react";
 import { useGetTaskIds } from "../../hooks/useGetTaskIds";
 import { useTransition, animated } from "react-spring";
 import TaskItem from "../TaskItem/TaskItem";
+import TaskDraggable from "../TaskItem/TaskDraggable";
 import TaskTooltip from "../TaskTooltip/TaskTooltip";
 
-const TasksDayList = ({ tasksDate }) => {
+const TasksDayList = ({ tasksDate, allowTooltip = true }) => {
   const tasks = useGetTaskIds(tasksDate);
   const [editableTaskId, setEditableTaskId] = useState("");
 
@@ -42,14 +43,17 @@ const TasksDayList = ({ tasksDate }) => {
           taskId && (
             <div key={taskId}>
               <animated.div className="h-fit" style={styles}>
-                <TaskItem
-                  taskId={taskId}
-                  key={taskId}
-                  isOpen={editableTaskId === taskId}
-                  setOpen={setEditableTaskId}
-                />
+                <TaskDraggable taskId={taskId}>
+                  <TaskItem
+                    taskId={taskId}
+                    isOpen={editableTaskId === taskId}
+                    setOpen={setEditableTaskId}
+                  />
+                </TaskDraggable>
               </animated.div>
-              {editableTaskId !== taskId && <TaskTooltip taskId={taskId} />}
+              {editableTaskId !== taskId && allowTooltip && (
+                <TaskTooltip taskId={taskId} />
+              )}
             </div>
           ),
       )}
@@ -59,6 +63,7 @@ const TasksDayList = ({ tasksDate }) => {
 
 TasksDayList.propTypes = {
   tasksDate: PropTypes.string,
+  allowTooltip: PropTypes.bool,
 };
 
 const countAnimationDelay = (index) => (index * 20 < 800 ? index * 20 : 800);
