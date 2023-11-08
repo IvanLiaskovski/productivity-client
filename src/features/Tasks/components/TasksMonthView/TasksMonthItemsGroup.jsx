@@ -8,11 +8,12 @@ import TasksDragAndDropContext from "../../context/TasksDragAndDropContext";
 
 const TasksMonthItemsGroup = () => {
   const { date } = useTasksDateContext();
+  const [activeTaskId, setActiveTaskId] = useState(null);
+
   const monthDays = useMemo(
     () => createMonthDatesRange(moment(date).format("YYYY-MM-DD")),
     [date],
   );
-  const [activeTaskId, setActiveTaskId] = useState(null);
 
   const currentMonth = moment(date).format("MMMM");
   const allowTooltip = !activeTaskId;

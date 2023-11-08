@@ -55,6 +55,28 @@ const TasksWeekSlider = ({ SlideItem }) => {
     }
   }
 
+  function handleBeforeChange() {
+    if (isSettingDate) {
+      setIsSettingDate(false);
+      return;
+    }
+    setIsSwipe(true);
+
+    clearTimeout(timeOut);
+    timeOut = setTimeout(() => {
+      setIsSwipe(false);
+    }, 1000);
+  }
+
+  function handleAfterCahnge(index) {
+    setIsSwipe(false);
+    if (isManualChange) {
+      setManualChange(false);
+      return;
+    }
+    setDate(sliderRef.current.props.children[index].key);
+  }
+
   return (
     <AppearAnimation animationType="fade">
       <Slider
@@ -63,27 +85,8 @@ const TasksWeekSlider = ({ SlideItem }) => {
         slidesToShow={7}
         slidesToScroll={7}
         initialSlide={7}
-        beforeChange={() => {
-          if (isSettingDate) {
-            setIsSettingDate(false);
-            return;
-          }
-
-          setIsSwipe(true);
-
-          clearTimeout(timeOut);
-          timeOut = setTimeout(() => {
-            setIsSwipe(false);
-          }, 1000);
-        }}
-        afterChange={(index) => {
-          setIsSwipe(false);
-          if (isManualChange) {
-            setManualChange(false);
-            return;
-          }
-          setDate(sliderRef.current.props.children[index].key);
-        }}
+        beforeChange={handleBeforeChange}
+        afterChange={handleAfterCahnge}
         nextArrow={<RightArrow sliderRef={sliderRef} isSwipe={isSwipe} />}
         prevArrow={<LeftArrow sliderRef={sliderRef} isSwipe={isSwipe} />}
         onSwipe={swipeHandler}

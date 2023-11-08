@@ -61,7 +61,7 @@ CreateTask.propTypes = {
   type: PropTypes.oneOf(["day", "year"]),
   mode: PropTypes.oneOf(["light", "dark"]),
   priorityBackground: PropTypes.oneOf(["light", "dark"]),
-  setIsEmpty: PropTypes.func,
+  setIsEmpty: PropTypes.func.isRequired,
   onAfterSave: PropTypes.func,
 };
 

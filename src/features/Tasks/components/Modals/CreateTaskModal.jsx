@@ -8,21 +8,21 @@ const CreateTaskModal = ({ date, className, children }) => {
   const [isOpen, setOpen] = useState();
   const styles = twMerge("h-full w-full", className);
 
-  const closeCreateModal = (e) => {
+  const closeCreationModal = (e) => {
     if (!e.target.closest(".content")) {
       setOpen(false);
     }
   };
 
-  const openCreateModal = () => {
+  const openCreationModal = () => {
     setOpen(true);
   };
 
   return (
-    <div className={styles} onDoubleClick={openCreateModal}>
+    <div className={styles} onDoubleClick={openCreationModal}>
       {children}
       {isOpen && (
-        <TaskModalLayout onClose={closeCreateModal}>
+        <TaskModalLayout onClose={closeCreationModal}>
           <CreateTask
             date={date}
             onAfterSave={setOpen}

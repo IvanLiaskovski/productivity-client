@@ -32,7 +32,7 @@ const SwitchBtn = ({
           data-testid="switch-btn-wrapper"
         >
           <div
-            className={gswitchBallStyles}
+            className={switchBallStyles}
             data-testid="switch-btn-circle"
           ></div>
         </div>

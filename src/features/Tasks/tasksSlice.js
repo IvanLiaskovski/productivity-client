@@ -15,8 +15,6 @@ const initialTasks = localStorage.getItem("productivityTasks")?.length
 
 const initialState = tasksAdapter.getInitialState({
   ...initialTasks,
-  history: [],
-  lastAction: {},
   onlyActive: false,
 });
 

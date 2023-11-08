@@ -9,10 +9,10 @@ const MoveTasksDateBtnGroup = () => {
 
   return (
     <div>
-      <MoveTasksDateBtn moveBy={1} moveByUnit={unit}>
+      <MoveTasksDateBtn moveBy={-1} moveByUnit={unit}>
         <FaChevronLeft />
       </MoveTasksDateBtn>
-      <MoveTasksDateBtn moveBy={-1} moveByUnit={unit}>
+      <MoveTasksDateBtn moveBy={1} moveByUnit={unit}>
         <FaChevronRight />
       </MoveTasksDateBtn>
     </div>

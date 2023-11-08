@@ -9,7 +9,7 @@ const ProductivityBar = () => {
   const { date } = useTasksDateContext();
   const tasks = useGetTasks(date);
   const tasksPercent = useMemo(() => progressCalculations(tasks), [tasks]);
-  const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 724px)" });
   const tooltipRightPosition =
     tasksPercent > 98 ? "34px" : tasksPercent < 5 ? "-34px" : 0;
 
@@ -27,15 +27,15 @@ const ProductivityBar = () => {
   });
 
   return (
-    <div className="left-[110px] mt-2 w-full lg:fixed lg:top-0 lg:mt-0 lg:w-[calc(100%_-_110px)]">
-      <h3 className="text-white lg:hidden">Productivity:</h3>
+    <div className="left-[110px] mt-2 w-full md:fixed md:top-0 md:mt-0 md:w-[calc(100%_-_110px)]">
+      <h3 className="text-white md:hidden">Productivity:</h3>
       <div className="mt-1 h-2 w-full rounded-xl bg-bgBottom md:mt-0 lg:rounded-none">
         <animated.div
           style={springStyles}
           className="relative h-full w-1/2 overflow-visible rounded bg-blue-500 lg:rounded-none"
           data-testid="productivity-line"
         >
-          {isScreenLarge && (
+          {isScreenMedium && (
             <animated.div
               style={{
                 right: tooltipRightPosition,

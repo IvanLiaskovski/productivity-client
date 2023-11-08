@@ -1,13 +1,14 @@
 import { renderHook, act } from "@testing-library/react";
 import { TasksDateProvider } from "../TasksDateContext";
 import { useTasksDateContext } from "../TasksDateContext";
+import moment from "moment";
 
 const mockTasksRangeDateContext = {
   date: new Date(),
   setDate: jest.fn((newDate) => (mockTasksRangeDateContext.date = newDate)),
 };
 
-const mockDate = "2023-07-12";
+const mockDate = moment().format("YYYY-MM-DD");
 
 test("TasksDateRangeProvider - set tasks range date", () => {
   const wrapper = ({ children }) => (

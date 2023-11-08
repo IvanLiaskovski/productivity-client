@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../../tasksSlice";
 import { twMerge } from "tailwind-merge";
+import { PRIORITY_ARR } from "../../../../data/priorityData";
 
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
 import TaskActions from "./TaskActions";
@@ -74,7 +75,7 @@ TaskEdit.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   content: PropTypes.string,
   description: PropTypes.string,
-  priority: PropTypes.string,
+  priority: PropTypes.oneOf(PRIORITY_ARR),
   setOpen: PropTypes.func,
 };
 

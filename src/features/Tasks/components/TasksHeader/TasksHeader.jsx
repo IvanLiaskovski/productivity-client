@@ -6,13 +6,18 @@ import ActiveTasksSwitch from "../Buttons/ActiveTasksSwitch";
 import MoveTasksDateBtnGroup from "./MoveTasksDateBtnGroup";
 
 const TasksHeader = () => {
-  const isScreenNotLarge = useMediaQuery({ query: "(max-width: 1024px)" });
+  const isScreenNotMedium = useMediaQuery({ query: "(max-width: 724px)" });
+  const isMonthOrYear = useCheckTasksURL(["month", "year"]);
 
   return (
-    <div className="mt-10 flex justify-between">
+    <div className="mt-10 flex flex-col justify-between lg:flex-row">
       <TasksHeaderControls />
       <ProductivityBar />
-      {isScreenNotLarge ? <ActiveTasksSwitch /> : <MoveTasksDateBtnGroup />}
+      {isScreenNotMedium ? (
+        <ActiveTasksSwitch />
+      ) : isMonthOrYear ? (
+        <MoveTasksDateBtnGroup />
+      ) : null}
     </div>
   );
 };

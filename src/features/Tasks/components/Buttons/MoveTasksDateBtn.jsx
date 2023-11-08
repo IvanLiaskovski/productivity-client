@@ -22,8 +22,8 @@ const MoveTasksDateBtn = ({ moveBy, moveByUnit, className, children }) => {
 };
 
 MoveTasksDateBtn.propTypes = {
-  moveBy: PropTypes.number,
-  moveByUnit: PropTypes.oneOf(["days", "weeks", "months", "years"]).isRequired,
+  moveBy: PropTypes.number.isRequired,
+  moveByUnit: PropTypes.oneOf(["days", "weeks", "months", "years"]),
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
