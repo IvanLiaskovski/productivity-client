@@ -6,7 +6,7 @@ import { PRIORITY_COLORS } from "../../../../data/priorityData";
 const PriorityMark = ({
   priority = "common",
   isCompleted,
-  circleClassName,
+  pulseClassName,
   className,
 }) => {
   const isMonthOrWeek = useCheckTasksURL(["month", "week"]);
@@ -29,7 +29,7 @@ const PriorityMark = ({
     "relative inline-flex h-1.5 w-1.5 lg:h-3 lg:w-3 rounded-full",
     isMonthOrWeek ? "lg:h-2 lg:w-2" : "h-3 w-3",
     PRIORITY_COLORS.bg[priority],
-    circleClassName,
+    pulseClassName,
   );
 
   return (
@@ -43,7 +43,7 @@ const PriorityMark = ({
 PriorityMark.propTypes = {
   priority: PropTypes.oneOf(Object.keys(PRIORITY_COLORS.bg)),
   isCompleted: PropTypes.bool,
-  circleClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  pulseClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.string,
 };
 

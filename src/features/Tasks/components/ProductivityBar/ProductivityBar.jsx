@@ -8,8 +8,9 @@ import progressCalculations from "../../../../helpers/progressCalculations";
 const ProductivityBar = () => {
   const { date } = useTasksDateContext();
   const tasks = useGetTasks(date);
-  const tasksPercent = useMemo(() => progressCalculations(tasks), [tasks]);
   const isScreenMedium = useMediaQuery({ query: "(min-width: 724px)" });
+
+  const tasksPercent = useMemo(() => progressCalculations(tasks), [tasks]);
   const tooltipRightPosition =
     tasksPercent > 98 ? "34px" : tasksPercent < 5 ? "-34px" : 0;
 

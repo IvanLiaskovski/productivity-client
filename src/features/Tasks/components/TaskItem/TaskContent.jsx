@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
+import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 import useCheckTasksURL from "../../hooks/useCheckTasksURL";
 import { useMediaQuery } from "react-responsive";
 import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
 
-const TaskContent = ({ taskId, content = "..." }) => {
+const TaskContent = memo(({ taskId, content = "..." }) => {
   const isMonthOrWeek = useCheckTasksURL(["month", "week"]);
   const isScreenSmall = useMediaQuery({ query: "(max-width: 767px)" });
   const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
@@ -45,7 +46,9 @@ const TaskContent = ({ taskId, content = "..." }) => {
       </pre>
     </AppearAnimation>
   );
-};
+});
+
+TaskContent.displayName = "TaskContent";
 
 TaskContent.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
