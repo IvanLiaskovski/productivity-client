@@ -1,14 +1,23 @@
+import { Suspense, lazy } from "react";
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import TasksWeekItemGroup from "./TasksWeekItemGroup";
-import TasksWeekSlider from "../../components/TasksWeekSlider/TasksWeekSlider";
-import SlideWeekItem from "../../components/TasksWeekSlider/SlideItems/SlideWeekItem";
+
+const TasksWeekSlider = lazy(() =>
+  import("../../components/TasksWeekSlider/TasksWeekSlider"),
+);
+const SlideWeekItem = lazy(() =>
+  import("../../components/TasksWeekSlider/SlideItems/SlideWeekItem"),
+);
+import Loading from "../../components/TasksWeekSlider/Loading";
 
 const TasksWeekView = () => {
   const { date } = useTasksDateContext();
 
   return (
     <>
-      <TasksWeekSlider SlideItem={SlideWeekItem} />
+      <Suspense fallback={<Loading />}>
+        <TasksWeekSlider SlideItem={SlideWeekItem} />
+      </Suspense>
       <TasksWeekItemGroup datesRange={date} />
     </>
   );

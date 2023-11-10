@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
+import { Suspense, lazy } from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { twMerge } from "tailwind-merge";
-import TasksDayList from "../TasksDayView/TasksDayList";
+const TasksDayList = lazy(() => import("../TasksDayView/TasksDayList"));
+import Loading from "../TasksDayView/Loading";
 import TaskCreationModal from "../../components/Modals/TaskCreationModal";
 
 const TasksMonthItem = ({ date, day, allowTooltip, className }) => {
@@ -16,12 +18,15 @@ const TasksMonthItem = ({ date, day, allowTooltip, className }) => {
     <div className={styles} ref={setNodeRef} data-testid="month-item-wrapper">
       <TaskCreationModal date={date}>
         <h5 className="text-blue-100">{day}.</h5>
-        <TasksDayList
-          tasksDate={date}
-          tasksType="day"
-          allowTooltip={allowTooltip}
-          className="max-h-[400px]"
-        />
+        <Suspense fallback={<Loading q={2} />}>
+          <TasksDayList
+            tasksDate={date}
+            tasksType="day"
+            allowTooltip={allowTooltip}
+            cancel={true}
+            className="max-h-[400px]"
+          />
+        </Suspense>
       </TaskCreationModal>
     </div>
   );

@@ -15,6 +15,7 @@ function Tasks() {
   const [isManualChange, setManualChange] = useState(false);
   const [taskDate, setTaskDate] = useState(moment().format("YYYY-MM-DD"));
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+
   const isDayOrYearView = useCheckTasksURL(["day", "year"]);
   const isMediumScreen = useMediaQuery({ query: "(min-width: 768px)" });
   const location = useLocation();

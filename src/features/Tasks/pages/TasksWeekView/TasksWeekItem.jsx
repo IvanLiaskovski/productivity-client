@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
+import { Suspense, lazy } from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { twMerge } from "tailwind-merge";
-import TasksDayList from "../TasksDayView/TasksDayList";
 import CreateBtn from "../../../../components/Buttons/CreateBtn";
 import { FaPlus } from "react-icons/fa";
 import TaskCreationModal from "../../components/Modals/TaskCreationModal";
+
+const TasksDayList = lazy(() => import("../TasksDayView/TasksDayList"));
+import Loading from "../TasksDayView/Loading";
 
 const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
   const { isOver, setNodeRef } = useDroppable({ id: tasksDate });
@@ -21,7 +24,9 @@ const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
         <CreateBtn className="mb-2 hidden w-full rounded-lg border-4 py-1 text-blue-100">
           <FaPlus />
         </CreateBtn>
-        <TasksDayList tasksDate={tasksDate} allowTooltip={allowTooltip} />
+        <Suspense fallback={<Loading q={2} />}>
+          <TasksDayList tasksDate={tasksDate} allowTooltip={allowTooltip} />
+        </Suspense>
       </TaskCreationModal>
     </div>
   );

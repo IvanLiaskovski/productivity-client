@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useTasksDatesRangeContext } from "../../context/TasksDatesRangeContext";
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import useMoveDateRange from "../../hooks/useMoveDateRange";
@@ -37,23 +37,27 @@ const TasksTermSlider = ({ SlideItem }) => {
     setIsSettingDate(true);
   }, [datesRange, setSlides]);
 
-  function swipeHandler() {
-    const currentSlideIndex = sliderRef.current.innerSlider.state.currentSlide;
-    const startX = sliderRef.current.innerSlider.state.touchObject.startX;
-    const endX = sliderRef.current.innerSlider.state.touchObject.curX;
+  const swipeHandler = useCallback(
+    () =>
+      function swipeHandler() {
+        const currentSlideIndex =
+          sliderRef.current.innerSlider.state.currentSlide;
+        const startX = sliderRef.current.innerSlider.state.touchObject.startX;
+        const endX = sliderRef.current.innerSlider.state.touchObject.curX;
 
-    if (startX > endX) {
-      const allowDateChange = currentSlideIndex === 14;
-      if (allowDateChange) {
-        moveDate(3, true);
-      }
-    } else if (startX < endX) {
-      const allowDateChange = currentSlideIndex === 0;
-      if (allowDateChange) {
-        moveDate(-3, true);
-      }
-    }
-  }
+        if (startX > endX) {
+          const allowDateChange = currentSlideIndex === 14;
+          if (allowDateChange) {
+            moveDate(3, true);
+          }
+        } else if (startX < endX) {
+          const allowDateChange = currentSlideIndex === 0;
+          if (allowDateChange) {
+            moveDate(-3, true);
+          }
+        }
+      },
+  );
 
   function handleBeforeChange() {
     if (isSettingDate) {

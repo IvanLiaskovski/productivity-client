@@ -1,16 +1,28 @@
+import { Suspense, lazy } from "react";
 import { useTasksDateContext } from "../../context/TasksDateContext";
-import TasksDayList from "./TasksDayList";
 import TaskCreationPanel from "../../components/TaskCreationPanel/TaskCreationPanel";
-import TasksWeekSlider from "../../components/TasksWeekSlider/TasksWeekSlider";
-import SlideDayItem from "../../components/TasksWeekSlider/SlideItems/SlideDayItem";
+
+const TasksDayList = lazy(() => import("./TasksDayList"));
+const TasksWeekSlider = lazy(() =>
+  import("../../components/TasksWeekSlider/TasksWeekSlider"),
+);
+const SlideDayItem = lazy(() =>
+  import("../../components/TasksWeekSlider/SlideItems/SlideDayItem"),
+);
+import Loading from "../../components/TasksWeekSlider/Loading";
+import ListLoading from "./Loading";
 
 function TasksDayView() {
   const { date } = useTasksDateContext();
 
   return (
     <>
-      <TasksWeekSlider SlideItem={SlideDayItem} />
-      <TasksDayList tasksDate={date} />
+      <Suspense fallback={<Loading />}>
+        <TasksWeekSlider SlideItem={SlideDayItem} />
+      </Suspense>
+      <Suspense fallback={<ListLoading />}>
+        <TasksDayList tasksDate={date} />
+      </Suspense>
       <TaskCreationPanel />
     </>
   );

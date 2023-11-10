@@ -11,6 +11,7 @@ const TasksDayList = ({
   tasksDate,
   tasksType = "day",
   allowTooltip = true,
+  cancel,
   className,
 }) => {
   const tasks = useGetTaskIds(tasksDate, tasksType);
@@ -53,7 +54,7 @@ const TasksDayList = ({
         (styles, taskId) =>
           taskId && (
             <div key={taskId}>
-              <animated.div className="h-fit" style={styles}>
+              <animated.div className="h-fit" style={cancel ? {} : styles}>
                 <TaskDraggable taskId={taskId}>
                   <TaskItem
                     taskId={taskId}
@@ -76,6 +77,7 @@ TasksDayList.propTypes = {
   tasksDate: PropTypes.string,
   tasksType: PropTypes.oneOf(["day", "year"]),
   allowTooltip: PropTypes.bool,
+  cancel: PropTypes.bool,
   className: PropTypes.string,
 };
 
