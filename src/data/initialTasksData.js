@@ -6,6 +6,7 @@ export const INITAIAL_TASKS = {
     1: {
       id: 1,
       content: "Learn Redux",
+      description: "Open source",
       priority: "urgent",
       isCompleted: false,
       order: 1,
@@ -15,6 +16,7 @@ export const INITAIAL_TASKS = {
     2: {
       id: 2,
       content: "Write code",
+      description: "Write more",
       isCompleted: false,
       order: 3,
       date: moment(new Date()).format("YYYY-MM-DD"),
@@ -23,6 +25,7 @@ export const INITAIAL_TASKS = {
     3: {
       id: 3,
       content: "Have fun",
+      description: "Playin games",
       priority: "low",
       isCompleted: false,
       order: 2,

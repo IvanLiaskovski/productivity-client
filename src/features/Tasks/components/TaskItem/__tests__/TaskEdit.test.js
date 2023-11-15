@@ -31,7 +31,7 @@ test("Update task content", async () => {
     />,
   );
 
-  const contentField = screen.getByRole("textbox");
+  const contentField = screen.getByRole("textbox", { name: /name:/i });
   const saveBtn = screen.getByTitle("Save");
 
   expect(contentField).toBeInTheDocument();

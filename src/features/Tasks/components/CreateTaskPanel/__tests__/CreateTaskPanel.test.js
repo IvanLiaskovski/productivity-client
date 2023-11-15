@@ -27,11 +27,11 @@ test("Create a task with a specific priority", async () => {
     </TasksDateProvider>,
   );
 
-  const textarea = screen.getByRole("textbox");
+  const contentField = screen.getByRole("textbox", { name: /name:/i });
   const priorityBtn = screen.getByTitle("urgent");
   const saveBtn = screen.getByTitle("Save");
 
-  await userEvent.type(textarea, taskTestContent);
+  await userEvent.type(contentField, taskTestContent);
   await userEvent.click(priorityBtn);
   await userEvent.click(saveBtn);
 
