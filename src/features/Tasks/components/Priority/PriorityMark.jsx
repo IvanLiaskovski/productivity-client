@@ -26,7 +26,8 @@ const PriorityMark = ({
   );
 
   const priorityMarkCircleStyles = twMerge(
-    "relative inline-flex h-1.5 w-1.5 lg:h-2 lg:w-2 rounded-full",
+    "relative inline-flex h-1.5 w-1.5 lg:h-3 lg:w-3 rounded-full",
+    isWeek && "lg:h-2 lg:w-2",
     PRIORITY_COLORS.bg[priority],
     circleClassName,
   );

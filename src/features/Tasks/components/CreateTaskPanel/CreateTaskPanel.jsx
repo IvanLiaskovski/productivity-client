@@ -35,7 +35,7 @@ const CreateTaskPanel = () => {
     (styles, isVisible) =>
       isVisible && (
         <animated.div
-          className="fixed bottom-0 left-0 z-40 h-1/3 w-screen sm:fixed md:relative md:mt-6 md:w-full md:self-end md:justify-self-end lg:relative lg:z-0 lg:h-auto lg:max-h-48"
+          className="fixed bottom-0 left-0 z-40 h-1/3 w-screen sm:fixed md:relative md:mt-6 md:w-full md:self-end md:justify-self-end lg:relative lg:z-0 lg:h-auto"
           style={styles}
         >
           <div className={wrapperStyles} data-testid="create-task-wrapper">

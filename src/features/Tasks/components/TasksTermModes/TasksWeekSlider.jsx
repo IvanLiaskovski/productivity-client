@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTasksDatesRangeContext } from "../../context/TasksDatesRangeContext";
 import { useTasksDateContext } from "../../context/TasksDateContext";
 import useMoveDateRange from "../../hooks/useMoveDateRange";
+import { useManualDateChangeContext } from "../../context/TasksManualDateChangeContext";
 import { useMediaQuery } from "react-responsive";
 import { createWeekDatesRange } from "../../helpers/tasksHelpers";
 import { twMerge } from "tailwind-merge";
@@ -15,10 +16,12 @@ import LeftArrow from "./Arrows/LeftArrow";
 import "slick-carousel/slick/slick.css";
 
 const TasksWeekSlider = ({ SlideItem }) => {
+  const { isManualChange, setManualChange } = useManualDateChangeContext();
   const { datesRange } = useTasksDatesRangeContext();
   const { setDate } = useTasksDateContext();
   const [slides, setSlides] = useState(createWeekDatesRange(datesRange));
   const [isSwipe, setIsSwipe] = useState(false);
+  const [isSettingDate, setIsSettingDate] = useState(false);
   const moveDate = useMoveDateRange();
   const isScreenMedium = useMediaQuery({ query: "(min-width: 	768px)" });
 
@@ -29,6 +32,8 @@ const TasksWeekSlider = ({ SlideItem }) => {
 
   useEffect(() => {
     setSlides(createWeekDatesRange(datesRange));
+    sliderRef.current.slickGoTo(7);
+    setIsSettingDate(true);
   }, [datesRange, setSlides]);
 
   function swipeHandler() {
@@ -57,9 +62,19 @@ const TasksWeekSlider = ({ SlideItem }) => {
         slidesToShow={7}
         slidesToScroll={7}
         initialSlide={7}
-        beforeChange={() => setIsSwipe(true)}
+        beforeChange={() => {
+          if (isSettingDate) {
+            setIsSettingDate(false);
+            return;
+          }
+          setIsSwipe(true);
+        }}
         afterChange={(index) => {
           setIsSwipe(false);
+          if (isManualChange) {
+            setManualChange(false);
+            return;
+          }
           setDate(sliderRef.current.props.children[index].key);
         }}
         nextArrow={<RightArrow sliderRef={sliderRef} isSwipe={isSwipe} />}

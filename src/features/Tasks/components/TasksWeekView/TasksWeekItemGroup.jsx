@@ -21,7 +21,7 @@ const TasksWeekItemGroup = ({ datesRange }) => {
   const allowTooltip = !activeId;
 
   const dateItems = useMemo(
-    () => createWeekDatesRange(datesRange).slice(0, 7),
+    () => createWeekDatesRange(datesRange).slice(7, 14),
     [datesRange],
   );
 
@@ -57,7 +57,7 @@ const TasksWeekItemGroup = ({ datesRange }) => {
       onDragEnd={handleDragEnd}
       sensors={sensors}
     >
-      <div className="grid grid-cols-7 justify-start px-2 lg:px-10">
+      <div className="grid min-h-[400px] grid-cols-7 justify-start px-2 lg:px-10">
         {dateItems.map((item) => (
           <TasksWeekItem
             key={item.itemDate}

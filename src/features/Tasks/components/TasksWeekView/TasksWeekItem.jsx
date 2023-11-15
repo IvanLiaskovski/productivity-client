@@ -13,7 +13,7 @@ const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
   const { isOver, setNodeRef } = useDroppable({ id: tasksDate });
 
   const styles = twMerge(
-    "flex justify-center border-x-2 border-block border-r-transparent border-opacity-80 px-2 first:border-transparent rounded",
+    "flex justify-center border-x-2 border-block border-r-transparent border-opacity-80 px-2 first:border-transparent rounded h-full",
     isOver && "bg-blue-100 bg-opacity-30",
     className,
   );

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import useTaskComplete from "../../hooks/useTaskComplete";
 import { useSpring, animated } from "react-spring";
 import useTaskDelete from "../../hooks/useTaskDelete";
+import useCheckTasksURL from "../../hooks/useCheckTasksURL";
 import { twMerge } from "tailwind-merge";
 
 import TaskActionBtn from "./TaskActionBtn";
@@ -9,7 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 
 const DeleteTaskBtn = ({ taskId, startAction, isActionStart }) => {
   const deleteTask = useTaskDelete(taskId);
-  const isWeek = useTaskComplete("week");
+  const isWeek = useCheckTasksURL("week");
 
   const styles = twMerge(
     "relative -z-10 rounded-full bg-red-300 transition-colors duration-150 hover:bg-red-400",
