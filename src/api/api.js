@@ -23,18 +23,16 @@ export const api = createApi({
     getTasks: builder.query({
       query: ({ view, start, end, page }) => ({
         body: gql`
-            query {
-                getTasks(view: $view, start: $start, end: $end, page: $page) {
-                    tasks: {
-                        id,
-                        name,
-                        type,
-                        isCompleted,
-                        notes,
-                        priority,
-                        createdAt
-                    }
-                }
+            query getTasks(view: $view, start: $start, end: $end, page: $page){
+              tasks: {
+                  id,
+                  name,
+                  type,
+                  isCompleted,
+                  notes,
+                  priority,
+                  createdAt
+              }
             }
         `,
         variables: { view, start, end, page },
@@ -43,7 +41,24 @@ export const api = createApi({
         currentCache.push(...newItems);
       },
     }),
+    createTask: builder.mutation({
+      query: ({ name, type, description, date, priority }) => ({
+        body: gql`
+          mutation createTask($name: String!, $type: String!, $description: String, date: String, priority: String){
+             id,
+             name,
+             type,
+             date,
+             isCompleted,
+             description,
+             priority,
+             createdAt
+          }
+        `,
+        variables: { name, type, description, date, priority },
+      }),
+    }),
   }),
 });
 
-export const { useGetTasksQuery } = api;
+export const { useGetTasksQuery, useCreateTaskMutation } = api;
