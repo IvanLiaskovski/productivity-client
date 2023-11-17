@@ -37,6 +37,7 @@ export const api = createApi({
         `,
         variables: { view, start, end, page },
       }),
+      providesTags: ["tasks"],
       merge: (currentCache, newItems) => {
         currentCache.push(...newItems);
       },
@@ -57,6 +58,10 @@ export const api = createApi({
         `,
         variables: { name, type, description, date, priority },
       }),
+      invalidatesTags: ["tasks"],
+      merge: (currentCache, newItems) => {
+        currentCache.push(...newItems);
+      },
     }),
   }),
 });
