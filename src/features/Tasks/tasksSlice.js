@@ -49,10 +49,15 @@ const tasksSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      api.endpoints.getTasks.matchFulfilled,
-      tasksAdapter.upsertMany,
-    );
+    builder
+      .addMatcher(
+        api.endpoints.getTasks.matchFulfilled,
+        tasksAdapter.upsertMany,
+      )
+      .addMatcher(
+        api.endpoints.createTask.matchFulfilled,
+        tasksAdapter.upsertMany,
+      );
   },
 });
 
