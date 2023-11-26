@@ -4,8 +4,12 @@ import { request, gql, ClientError } from "graphql-request";
 const graphqlBaseQuery =
   ({ baseUrl }) =>
   async ({ body, variables }) => {
+    const requestHeaders = {
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTVmYjZhMzNmMTg2MzgxZTMwMjc4ZjMiLCJpYXQiOjE3MDA3NzIyMzN9.yg7915y0NXN2dw_NMNROMQVovm7uBlb81rW3aLqXNpY`,
+    };
+
     try {
-      const result = await request(baseUrl, body, variables);
+      const result = await request(baseUrl, body, variables, requestHeaders);
       return { data: result };
     } catch (error) {
       if (error instanceof ClientError) {
@@ -17,50 +21,62 @@ const graphqlBaseQuery =
 
 export const api = createApi({
   baseQuery: graphqlBaseQuery({
-    baseUrl: "/api",
+    baseUrl: "http://localhost:4000/graphql",
   }),
+  tagTypes: ["Tasks"],
+
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: ({ view, start, end, page }) => ({
         body: gql`
-            query getTasks(view: $view, start: $start, end: $end, page: $page){
-              tasks: {
-                  id,
-                  name,
-                  type,
-                  isCompleted,
-                  notes,
-                  priority,
-                  createdAt
+          query Query($params: TasksQueryParams!) {
+            getTasks(params: $params) {
+              ... on TaskSingleListView {
+                count
+                tasks {
+                  name
+                  id
+                  type
+                  date
+                }
               }
             }
+          }
         `,
-        variables: { view, start, end, page },
+        variables: { params: { view, start, end, page } },
       }),
-      providesTags: ["tasks"],
-      merge: (currentCache, newItems) => {
-        currentCache.push(...newItems);
-      },
+      providesTags: ["Tasks"],
     }),
     createTask: builder.mutation({
       query: ({ name, type, description, date, priority }) => ({
         body: gql`
-          mutation createTask($name: String!, $type: String!, $description: String, date: String, priority: String){
-             id,
-             name,
-             type,
-             date,
-             isCompleted,
-             description,
-             priority,
-             createdAt
+          mutation Mutation($input: CreateTaskInput!) {
+            createTask(input: $input) {
+              id
+              name
+              notes
+              date
+              type
+              priority
+            }
           }
         `,
-        variables: { name, type, description, date, priority },
+        variables: {
+          input: { name, type, notes: description, date, priority },
+        },
       }),
-      invalidatesTags: ["tasks"],
-      merge: (currentCache, newItems) => {
-        currentCache.push(...newItems);
+      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            api.util.upsertQueryData("getTasks", id, {
+              tasks: [data.createTask],
+            }),
+          );
+        } catch {
+          console.log("Create task API error");
+        }
       },
     }),
   }),

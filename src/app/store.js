@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import tasksReducer from "../features/Tasks/tasksSlice";
 import { api } from "../api/api";
 
@@ -8,5 +8,8 @@ export default configureStore({
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware({
+      serializableCheck: true,
+      immutableCheck: true,
+    }).concat(api.middleware),
 });
