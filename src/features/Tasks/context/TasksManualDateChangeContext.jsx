@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
-import { useContext, createContext } from "react";
+import { useState, useContext, createContext } from "react";
 
 const TasksManualDateChangeContext = createContext(false);
 
 export const TasksManualDateChangeProvider = ({
-  isManualChange = false,
-  setManualChange,
+  isManualTaskChange = false,
   children,
 }) => {
+  const [isManualChange, setManualChange] = useState(isManualTaskChange);
+
   return (
     <TasksManualDateChangeContext.Provider
       value={{ isManualChange, setManualChange }}
@@ -18,8 +19,7 @@ export const TasksManualDateChangeProvider = ({
 };
 
 TasksManualDateChangeProvider.propTypes = {
-  isManualChange: PropTypes.bool,
-  setManualChange: PropTypes.func,
+  isManualTaskChange: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
