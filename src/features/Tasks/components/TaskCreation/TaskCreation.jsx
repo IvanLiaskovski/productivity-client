@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createTask } from "../../tasksSlice";
+import { useCreateTask } from "../../hooks/useCreateTask";
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
 
 const TaskCreation = ({
@@ -12,13 +11,18 @@ const TaskCreation = ({
   setIsEmpty,
   onAfterSave = () => {},
 }) => {
-  const dispatch = useDispatch();
-
   const [content, setContent] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("common");
+  const [createTask] = useCreateTask({
+    content,
+    description,
+    priority,
+    date,
+    type,
+  });
 
-  const handleTaskCreation = () => {
+  const handleTaskCreation = async () => {
     if (!content) {
       setIsEmpty(true);
       setTimeout(() => setIsEmpty(false), 1000);
@@ -26,15 +30,7 @@ const TaskCreation = ({
       return;
     }
 
-    dispatch(
-      createTask({
-        content,
-        description,
-        priority,
-        date,
-        type,
-      }),
-    );
+    await createTask();
 
     onAfterSave();
     setContent("");
