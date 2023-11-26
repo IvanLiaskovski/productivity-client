@@ -49,15 +49,24 @@ const tasksSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder
-      .addMatcher(
-        api.endpoints.getTasks.matchFulfilled,
-        tasksAdapter.upsertMany,
-      )
-      .addMatcher(
-        api.endpoints.createTask.matchFulfilled,
-        tasksAdapter.upsertMany,
-      );
+    builder.addMatcher(
+      api.endpoints.getTasks.matchFulfilled,
+      (state, action) => {
+        const tasksData = action.payload?.getTasks
+          ? action.payload.getTasks.tasks
+          : action.payload.tasks;
+        if (!tasksData) return;
+
+        const tasks = tasksData.map(({ id, name, type, date }) => ({
+          id,
+          content: name,
+          type,
+          date: moment(date).format("YYYY-MM-DD"),
+        }));
+
+        tasksAdapter.upsertMany(state, tasks);
+      },
+    );
   },
 });
 
