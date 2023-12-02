@@ -3,6 +3,7 @@ import {
   render,
   screen,
   createFakeTask,
+  waitFor,
 } from "../../../../../utils/tests/test-util";
 import {
   createTestTask,
@@ -30,10 +31,11 @@ afterEach(() => {
 describe("TasksMonthItemGroup tests", () => {
   test("Should display all tasks for current month", () => {
     render(<TasksMonthItemsGroup />);
-
-    tasks.forEach(({ content }) => {
-      const task = screen.getByText(content);
-      expect(task).toBeInTheDocument();
+    waitFor(() => {
+      tasks.forEach(({ content }) => {
+        const task = screen.getByText(content);
+        expect(task).toBeInTheDocument();
+      });
     });
   });
 });

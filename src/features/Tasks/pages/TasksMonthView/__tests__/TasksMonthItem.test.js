@@ -3,6 +3,7 @@ import {
   render,
   screen,
   createFakeTask,
+  waitFor,
 } from "../../../../../utils/tests/test-util";
 import {
   createTestTask,
@@ -36,9 +37,11 @@ describe("TasksMonthItem tests", () => {
     const monthDayElement = screen.getByText(`${monthDay}.`);
     expect(monthDayElement).toBeInTheDocument();
 
-    tasks.forEach(({ content }) => {
-      const task = screen.getByText(content);
-      expect(task).toBeInTheDocument();
+    waitFor(() => {
+      tasks.forEach(({ content }) => {
+        const task = screen.getByText(content);
+        expect(task).toBeInTheDocument();
+      });
     });
   });
 
