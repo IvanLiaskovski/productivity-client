@@ -1,21 +1,24 @@
 import { renderHook } from "@testing-library/react";
 import { Provider } from "react-redux";
 import store from "../../../../app/store";
+import { MemoryRouter } from "react-router";
 import { TasksDateProvider } from "../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../context/TasksDatesRangeContext";
 import { useGetTasks } from "../useGetTasks";
 
-const mockTasksRangeDateContext = {
-  date: new Date(),
-  setDate: jest.fn((newDate) => (mockTasksRangeDateContext.date = newDate)),
-};
+
 
 test("Ensure useGetTasks retrieves tasks contents from Redux store accurately", () => {
   const wrapper = ({ children }) => (
-    <Provider store={store}>
-      <TasksDateProvider {...mockTasksRangeDateContext}>
-        {children}
-      </TasksDateProvider>
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <TasksDatesRangeProvider>
+        <TasksDateProvider>
+          {children}
+        </TasksDateProvider>
+        </TasksDatesRangeProvider>
+      </Provider>
+    </MemoryRouter>
   );
   const { result } = renderHook(() => useGetTasks(), { wrapper });
 
