@@ -30,6 +30,8 @@ const TaskCreation = ({
       return;
     }
 
+    console.log({ content, description, priority, date, type });
+
     await createTask();
 
     onAfterSave();
