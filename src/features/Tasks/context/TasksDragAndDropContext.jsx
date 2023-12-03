@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { updateTask } from "../tasksSlice";
+import { useUpdateTask } from "../hooks/useUpdateTask";
 import {
   MouseSensor,
   TouchSensor,
@@ -16,7 +15,7 @@ const TasksDragAndDropContext = ({
   setActiveTaskId,
   children,
 }) => {
-  const dispatch = useDispatch();
+  const updateTask = useUpdateTask();
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -36,11 +35,13 @@ const TasksDragAndDropContext = ({
     setActiveTaskId(event.active.id);
   }
 
-  function handleDragEnd(event) {
+  async function handleDragEnd(event) {
     const { active, over } = event;
     const date = over.id;
     const id = active.id;
-    dispatch(updateTask({ id, date }));
+
+    updateTask({ id, date });
+
     setActiveTaskId(null);
   }
   return (
