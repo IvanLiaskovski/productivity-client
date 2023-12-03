@@ -5,7 +5,7 @@ const graphqlBaseQuery =
   ({ baseUrl }) =>
   async ({ body, variables }) => {
     const requestHeaders = {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTVmYjZhMzNmMTg2MzgxZTMwMjc4ZjMiLCJpYXQiOjE3MDA3NzIyMzN9.yg7915y0NXN2dw_NMNROMQVovm7uBlb81rW3aLqXNpY`,
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjOWIwOWVkNWEzODdlNDdmYmIwMmUiLCJpYXQiOjE3MDE2MTYzOTN9.R9AVUDrPF6CL3F2fEjDVyHbSLP5eHAr6BuGryWAmxMI`,
     };
 
     try {
@@ -79,7 +79,55 @@ export const api = createApi({
         }
       },
     }),
+    updateTask: builder.mutation({
+      query: ({ id, name, date, notes = "", isCompleted, priority }) => ({
+        body: gql`
+          mutation Mutation($input: UpdateTaskInput!) {
+            updateTask(input: $input) {
+              id
+              name
+              notes
+              type
+              priority
+              isCompleted
+              date
+            }
+          }
+        `,
+        variables: {
+          input: { id, name, date, notes, isCompleted, priority: 1 },
+        },
+      }),
+      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            api.util.upsertQueryData("getTasks", id, {
+              tasks: [data.updateTask],
+            }),
+          );
+        } catch {
+          console.log("Update task API error");
+        }
+      },
+    }),
+    deleteTask: builder.mutation({
+      query: (id) => ({
+        body: gql`
+          mutation Mutation($deleteTaskId: ID!) {
+            deleteTask(id: $deleteTaskId)
+          }
+        `,
+        variables: { deleteTaskId: id },
+      }),
+    }),
   }),
 });
 
-export const { useGetTasksQuery, useCreateTaskMutation } = api;
+export const {
+  useGetTasksQuery,
+  useCreateTaskMutation,
+  useUpdateTaskMutation,
+  useDeleteTaskMutation,
+} = api;
