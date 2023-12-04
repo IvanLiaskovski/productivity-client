@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { createTask } from "../tasksSlice";
 import { useCreateTaskMutation } from "../../../api/api";
 
-export function useCreateTask({ content, description, priority, date, type }) {
+export function useCreateTask({ name, notes, priority, date, type }) {
   //ToDo Login
   const isLogin = true;
 
@@ -12,8 +12,8 @@ export function useCreateTask({ content, description, priority, date, type }) {
   const handleTaskCreation = async () => {
     if (isLogin) {
       await createTaskMutation({
-        name: content,
-        notes: description,
+        name,
+        notes,
         priority: 1,
         date,
         type,
@@ -23,10 +23,10 @@ export function useCreateTask({ content, description, priority, date, type }) {
     if (!isLogin) {
       dispatch(
         createTask({
-          content,
-          description,
-          priority,
+          name,
+          notes,
           date,
+          priority,
           type,
         }),
       );

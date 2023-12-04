@@ -3,22 +3,20 @@ import moment from "moment";
 import { createTask, removeTask } from "../../features/Tasks/tasksSlice";
 
 export function createTestTask(
-  content,
+  name,
   date = moment().format("YYYY-MM-DD"),
   type = "day",
 ) {
   store.dispatch(
     createTask({
-      content,
+      name,
       date,
       type,
     }),
   );
 
   const allTasks = store.getState().tasks.entities;
-  return Object.entries(allTasks).find(
-    (item) => item[1].content === content,
-  )[0];
+  return Object.entries(allTasks).find((item) => item[1].name === name)[0];
 }
 
 export function removeTestTask(taskId) {

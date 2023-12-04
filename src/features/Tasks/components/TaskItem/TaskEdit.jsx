@@ -9,13 +9,13 @@ import TaskActions from "./TaskActions";
 
 const TaskEdit = ({
   id,
-  content: contentProps,
-  description: descriptionProps,
+  name: nameProps,
+  notes: notesProps,
   priority: priorityProps,
   setOpen,
 }) => {
-  const [content, setContent] = useState(contentProps);
-  const [description, setDescription] = useState(descriptionProps);
+  const [name, setName] = useState(nameProps);
+  const [notes, setNotes] = useState(notesProps);
   const [priority, setPriority] = useState(priorityProps);
   const [isActionStart, setActionStart] = useState(false);
   const updateTask = useUpdateTask();
@@ -30,9 +30,9 @@ const TaskEdit = ({
   function saveTask() {
     updateTask({
       id,
-      name: content,
-      notes: description,
-      priority: priority,
+      name,
+      notes,
+      priority,
     });
 
     closeEdit();
@@ -47,11 +47,11 @@ const TaskEdit = ({
     <>
       <div className={panelWrapperStyles}>
         <TaskManagementPanel
-          content={content}
-          description={description}
+          name={name}
+          notes={notes}
           priority={priority}
-          setContent={setContent}
-          setDescription={setDescription}
+          setName={setName}
+          setNotes={setNotes}
           setPriority={setPriority}
           onSave={saveTask}
           priorityBackground="dark"
@@ -70,8 +70,8 @@ const TaskEdit = ({
 
 TaskEdit.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  content: PropTypes.string,
-  description: PropTypes.string,
+  name: PropTypes.string,
+  notes: PropTypes.string,
   priority: PropTypes.oneOf(PRIORITY_ARR),
   setOpen: PropTypes.func,
 };

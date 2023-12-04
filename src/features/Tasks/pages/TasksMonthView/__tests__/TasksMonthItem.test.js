@@ -19,8 +19,8 @@ const tasks = createFakeTask("day", formatedDate);
 const tasksIds = [];
 
 beforeEach(() => {
-  tasks.forEach(({ content, date, type }) => {
-    tasksIds.push(createTestTask(content, date, type));
+  tasks.forEach(({ name, date, type }) => {
+    tasksIds.push(createTestTask(name, date, type));
   });
 });
 
@@ -38,8 +38,8 @@ describe("TasksMonthItem tests", () => {
     expect(monthDayElement).toBeInTheDocument();
 
     waitFor(() => {
-      tasks.forEach(({ content }) => {
-        const task = screen.getByText(content);
+      tasks.forEach(({ name }) => {
+        const task = screen.getByText(name);
         expect(task).toBeInTheDocument();
       });
     });

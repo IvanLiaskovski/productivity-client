@@ -5,7 +5,7 @@ import TaskContent from "./TaskContent";
 import PriorityMark from "../Priority/PriorityMark";
 import TaskUnDo from "./TaskUnDo";
 
-const TaskCompleted = ({ taskId, content, priority }) => {
+const TaskCompleted = ({ taskId, name, priority }) => {
   const isScreenSmall = useMediaQuery({ query: "(max-width: 768px)" });
   const unDoTask = useUnDoTask(taskId);
 
@@ -16,7 +16,7 @@ const TaskCompleted = ({ taskId, content, priority }) => {
   };
   return (
     <div onClick={unDoTaskHandle} className="group cursor-pointer">
-      <TaskContent taskId={taskId} content={content} />
+      <TaskContent taskId={taskId} name={name} />
       <PriorityMark priority={priority} isCompleted />
       {!isScreenSmall && <TaskUnDo taskId={taskId} />}
     </div>
@@ -25,7 +25,7 @@ const TaskCompleted = ({ taskId, content, priority }) => {
 
 TaskCompleted.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  content: PropTypes.string,
+  name: PropTypes.string,
   priority: PropTypes.string,
 };
 

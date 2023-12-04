@@ -34,8 +34,9 @@ export const api = createApi({
               ... on TaskSingleListView {
                 count
                 tasks {
-                  name
                   id
+                  name
+                  notes
                   type
                   date
                 }
@@ -48,7 +49,7 @@ export const api = createApi({
       providesTags: ["Tasks"],
     }),
     createTask: builder.mutation({
-      query: ({ name, type, description, date, priority }) => ({
+      query: ({ name, notes, type, date, priority, isCompleted }) => ({
         body: gql`
           mutation Mutation($input: CreateTaskInput!) {
             createTask(input: $input) {
@@ -62,7 +63,7 @@ export const api = createApi({
           }
         `,
         variables: {
-          input: { name, type, notes: description, date, priority },
+          input: { name, notes, type, date, priority, isCompleted },
         },
       }),
       async onQueryStarted({ id }, { dispatch, queryFulfilled }) {

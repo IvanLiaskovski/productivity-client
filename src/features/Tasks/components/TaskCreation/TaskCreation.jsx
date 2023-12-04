@@ -11,42 +11,42 @@ const TaskCreation = ({
   setIsEmpty,
   onAfterSave = () => {},
 }) => {
-  const [content, setContent] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [notes, setNotes] = useState("");
   const [priority, setPriority] = useState("common");
   const [createTask] = useCreateTask({
-    content,
-    description,
+    name,
+    notes,
     priority,
     date,
     type,
   });
 
   const handleTaskCreation = async () => {
-    if (!content) {
+    if (!name) {
       setIsEmpty(true);
       setTimeout(() => setIsEmpty(false), 1000);
 
       return;
     }
 
-    console.log({ content, description, priority, date, type });
+    console.log({ name, notes, priority, date, type });
 
     await createTask();
 
     onAfterSave();
-    setContent("");
-    setDescription("");
+    setName("");
+    setNotes("");
   };
 
   return (
     <TaskManagementPanel
-      content={content}
+      name={name}
       priority={priority}
-      setContent={setContent}
+      setName={setName}
       setPriority={setPriority}
-      description={description}
-      setDescription={setDescription}
+      notes={notes}
+      setNotes={setNotes}
       onSave={handleTaskCreation}
       mode={mode}
       priorityBackground={priorityBackground}

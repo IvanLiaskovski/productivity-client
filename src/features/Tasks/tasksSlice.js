@@ -57,12 +57,17 @@ const tasksSlice = createSlice({
           : action.payload.tasks;
         if (!tasksData) return;
 
-        const tasks = tasksData.map(({ id, name, type, date }) => ({
-          id,
-          content: name,
-          type,
-          date: moment(date).format("YYYY-MM-DD"),
-        }));
+        const tasks = tasksData.map(
+          ({ id, name, notes, type, date, isCompleted, priority }) => ({
+            id,
+            name,
+            notes,
+            type,
+            date: moment(date).format("YYYY-MM-DD"),
+            isCompleted,
+            priority,
+          }),
+        );
 
         tasksAdapter.upsertMany(state, tasks);
       },

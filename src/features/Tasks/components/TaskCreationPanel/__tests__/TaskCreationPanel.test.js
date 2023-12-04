@@ -30,11 +30,11 @@ test("Create a task with a specific priority", async () => {
     </MemoryRouter>,
   );
 
-  const contentField = screen.getByRole("textbox", { name: /name:/i });
+  const nameField = screen.getByRole("textbox", { name: /name:/i });
   const priorityBtn = screen.getByTitle("urgent");
   const saveBtn = screen.getByTitle("Save");
 
-  await userEvent.type(contentField, taskTestContent);
+  await userEvent.type(nameField, taskTestContent);
   await userEvent.click(priorityBtn);
   await userEvent.click(saveBtn);
   waitFor(() => {
@@ -64,8 +64,8 @@ test("Create empty task warning", async () => {
   expect(wrapper).toHaveClass("shadow-red-600");
 });
 
-function getTaskByContent(content) {
+function getTaskByContent(name) {
   return Object.entries(store.getState().tasks.entities).find(
-    (task) => task[1].content === content,
+    (task) => task[1].name === name,
   );
 }

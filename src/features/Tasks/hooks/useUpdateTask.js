@@ -22,7 +22,6 @@ export function useUpdateTask() {
     );
 
     if (isLogin) {
-      remoteUpdate({ id, name, notes, date, priority });
       remoteUpdate({ id, name, notes, date, isCompleted, priority });
     }
   }
