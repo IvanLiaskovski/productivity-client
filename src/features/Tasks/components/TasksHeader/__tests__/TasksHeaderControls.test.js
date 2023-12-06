@@ -1,9 +1,9 @@
 import { render } from "../../../../../utils/tests/test-util";
 import { screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import store from "../../../../../app/store";
 import { TasksDateProvider } from "../../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../../context/TasksDatesRangeContext";
 import TasksHeaderControls from "../TasksHeaderControls";
+import { MemoryRouter } from "react-router";
 
 const mockTasksRangeDateContext = {
   date: new Date(),
@@ -12,22 +12,18 @@ const mockTasksRangeDateContext = {
 
 test("Change tasks mode", async () => {
   render(
-    <TasksDateProvider {...mockTasksRangeDateContext}>
-      <TasksHeaderControls />
-    </TasksDateProvider>,
+    <MemoryRouter>
+      <TasksDatesRangeProvider>
+        <TasksDateProvider {...mockTasksRangeDateContext}>
+          <TasksHeaderControls />
+        </TasksDateProvider>
+      </TasksDatesRangeProvider>
+    </MemoryRouter>,
   );
 
-  const changeToDayMode = screen.getByRole("button", { name: "Day" });
-  const changeToYearMode = screen.getByRole("button", { name: "Year" });
+  const changeToDayMode = screen.getByRole("link", { name: "Day" });
+  const changeToYearMode = screen.getByRole("link", { name: "Year" });
 
   expect(changeToDayMode).toBeInTheDocument();
   expect(changeToYearMode).toBeInTheDocument();
-
-  await userEvent.click(changeToDayMode);
-  expect(getTasksMode()).toBe("day");
-
-  await userEvent.click(changeToYearMode);
-  expect(getTasksMode()).toBe("year");
 });
-
-const getTasksMode = () => store.getState().tasks.mode;

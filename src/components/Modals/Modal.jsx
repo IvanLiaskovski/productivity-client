@@ -1,7 +1,16 @@
 import PropTypes from "prop-types";
+import { twMerge } from "tailwind-merge";
 import Popup from "reactjs-popup";
 
-const Modal = ({ onClose, children }) => {
+const Modal = ({ onClose, isTransparent, className, children }) => {
+  const modalStyles = twMerge(
+    `group/actions content relative h-fit w-full max-w-xl overflow-hidden rounded-lg px-4 py-6 pt-8 `,
+    isTransparent
+      ? "bg-transparent"
+      : "bg-primary-200 shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset]",
+    className,
+  );
+
   return (
     <Popup open={true} modal nested>
       <div
@@ -9,9 +18,7 @@ const Modal = ({ onClose, children }) => {
         onClick={onClose}
         data-testid="modal-wrapper"
       >
-        <div className="group/actions content relative h-fit w-full max-w-xl overflow-hidden rounded-lg bg-primary-200 px-4 py-6 pt-8 shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset]">
-          {children}
-        </div>
+        <div className={modalStyles}>{children}</div>
       </div>
     </Popup>
   );
@@ -23,6 +30,8 @@ Modal.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  isTransparent: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default Modal;

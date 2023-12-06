@@ -23,6 +23,16 @@ body {
   font-size: 16px;
 }
 
+.fix-blurry {
+  backface-visibility: hidden;
+  transform: perspective(1px) translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.react-datepicker-popper {
+  z-index: 9999;
+}
+
 .react-datepicker-wrapper input::before {
   content: "\A";
   border-style: solid;
@@ -30,7 +40,7 @@ body {
   border-color: transparent #dd4397 transparent transparent;
   position: absolute;
   left: -15px;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .scrollbar-hide::-webkit-scrollbar {

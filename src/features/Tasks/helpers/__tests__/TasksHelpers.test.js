@@ -1,23 +1,38 @@
 import { renderHook } from "@testing-library/react";
 import { useGetTasks } from "../../hooks/useGetTasks";
-import { createMonthDaysArray } from "../tasksHelpers";
+import { createMonthDatesRange } from "../tasksHelpers";
 import { sortTasks } from "../tasksHelpers";
 import store from "../../../../app/store";
+import moment from "moment";
 import { Provider } from "react-redux";
 import { TasksDateProvider } from "../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../context/TasksDatesRangeContext";
+import { MemoryRouter } from "react-router";
 
-const mockTasksRangeDateContext = {
-  date: new Date(),
-  setDate: jest.fn((newDate) => (mockTasksRangeDateContext.date = newDate)),
-};
+const currentDate = moment();
 
 test("Create month days array", () => {
-  const monthDays = createMonthDaysArray("2023-08-01");
+  const monthDays = createMonthDatesRange(
+    currentDate.clone().format("YYYY-MM-DD"),
+  );
   const expectedValue = {
-    weekName: "Tue.",
-    day: 1,
-    year: 2023,
-    date: "2023-08-01",
+    monthName: currentDate
+      .clone()
+      .startOf("month")
+      .startOf("isoWeek")
+      .format("MMMM"),
+    weekName: currentDate
+      .clone()
+      .startOf("month")
+      .startOf("isoWeek")
+      .format("dddd"),
+    day: currentDate.clone().startOf("month").startOf("isoWeek").date(),
+    year: currentDate.clone().startOf("month").startOf("isoWeek").year(),
+    itemDate: currentDate
+      .clone()
+      .startOf("month")
+      .startOf("isoWeek")
+      .format("YYYY-MM-DD"),
   };
 
   expect(monthDays[0]).toEqual(expectedValue);
@@ -25,11 +40,13 @@ test("Create month days array", () => {
 
 test("Sort tasks by priority", () => {
   const wrapper = ({ children }) => (
-    <Provider store={store}>
-      <TasksDateProvider {...mockTasksRangeDateContext}>
-        {children}
-      </TasksDateProvider>
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <TasksDatesRangeProvider>
+          <TasksDateProvider>{children}</TasksDateProvider>
+        </TasksDatesRangeProvider>
+      </Provider>
+    </MemoryRouter>
   );
   const { result } = renderHook(() => useGetTasks(), { wrapper });
   const tasks = sortTasks(result.current);

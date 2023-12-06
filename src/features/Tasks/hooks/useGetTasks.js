@@ -1,21 +1,30 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { selectTasksByDate, selectTasksMode } from "../tasksSlice";
+import { selectTasksByDate } from "../tasksSlice";
 import useCheckTasksURL from "./useCheckTasksURL";
-import { createWeekDatesRange } from "../helpers/tasksHelpers";
+import {
+  createWeekDatesRange,
+  createMonthDatesRange,
+} from "../helpers/tasksHelpers";
 import moment from "moment";
 
 export function useGetTasks(date) {
-  const mode = useSelector(selectTasksMode);
   const isWeek = useCheckTasksURL("week");
+  const isMonth = useCheckTasksURL("month");
+  const isYear = useCheckTasksURL("year");
 
-  if (isWeek) {
-    date = createWeekDatesRange(date, true).slice(0, 7);
-  } else {
-    date = moment(date).format("YYYY-MM-DD");
-  }
+  date = useMemo(() => {
+    return isMonth
+      ? createMonthDatesRange(date, true, false)
+      : isWeek
+      ? createWeekDatesRange(date, true).slice(7, 14)
+      : isYear
+      ? moment().format("YYYY")
+      : moment(date).format("YYYY-MM-DD");
+  }, [date, isWeek, isMonth, isYear]);
 
   const tasks = useSelector((state) =>
-    selectTasksByDate(state, mode === "year" ? date.getFullYear() : date),
+    selectTasksByDate(state, date, isYear ? "year" : "day"),
   );
 
   return tasks;
