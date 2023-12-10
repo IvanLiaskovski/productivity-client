@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { request, gql, ClientError } from "graphql-request";
 
@@ -5,7 +6,7 @@ const graphqlBaseQuery =
   ({ baseUrl }) =>
   async ({ body, variables }) => {
     const requestHeaders = {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjOWIwOWVkNWEzODdlNDdmYmIwMmUiLCJpYXQiOjE3MDE2MTYzOTN9.R9AVUDrPF6CL3F2fEjDVyHbSLP5eHAr6BuGryWAmxMI`,
+      Authorization: `Bearer ${Cookies.get("productivity-token")}`,
     };
 
     try {
