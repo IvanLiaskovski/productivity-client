@@ -1,10 +1,12 @@
 import { Routes, Route } from "react-router";
-import UserForm from "./components/UserForm/UserForm";
+import UserRegistration from "./pages/UserRegistration/UserRegistration";
+import UserLogin from "./pages/UserLogin/UserLogin";
 
 const UserRoutes = () => {
   return (
     <Routes>
-      <Route path="/signup" element={<UserForm />} />
+      <Route path="/signup" element={<UserRegistration />} />
+      <Route path="/login" element={<UserLogin />} />
     </Routes>
   );
 };
