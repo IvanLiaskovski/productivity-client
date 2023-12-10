@@ -1,14 +1,24 @@
 import PropTypes from "prop-types";
-import { useContext, createContext } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
+import { useTasksDatesRangeContext } from "./TasksDatesRangeContext";
+import { useLocation } from "react-router";
 import moment from "moment";
 
 const TasksDateContext = createContext(moment().format("YYYY-MM-DD"));
 
 export const TasksDateProvider = ({
-  date = moment().format("YYYY-MM-DD"),
-  setDate,
+  taskDate = moment().format("YYYY-MM-DD"),
   children,
 }) => {
+  const [date, setDate] = useState(taskDate);
+  const { setDatesRange } = useTasksDatesRangeContext();
+  const location = useLocation();
+  const path = location.pathname;
+
+  useEffect(() => {
+    setDatesRange(date);
+  }, [path]);
+
   return (
     <TasksDateContext.Provider value={{ date, setDate }}>
       {children}
@@ -17,8 +27,7 @@ export const TasksDateProvider = ({
 };
 
 TasksDateProvider.propTypes = {
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  setDate: PropTypes.func,
+  taskDate: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

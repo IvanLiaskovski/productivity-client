@@ -1,11 +1,7 @@
-import { useDispatch } from "react-redux";
-import { updateTask } from "../tasksSlice";
+import { useUpdateTask } from "./useUpdateTask";
 
 export function useUnDoTask(taskId) {
-  const dispatch = useDispatch();
-  const undoTask = () => {
-    dispatch(updateTask({ id: taskId, isCompleted: false }));
-  };
+  const updateTask = useUpdateTask();
 
-  return undoTask;
+  return () => updateTask({ id: taskId, isCompleted: false });
 }

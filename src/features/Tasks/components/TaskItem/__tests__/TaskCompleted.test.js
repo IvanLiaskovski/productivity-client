@@ -2,12 +2,12 @@ import { render } from "../../../../../utils/tests/test-util";
 import { screen } from "@testing-library/react";
 import TaskCompleted from "../TaskCompleted";
 
-const testContent = "Test react task";
+const testName = "Test react task";
 
-test("Complete task render and show correct content", () => {
-  render(<TaskCompleted content={testContent} priority="urgent" />);
+test("Complete task render and show correct name", () => {
+  render(<TaskCompleted name={testName} priority="urgent" />);
 
-  const taskContent = screen.getByText(testContent);
+  const taskContent = screen.getByText(testName);
   const priorityMark = screen.getByTestId("priority-mark");
 
   expect(taskContent).toBeInTheDocument();

@@ -17,7 +17,7 @@ const PriorityPanel = ({
         isActive={priority === activePriority}
         backgroundColor={backgroundColor}
       >
-        <ImFlag />
+        <ImFlag className="fix-blurry" />
       </PriorityBtn>
     ))}
   </div>

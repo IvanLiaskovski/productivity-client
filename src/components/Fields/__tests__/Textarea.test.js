@@ -5,7 +5,7 @@ import Textarea from "../Textarea";
 
 const changeEventMock = jest.fn();
 
-test("Textarea type text and forward refration tests", async () => {
+test("Textarea type text and forward referation tests", async () => {
   const user = userEvent.setup();
   const textareaRef = createRef("textarea");
 

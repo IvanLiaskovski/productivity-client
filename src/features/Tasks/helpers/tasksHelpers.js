@@ -1,36 +1,6 @@
 import moment from "moment/moment";
 import { PRIORITY_PRECIOUS } from "../../../data/priorityData";
 
-const getWeekName = (date) => {
-  const weekdays = ["Sun.", "Mon.", "Tue.", "Wed.", "Thu.", "Fr.", "Sat."];
-  return weekdays[date.getDay()];
-};
-
-export const createMonthDaysArray = (date) => {
-  if (typeof date === "string") {
-    date = new Date(date);
-  }
-  const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
-  const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-  const datesArray = [];
-  let currentDate = new Date(startDate);
-
-  while (currentDate <= endDate) {
-    const dateObject = {
-      weekName: getWeekName(currentDate),
-      day: currentDate.getDate(),
-      year: currentDate.getFullYear(),
-      date: moment(currentDate).format("YYYY-MM-DD"),
-    };
-
-    datesArray.push(dateObject);
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return datesArray;
-};
-
 export function createWeekDatesRange(date, onlyDates) {
   const currentDate = moment(date);
   const datesArray = [];
@@ -52,6 +22,37 @@ export function createWeekDatesRange(date, onlyDates) {
     }
     datesArray.push(dateItem);
     startOfWeek.add(1, "day");
+  }
+
+  return datesArray;
+}
+
+export function createMonthDatesRange(date, onlyDates, weekMissingDays = true) {
+  const currentDate = moment(date);
+  const datesArray = [];
+
+  const startOfMonth = weekMissingDays
+    ? currentDate.clone().startOf("month").startOf("isoWeek")
+    : currentDate.clone().startOf("month");
+  const endOfMonth = weekMissingDays
+    ? currentDate.clone().endOf("month").endOf("isoWeek")
+    : currentDate.clone().endOf("month");
+
+  while (startOfMonth.isSameOrBefore(endOfMonth, "day")) {
+    let dateItem;
+    if (onlyDates) {
+      dateItem = startOfMonth.clone().format("YYYY-MM-DD");
+    } else {
+      dateItem = {
+        monthName: startOfMonth.clone().format("MMMM"),
+        weekName: startOfMonth.clone().format("dddd"),
+        day: startOfMonth.clone().date(),
+        year: startOfMonth.clone().year(),
+        itemDate: startOfMonth.clone().format("YYYY-MM-DD"),
+      };
+    }
+    datesArray.push(dateItem);
+    startOfMonth.add(1, "day");
   }
 
   return datesArray;

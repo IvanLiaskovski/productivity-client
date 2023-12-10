@@ -1,5 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { TasksDateProvider } from "../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../context/TasksDatesRangeContext";
+import { MemoryRouter } from "react-router";
 import { Provider } from "react-redux";
 import store from "../../../../app/store";
 import { SLIDE_ACTIONS } from "../../../../data/actionsData";
@@ -12,11 +14,15 @@ const mockTasksRangeDateContext = {
 
 test("useTaskSlideActions for Expected Functions and Properties", () => {
   const wrapper = ({ children }) => (
-    <Provider store={store}>
-      <TasksDateProvider {...mockTasksRangeDateContext}>
-        {children}
-      </TasksDateProvider>
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <TasksDatesRangeProvider>
+          <TasksDateProvider {...mockTasksRangeDateContext}>
+            {children}
+          </TasksDateProvider>
+        </TasksDatesRangeProvider>
+      </Provider>
+    </MemoryRouter>
   );
   const { result } = renderHook(() => useTaskSlideActions(), { wrapper });
   const [

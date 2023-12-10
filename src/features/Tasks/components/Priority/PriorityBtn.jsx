@@ -12,7 +12,8 @@ const PriorityBtn = ({
   children,
 }) => {
   const styles = twMerge(
-    "cursor-pointer rounded-lg border-2 p-2 text-lg",
+    "cursor-pointer rounded-lg border-2 p-2 text-lg fix-blurry hover:scale-110 transition-all duration-300",
+    PRIORITY_COLORS.hover[priority],
     isActive ? PRIORITY_COLORS.border[priority] : "border-transparent",
     PRIORITY_COLORS.txt[priority],
     backgroundColor === "dark" ? "bg-block bg-opacity-90" : "bg-primary-200",

@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 const TasksNavItem = ({ title, url, className, children }) => {
   const styles = twMerge(
-    "rounded-lg bg-blue-500 px-9 py-1 text-center text-blue-100 block hover:shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset] transition-shadow",
+    "rounded-lg bg-blue-500 px-9 py-1 text-center text-blue-100 text-lg block hover:shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset] transition-shadow",
     className,
   );
 

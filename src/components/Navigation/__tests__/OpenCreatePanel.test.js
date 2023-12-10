@@ -3,23 +3,26 @@ import userEvent from "@testing-library/user-event";
 import OpenCreatePanelProvider from "../../../context/OpenCreatePanelContext";
 import OpenCreatePanelBtn from "../OpenCreatePanelBtn";
 
-const mockOpenPanelContext = {
-  isOpen: false,
-  setOpen: jest.fn(),
-};
+const mockOpenPanelContext = jest.fn();
+
+jest.mock("../../../hooks/useOpenCreatePanel", () =>
+  jest.fn(() => [mockOpenPanelContext]),
+);
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 test("Should open the panel when the button is clicked", async () => {
-  const wrapper = ({ children }) => (
-    <OpenCreatePanelProvider {...mockOpenPanelContext}>
-      {children}
-    </OpenCreatePanelProvider>
+  render(
+    <OpenCreatePanelProvider>
+      <OpenCreatePanelBtn />
+    </OpenCreatePanelProvider>,
   );
-
-  render(<OpenCreatePanelBtn />, { wrapper });
 
   const openPanelBtn = screen.getByRole("button");
   await userEvent.click(openPanelBtn);
 
   expect(openPanelBtn).toBeInTheDocument();
-  expect(mockOpenPanelContext.setOpen).toBeCalled();
+  expect(mockOpenPanelContext).toBeCalled();
 });
