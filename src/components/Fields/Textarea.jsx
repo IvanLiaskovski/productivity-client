@@ -17,10 +17,12 @@ const Textarea = forwardRef(
     ref,
   ) => {
     const textareaStyles = twMerge(
-      "h-auto min-h-[40px] w-full px-2 py-1 resize-none overflow-hidden rounded-xl outline-none ",
+      "h-auto min-h-[40px] w-full p-2 resize-none overflow-hidden rounded-lg outline-none tansition-all duration-300",
       mode === "light"
-        ? "bg-primary-200 text-primary-900 shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset] placeholder:text-gray-500"
-        : "bg-block bg-opacity-95 text-blue-100 shadow-[0px_-2px_10px_0px_rgba(0,0,0,0.4)_inset] placeholder:text-gray-300",
+        ? `bg-primary-200 text-primary-900 shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset]
+           focus:shadow-[0px_-10px_16px_0px_rgba(0,0,0,0.4)_inset] placeholder:text-gray-500`
+        : `bg-block bg-opacity-95 text-blue-100 shadow-[0px_-2px_10px_0px_rgba(0,0,0,0.4)_inset] 
+           focus:shadow-[0px_-2px_4px_0px_rgba(0,0,0,0.4)_inset] placeholder:text-gray-300`,
       isTransparent ? "bg-transparent" : "",
       className,
     );

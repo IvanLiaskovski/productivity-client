@@ -4,10 +4,10 @@ import { useTasksDatesRangeContext } from "../context/TasksDatesRangeContext";
 const useMoveDateRange = () => {
   const { datesRange, setDatesRange } = useTasksDatesRangeContext();
 
-  function moveDate(weeksAmount, allowChange) {
+  function moveDate(weeksAmount, allowChange, moveBy = "weeks") {
     if (allowChange) {
       setDatesRange(
-        moment(datesRange).add(weeksAmount, "weeks").format("YYYY-MM-DD"),
+        moment(datesRange).add(weeksAmount, moveBy).format("YYYY-MM-DD"),
       );
       return;
     }

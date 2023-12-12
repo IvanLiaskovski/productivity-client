@@ -7,7 +7,7 @@ const TaskDraggable = ({ taskId, className, children }) => {
     id: taskId,
   });
 
-  const styles = twMerge(className, isDragging && "opacity-0");
+  const styles = twMerge(isDragging && "opacity-0", className);
 
   return (
     <div ref={setNodeRef} className={styles} {...listeners}>

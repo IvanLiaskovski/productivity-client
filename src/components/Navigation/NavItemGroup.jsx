@@ -1,6 +1,9 @@
+import { useAuth } from "../../context/AuthenticationContext";
 import NavItem from "./NavItem";
+import LogOutBtn from "./LogOutBtn";
 import IconContextProvider from "../../context/IconsContext";
 import { FaHome, FaTasks, FaMoneyBillAlt } from "react-icons/fa";
+import { CiLogin, CiLogout } from "react-icons/ci";
 import { GoGraph } from "react-icons/go";
 
 const navItems = [
@@ -27,6 +30,8 @@ const navItems = [
 ];
 
 const NavItemGroup = () => {
+  const { user, logout } = useAuth();
+
   return (
     <IconContextProvider value={{ className: "text-4xl" }}>
       <nav className="mx-auto max-w-md  px-4 text-white md:px-3">
@@ -38,6 +43,17 @@ const NavItemGroup = () => {
               </NavItem>
             </li>
           ))}
+          <li>
+            {user ? (
+              <LogOutBtn onClick={() => logout()}>
+                <CiLogout />
+              </LogOutBtn>
+            ) : (
+              <NavItem url="/user/login">
+                <CiLogin />
+              </NavItem>
+            )}
+          </li>
         </ul>
       </nav>
     </IconContextProvider>

@@ -2,7 +2,7 @@ import { screen, render } from "@testing-library/react";
 import { Globals } from "react-spring";
 import TaskContent from "../TaskContent";
 
-const testContent = "Test react task";
+const testName = "Test react task";
 
 beforeAll(() => {
   Globals.assign({
@@ -10,9 +10,9 @@ beforeAll(() => {
   });
 });
 
-test("TaskContent content appearance", () => {
-  render(<TaskContent content={testContent} />);
+test("TaskContent name appearance", () => {
+  render(<TaskContent name={testName} />);
 
-  const TaskContentElement = screen.getByText(testContent);
+  const TaskContentElement = screen.getByText(testName);
   expect(TaskContentElement).toBeInTheDocument();
 });
