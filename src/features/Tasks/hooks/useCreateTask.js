@@ -1,16 +1,16 @@
+import { useCheckAuth } from "../../../context/AuthenticationContext";
 import { useDispatch } from "react-redux";
 import { createTask } from "../tasksSlice";
 import { useCreateTaskMutation } from "../../../api/api";
 
 export function useCreateTask({ name, notes, priority, date, type }) {
-  //ToDo Login
-  const isLogin = true;
+  const { user, isDemo } = useCheckAuth();
 
   const dispatch = useDispatch();
   const [createTaskMutation] = useCreateTaskMutation();
 
   const handleTaskCreation = async () => {
-    if (isLogin) {
+    if (user) {
       await createTaskMutation({
         name,
         notes,
@@ -20,7 +20,7 @@ export function useCreateTask({ name, notes, priority, date, type }) {
       });
     }
 
-    if (!isLogin) {
+    if (isDemo) {
       dispatch(
         createTask({
           name,

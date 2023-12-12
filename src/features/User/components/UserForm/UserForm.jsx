@@ -1,4 +1,5 @@
-import useUserSign from "../../hooks/useUserSign";
+import PropTypes from "prop-types";
+import { useAuth } from "../../../../context/AuthenticationContext";
 import { useForm, Controller } from "react-hook-form";
 import { useMemo } from "react";
 import Input from "../../../../components/Fields/Input";
@@ -6,7 +7,8 @@ import Modal from "../../../../components/Modals/Modal";
 import Button from "../../../../components/Buttons/Button";
 
 const UserForm = ({ title, isRegistration }) => {
-  const signInUp = useUserSign(isRegistration);
+  const { signUpUser, loginUser, tryDemo } = useAuth();
+
   const defaultValues = useMemo(() => {
     return isRegistration
       ? { name: "", email: "", password: "" }
@@ -16,7 +18,11 @@ const UserForm = ({ title, isRegistration }) => {
   const { handleSubmit, control } = useForm({ defaultValues });
 
   const submitForm = (data) => {
-    signInUp(data);
+    if (isRegistration) {
+      signUpUser(data);
+    } else {
+      loginUser(data);
+    }
   };
 
   return (
@@ -66,10 +72,18 @@ const UserForm = ({ title, isRegistration }) => {
           <Button type="submit" className="mt-4 w-full font-medium">
             {isRegistration ? "Sign Up" : "Sign In"}
           </Button>
+          <button onClick={() => tryDemo()}>Try Demo</button>
         </form>
       </div>
     </Modal>
   );
 };
+
+UserForm.propTypes = {
+  title: PropTypes.string,
+  isRegistration: PropTypes.bool,
+};
+
+//Temporary Try Demo Button styles
 
 export default UserForm;

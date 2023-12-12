@@ -1,10 +1,10 @@
+import { useCheckAuth } from "../../../context/AuthenticationContext";
 import { useUpdateTaskMutation } from "../../../api/api";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../tasksSlice";
 
 export function useUpdateTask() {
-  //ToDo Login
-  const isLogin = true;
+  const { user } = useCheckAuth();
 
   const [remoteUpdate] = useUpdateTaskMutation();
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export function useUpdateTask() {
       }),
     );
 
-    if (isLogin) {
+    if (user) {
       remoteUpdate({ id, name, notes, date, isCompleted, priority });
     }
   }
