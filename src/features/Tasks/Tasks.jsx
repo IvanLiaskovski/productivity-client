@@ -1,3 +1,5 @@
+import moment from "moment";
+import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import { TasksDateProvider } from "./context/TasksDateContext";
 import { TasksDatesRangeProvider } from "./context/TasksDatesRangeContext";
@@ -7,8 +9,7 @@ import TasksHeader from "./components/TasksHeader/TasksHeader";
 import TasksNavigation from "./components/TasksNavigation/TasksNavigation";
 import TasksDayView from "./components/TasksDayView/TasksDayView";
 import TasksWeekView from "./components/TasksWeekView/TasksWeekView";
-import moment from "moment";
-import { useMediaQuery } from "react-responsive";
+import TasksMonthView from "./components/TasksMonthView/TasksMonthView";
 
 function Tasks() {
   const [isManualChange, setManualChange] = useState(false);
@@ -39,6 +40,16 @@ function Tasks() {
                   element={
                     isMediumScreen ? (
                       <TasksWeekView />
+                    ) : (
+                      <Navigate to="/task/day" />
+                    )
+                  }
+                />
+                <Route
+                  path="/month"
+                  element={
+                    isMediumScreen ? (
+                      <TasksMonthView />
                     ) : (
                       <Navigate to="/task/day" />
                     )

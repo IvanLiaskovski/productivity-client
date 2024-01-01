@@ -5,10 +5,16 @@ import { useTransition, animated } from "react-spring";
 import TaskItem from "../TaskItem/TaskItem";
 import TaskDraggable from "../TaskItem/TaskDraggable";
 import TaskTooltip from "../TaskTooltip/TaskTooltip";
+import { twMerge } from "tailwind-merge";
 
-const TasksDayList = ({ tasksDate, allowTooltip = true }) => {
+const TasksDayList = ({ tasksDate, allowTooltip = true, className }) => {
   const tasks = useGetTaskIds(tasksDate);
   const [editableTaskId, setEditableTaskId] = useState("");
+
+  const styles = twMerge(
+    "scrollbar-hide max-h-[60vh] w-full overflow-x-auto overflow-y-visible",
+    className,
+  );
 
   const transitions = useTransition(tasks, {
     from: {
@@ -37,7 +43,7 @@ const TasksDayList = ({ tasksDate, allowTooltip = true }) => {
   });
 
   return (
-    <div className="scrollbar-hide max-h-[60vh] w-full overflow-x-auto overflow-y-visible">
+    <div className={styles}>
       {transitions(
         (styles, taskId) =>
           taskId && (
@@ -64,6 +70,7 @@ const TasksDayList = ({ tasksDate, allowTooltip = true }) => {
 TasksDayList.propTypes = {
   tasksDate: PropTypes.string,
   allowTooltip: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 const countAnimationDelay = (index) => (index * 20 < 800 ? index * 20 : 800);

@@ -57,6 +57,37 @@ export function createWeekDatesRange(date, onlyDates) {
   return datesArray;
 }
 
+export function createMonthDatesRange(date, onlyDates, weekMissingDays = true) {
+  const currentDate = moment(date);
+  const datesArray = [];
+
+  const startOfMonth = weekMissingDays
+    ? currentDate.clone().startOf("month").startOf("isoWeek")
+    : currentDate.clone().startOf("month");
+  const endOfMonth = weekMissingDays
+    ? currentDate.clone().endOf("month").endOf("isoWeek")
+    : currentDate.clone().endOf("month");
+
+  while (startOfMonth.isSameOrBefore(endOfMonth, "day")) {
+    let dateItem;
+    if (onlyDates) {
+      dateItem = startOfMonth.clone().format("YYYY-MM-DD");
+    } else {
+      dateItem = {
+        monthName: startOfMonth.clone().format("MMMM"),
+        weekName: startOfMonth.clone().format("dddd"),
+        day: startOfMonth.clone().date(),
+        year: startOfMonth.clone().year(),
+        itemDate: startOfMonth.clone().format("YYYY-MM-DD"),
+      };
+    }
+    datesArray.push(dateItem);
+    startOfMonth.add(1, "day");
+  }
+
+  return datesArray;
+}
+
 export function sortTasks(tasks) {
   return tasks
     .sort(

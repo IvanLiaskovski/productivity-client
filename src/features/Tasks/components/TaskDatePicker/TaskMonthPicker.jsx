@@ -8,7 +8,7 @@ import { VscTriangleDown } from "react-icons/vsc";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
-const TaskDayPicker = () => {
+const TaskMonthPicker = () => {
   const { date, setDate } = useTasksDateContext();
   const { setDatesRange } = useTasksDatesRangeContext();
   const { setManualChange } = useManualDateChangeContext();
@@ -21,7 +21,7 @@ const TaskDayPicker = () => {
         setDate(moment(date).format("YYYY-MM-DD"));
         setDatesRange(moment(date).format("YYYY-MM-DD"));
       },
-      dateFormat: "MMMM d, yyyy",
+      dateFormat: "MMMM, Y",
     };
   }, [date, setDatesRange, setManualChange, setDate]);
 
@@ -29,9 +29,10 @@ const TaskDayPicker = () => {
     <DatePicker
       className="relative z-50"
       {...pickerSettings}
+      showMonthYearPicker
       customInput={
-        <PickerInput>
-          <span className="-translatex-1/2 absolute -right-1/4 top-1/2 -translate-y-1/2">
+        <PickerInput className="rounded-md bg-block p-2 shadow-md">
+          <span className="-translatex-1/2 absolute -right-7 top-1/2 -translate-y-1/2 rounded-md bg-block p-3 shadow-md">
             <VscTriangleDown />
           </span>
         </PickerInput>
@@ -40,4 +41,4 @@ const TaskDayPicker = () => {
   );
 };
 
-export default TaskDayPicker;
+export default TaskMonthPicker;

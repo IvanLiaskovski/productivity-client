@@ -5,8 +5,9 @@ import Modal from "../../../../components/Modals/Modal";
 
 const TaskModalLayout = ({ onClose, children }) => {
   const isWeek = useCheckTasksURL("week");
+  const isMonth = useCheckTasksURL("month");
 
-  return isWeek ? (
+  return isWeek || isMonth ? (
     <>
       ...
       <Modal onClose={onClose}>{children}</Modal>
