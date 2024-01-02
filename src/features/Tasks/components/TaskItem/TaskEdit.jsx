@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../../tasksSlice";
 import { twMerge } from "tailwind-merge";
+import { PRIORITY_ARR } from "../../../../data/priorityData";
 
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
 import TaskActions from "./TaskActions";
@@ -21,7 +22,7 @@ const TaskEdit = ({
   const [isActionStart, setActionStart] = useState(false);
 
   const panelWrapperStyles = twMerge(
-    "relative z-30",
+    "relative z-20 p-2",
     isActionStart && "opacity-80",
   );
 
@@ -40,6 +41,11 @@ const TaskEdit = ({
     closeEdit();
   }
 
+  const handleStartAction = () => {
+    setActionStart(true);
+    closeEdit();
+  };
+
   return (
     <>
       <div className={panelWrapperStyles}>
@@ -57,7 +63,7 @@ const TaskEdit = ({
       <TaskActions
         taskId={id}
         isActionStart={isActionStart}
-        setActionStart={setActionStart}
+        setActionStart={handleStartAction}
         onAfterAction={closeEdit}
         isEdit
       />
@@ -69,7 +75,7 @@ TaskEdit.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   content: PropTypes.string,
   description: PropTypes.string,
-  priority: PropTypes.string,
+  priority: PropTypes.oneOf(PRIORITY_ARR),
   setOpen: PropTypes.func,
 };
 

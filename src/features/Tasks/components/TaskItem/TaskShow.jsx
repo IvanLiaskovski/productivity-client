@@ -30,7 +30,7 @@ TaskShow.propTypes = {
   content: PropTypes.string,
   priority: PropTypes.string,
   isCompleted: PropTypes.bool,
-  hideActions: PropTypes.string,
+  hideActions: PropTypes.bool,
   setOpen: PropTypes.func,
 };
 

@@ -4,10 +4,9 @@ import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimatio
 import Modal from "../../../../components/Modals/Modal";
 
 const TaskModalLayout = ({ onClose, children }) => {
-  const isWeek = useCheckTasksURL("week");
-  const isMonth = useCheckTasksURL("month");
+  const isMonthOrWeek = useCheckTasksURL(["month", "week"]);
 
-  return isWeek || isMonth ? (
+  return isMonthOrWeek ? (
     <>
       ...
       <Modal onClose={onClose}>{children}</Modal>

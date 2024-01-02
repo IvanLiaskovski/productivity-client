@@ -43,6 +43,7 @@ test("Update task content", async () => {
 
   await userEvent.click(saveBtn);
   expect(clickEventMock).toBeCalled();
+
   waitFor(() =>
     expect(store.getState().tasks.entities[testTaskId].content).toBe(
       taskContent + typeContent,

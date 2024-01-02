@@ -1,35 +1,53 @@
+import { Suspense, lazy } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useTasksMode } from "../../hooks/useTasksMode";
+import useCheckTasksURL from "../../hooks/useCheckTasksURL";
 
 import ActiveTasksSwitch from "../Buttons/ActiveTasksSwitch";
-import ModeBtn from "../../../../components/Buttons/ModeBtn";
+import TasksNavItem from "../TasksNavigation/TasksNavItem";
 import SettingsBtn from "../../../../components/Buttons/SettingsBtn";
-import TaskDayPicker from "../TaskDatePicker/TaskDayPicker";
-import TaskYearPicker from "../TaskDatePicker/TaskYearPicker";
+
+const TaskDayPicker = lazy(() => import("../TaskDatePicker/TaskDayPicker"));
+const TaskMonthPicker = lazy(() => import("../TaskDatePicker/TaskMonthPicker"));
+const TaskYearPicker = lazy(() => import("../TaskDatePicker/TaskYearPicker"));
+import Loading from "../TaskDatePicker/Loading";
 
 const TasksHeaderControls = () => {
-  const [mode, changeMode] = useTasksMode();
-  const isScreenLarge = useMediaQuery({ query: "(min-width: 1024px)" });
-
-  const isYear = mode === "year";
-  const isDay = mode === "day";
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 724px)" });
+  const isMonth = useCheckTasksURL("month");
+  const isYear = useCheckTasksURL("year");
 
   return (
     <div>
       <div className="w-100 flex items-center justify-between font-sans lg:justify-start">
-        <div>{isYear ? <TaskYearPicker /> : <TaskDayPicker />}</div>
-        {isScreenLarge ? (
-          <div className="lg:ml-11 lg:pb-2">
+        <Suspense fallback={<Loading />}>
+          <div>
+            {isYear ? (
+              <TaskYearPicker />
+            ) : isMonth ? (
+              <TaskMonthPicker />
+            ) : (
+              <TaskDayPicker />
+            )}
+          </div>
+        </Suspense>
+        {isScreenMedium ? (
+          <div className="lg:ml-5 lg:pb-2">
             <ActiveTasksSwitch />
           </div>
         ) : (
           <div className="flex gap-3">
-            <ModeBtn onClick={changeMode("day")} isActive={isDay}>
+            <TasksNavItem
+              className="rounded-lg px-2 py-1 text-xl"
+              url="/task/day"
+            >
               Day
-            </ModeBtn>
-            <ModeBtn onClick={changeMode("year")} isActive={isYear}>
+            </TasksNavItem>
+            <TasksNavItem
+              className="rounded-lg px-2 py-1 text-xl"
+              url="/task/year"
+            >
               Year
-            </ModeBtn>
+            </TasksNavItem>
             <SettingsBtn />
           </div>
         )}

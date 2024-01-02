@@ -8,33 +8,32 @@ import { twMerge } from "tailwind-merge";
 
 const CompleteTaskBtn = ({
   taskId,
-  startAction,
+  startAction = () => false,
   onAfterAction = () => false,
   isActionStart,
 }) => {
   const completeTask = useTaskComplete(taskId);
-  const isWeek = useCheckTasksURL("week");
+  const isMonthOrWeek = useCheckTasksURL(["week", "month"]);
 
   const styles = twMerge(
-    "relative -z-10 rounded-full bg-green-200 transition-colors duration-150 hover:bg-green-400",
-    isWeek ? "h-4 w-4" : "h-6 w-6",
+    "relative -z-10 rounded-full bg-green-200 transition-colors duration-150",
+    isMonthOrWeek ? "h-4 w-4" : "h-6 w-6",
+    !isActionStart && "hover:bg-green-400",
   );
-
-  const handleCompleteAction = () => {
-    completeTask();
-    onAfterAction();
-  };
 
   const [springStyles, springApi] = useSpring(() => ({
     from: { transform: "scale(1)" },
     reset: true,
     onStart: startAction,
-    onRest: handleCompleteAction,
+    onRest: () => {
+      completeTask();
+      onAfterAction();
+    },
   }));
 
   const handleCompleteTask = () => {
     springApi.start({
-      to: { transform: "scale(99)" },
+      to: { transform: "scale(90)" },
     });
   };
 

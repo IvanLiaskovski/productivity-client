@@ -10,8 +10,8 @@ import TaskContent from "./TaskContent";
 
 const TaskActive = ({ taskId, content, priority, hideActions, setOpen }) => {
   const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
-
   const [isActionStart, setActionStart] = useState(false);
+
   const styles = twMerge("group/actions relative cursor-pointer");
 
   const openTaskHandle = (e) => {
@@ -40,7 +40,7 @@ TaskActive.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   content: PropTypes.string,
   priority: PropTypes.string,
-  hideActions: PropTypes.string,
+  hideActions: PropTypes.bool,
   setOpen: PropTypes.func,
 };
 

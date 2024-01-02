@@ -46,8 +46,8 @@ const TaskItem = memo(({ taskId, hideActions, isOpen, setOpen }) => {
 TaskItem.displayName = "TaskItem";
 
 TaskItem.propTypes = {
-  taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  hideActions: PropTypes.string,
+  taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  hideActions: PropTypes.bool,
   isOpen: PropTypes.bool,
   setOpen: PropTypes.func,
 };

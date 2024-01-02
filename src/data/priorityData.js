@@ -19,6 +19,12 @@ export const PRIORITY_COLORS = {
     low: "border-blue-400",
     common: "border-gray-500",
   },
+  hover: {
+    urgent: "hover:border-red-500",
+    moderate: "hover:border-orange-500",
+    low: "hover:border-blue-400",
+    common: "hover:border-gray-500",
+  },
 };
 
 export const PRIORITY_PRECIOUS = {

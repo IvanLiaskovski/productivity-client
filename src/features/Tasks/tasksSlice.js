@@ -15,7 +15,6 @@ const initialTasks = localStorage.getItem("productivityTasks")?.length
 
 const initialState = tasksAdapter.getInitialState({
   ...initialTasks,
-  mode: "day",
   onlyActive: false,
 });
 
@@ -25,13 +24,11 @@ const tasksSlice = createSlice({
   reducers: {
     createTask: {
       reducer: (state, action) => {
-        const { date } = action.payload;
-        const mode = state.mode;
+        const { date, type } = action.payload;
 
         tasksAdapter.addOne(state, {
           ...action.payload,
-          date: mode === "year" ? new Date(date).getFullYear() : date,
-          type: mode,
+          date: type === "year" ? moment(date).format("YYYY") : date,
         });
       },
       prepare: (data) => ({
@@ -45,7 +42,6 @@ const tasksSlice = createSlice({
     },
     updateTask: tasksAdapter.upsertOne,
     removeTask: tasksAdapter.removeOne,
-    setTasksMode: (state, action) => ({ ...state, mode: action.payload }),
     setTasksOnlyActive: (state, action) => ({
       ...state,
       onlyActive: action.payload,
@@ -55,14 +51,13 @@ const tasksSlice = createSlice({
 
 //Selectors
 export const selectTasks = (state) => state.tasks;
-export const selectTasksMode = (state) => state.tasks.mode;
 export const selectTasksOnlyActive = (state) => state.tasks.onlyActive;
 
 export const selectTaskIdsByDate = createSelector(
-  [selectTasks, (_, date) => date],
-  (tasks, date) => {
+  [selectTasks, (_, date) => date, (_, date, type) => type],
+  (tasks, date, type) => {
     let taskArray = Object.values(tasks.entities).filter(
-      (task) => task?.date === date,
+      (task) => task?.date === date && task?.type === type,
     );
 
     if (tasks.onlyActive) {
@@ -74,14 +69,20 @@ export const selectTaskIdsByDate = createSelector(
 );
 
 export const selectTasksByDate = createSelector(
-  [selectTasks, (_, date) => date],
-  (tasks, date) => {
+  [selectTasks, (_, date) => date, (_, date, type) => type],
+  (tasks, date, type) => {
     tasks = Object.values(tasks.entities);
 
     if (Array.isArray(date)) {
-      return sortTasks(tasks.filter((task) => date.includes(task?.date)));
+      return sortTasks(
+        tasks.filter(
+          (task) => date.includes(task?.date) && task?.type === type,
+        ),
+      );
     }
-    return sortTasks(tasks.filter((task) => task?.date === date));
+    return sortTasks(
+      tasks.filter((task) => task?.date === date && task?.type === type),
+    );
   },
 );
 
@@ -96,7 +97,6 @@ export const {
   createTask,
   updateTask,
   removeTask,
-  setTasksMode,
   setTasksOnlyActive,
   setTaskDate,
 } = tasksSlice.actions;

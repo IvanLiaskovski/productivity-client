@@ -17,7 +17,10 @@ test("useGetTaskIds correctly retrieves task IDs from Redux store", () => {
       </TasksDateProvider>
     </Provider>
   );
-  const { result } = renderHook(() => useGetTaskIds(), { wrapper });
+  const { result } = renderHook(
+    () => useGetTaskIds(mockTasksRangeDateContext.date, "day"),
+    { wrapper },
+  );
 
   expect(result.current).toHaveLength(3);
   expect(result.current[0]).toBeGreaterThanOrEqual(1);

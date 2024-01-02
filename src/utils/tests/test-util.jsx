@@ -17,7 +17,7 @@ export const storeWrapper = ({ children }) => (
 );
 
 export const createFakeTask = (
-  type,
+  type = "day",
   date = moment(faker.date.recent).format("YYYY-MM-DD"),
 ) => [
   {
