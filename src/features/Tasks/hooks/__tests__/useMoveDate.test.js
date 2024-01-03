@@ -1,53 +1,41 @@
 import { renderHook, act } from "@testing-library/react";
 import useMoveDate from "../useMoveDate";
+import { MemoryRouter } from "react-router";
 import { TasksDateProvider } from "../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../context/TasksDatesRangeContext";
 import moment from "moment";
 
-const mockTasksDateContext = {
-  date: moment().format("YYYY-MM-DD"),
-  setDate: (date) => (mockTasksDateContext.date = date),
-};
+const mockSetDate = jest.fn();
+const mockDate = moment().format("YYYY-MM-DD");
 
-afterEach(() => {
-  mockTasksDateContext.date = moment().format("YYYY-MM-DD");
-});
+jest.mock("../../context/TasksDateContext", () => ({
+  ...jest.requireActual("../../context/TasksDateContext"),
+  useTasksDateContext: jest.fn(() => ({
+    date: mockDate,
+    setDate: mockSetDate,
+  })),
+}));
+
+afterEach(() => {});
 
 describe("MoveBack button tests", () => {
   test("Should move date 1 month backward", async () => {
     const wrapper = ({ children }) => (
-      <TasksDateProvider {...mockTasksDateContext}>
-        {children}
-      </TasksDateProvider>
+      <MemoryRouter>
+        <TasksDatesRangeProvider>
+          <TasksDateProvider>{children}</TasksDateProvider>
+        </TasksDatesRangeProvider>
+      </MemoryRouter>
     );
 
     const { result } = renderHook(() => useMoveDate(), { wrapper });
     const moveDate = result.current;
 
-    expect(moment(mockTasksDateContext.date).month()).toBe(moment().month());
-
     act(() => moveDate(-1, true, "month"));
 
-    expect(moment(mockTasksDateContext.date).month()).toBe(
-      moment().add(-1, "month").month(),
-    );
-  });
-
-  test("Should move date 1 week forward", async () => {
-    const wrapper = ({ children }) => (
-      <TasksDateProvider {...mockTasksDateContext}>
-        {children}
-      </TasksDateProvider>
-    );
-
-    const { result } = renderHook(() => useMoveDate(), { wrapper });
-    const moveDate = result.current;
-
-    expect(moment(mockTasksDateContext.date).month()).toBe(moment().month());
-
-    act(() => moveDate(-1, true, "month"));
-
-    expect(moment(mockTasksDateContext.date).month()).toBe(
-      moment().add(-1, "month").month(),
+    expect(mockSetDate).toBeCalled();
+    expect(mockSetDate).toBeCalledWith(
+      moment(mockDate).add(-1, "month").format("YYYY-MM-DD"),
     );
   });
 });

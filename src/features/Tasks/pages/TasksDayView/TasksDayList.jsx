@@ -2,10 +2,12 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useGetTaskIds } from "../../hooks/useGetTaskIds";
 import { useTransition, animated } from "react-spring";
+import { twMerge } from "tailwind-merge";
+
 import TaskItem from "../../components/TaskItem/TaskItem";
 import TaskDraggable from "../../components/TaskItem/TaskDraggable";
 import TaskTooltip from "../../components/TaskTooltip/TaskTooltip";
-import { twMerge } from "tailwind-merge";
+import Loading from "./Loading";
 
 const TasksDayList = ({
   tasksDate,
@@ -14,7 +16,7 @@ const TasksDayList = ({
   cancel,
   className,
 }) => {
-  const tasks = useGetTaskIds(tasksDate, tasksType);
+  const { isLoading, tasks } = useGetTaskIds(tasksDate, tasksType);
   const [editableTaskId, setEditableTaskId] = useState("");
 
   const styles = twMerge(
@@ -48,7 +50,9 @@ const TasksDayList = ({
     key: (taskId) => taskId,
   });
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className={styles}>
       {transitions(
         (styles, taskId) =>

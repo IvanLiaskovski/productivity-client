@@ -10,43 +10,43 @@ import { PRIORITY_ARR } from "../../../../../data/priorityData";
 import TaskEdit from "../TaskEdit";
 
 let testTaskId;
-const taskContent = "TestTaskUniqueId";
-const typeContent = " Test type";
+const taskName = "TestTaskUniqueId";
+const typeName = " Test type";
 const urgentPriotity = PRIORITY_ARR[0];
 const clickEventMock = jest.fn();
 
 beforeAll(() => {
-  testTaskId = createTestTask(taskContent);
+  testTaskId = createTestTask(taskName);
 });
 
 afterAll(() => removeTestTask(testTaskId));
 
-test("Update task content", async () => {
+test("Update task name", async () => {
   render(
     <TaskEdit
       taskId={testTaskId}
-      content={taskContent}
+      name={taskName}
       priority={urgentPriotity}
       setOpen={clickEventMock}
     />,
   );
 
-  const contentField = screen.getByRole("textbox", { name: /name:/i });
+  const nameField = screen.getByRole("textbox", { name: /name:/i });
   const saveBtn = screen.getByTitle("Save");
 
-  expect(contentField).toBeInTheDocument();
+  expect(nameField).toBeInTheDocument();
   expect(saveBtn).toBeInTheDocument();
-  expect(contentField.value).toBe(taskContent);
+  expect(nameField.value).toBe(taskName);
 
-  await userEvent.type(contentField, typeContent);
-  expect(contentField.value).toBe(taskContent + typeContent);
+  await userEvent.type(nameField, typeName);
+  expect(nameField.value).toBe(taskName + typeName);
 
   await userEvent.click(saveBtn);
   expect(clickEventMock).toBeCalled();
 
   waitFor(() =>
-    expect(store.getState().tasks.entities[testTaskId].content).toBe(
-      taskContent + typeContent,
+    expect(store.getState().tasks.entities[testTaskId].name).toBe(
+      taskName + typeName,
     ),
   );
 });

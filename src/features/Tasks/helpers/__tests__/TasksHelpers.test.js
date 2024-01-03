@@ -3,14 +3,11 @@ import { useGetTasks } from "../../hooks/useGetTasks";
 import { createMonthDatesRange } from "../tasksHelpers";
 import { sortTasks } from "../tasksHelpers";
 import store from "../../../../app/store";
+import moment from "moment";
 import { Provider } from "react-redux";
 import { TasksDateProvider } from "../../context/TasksDateContext";
-import moment from "moment";
-
-const mockTasksRangeDateContext = {
-  date: new Date(),
-  setDate: jest.fn((newDate) => (mockTasksRangeDateContext.date = newDate)),
-};
+import { TasksDatesRangeProvider } from "../../context/TasksDatesRangeContext";
+import { MemoryRouter } from "react-router";
 
 const currentDate = moment();
 
@@ -43,11 +40,13 @@ test("Create month days array", () => {
 
 test("Sort tasks by priority", () => {
   const wrapper = ({ children }) => (
-    <Provider store={store}>
-      <TasksDateProvider {...mockTasksRangeDateContext}>
-        {children}
-      </TasksDateProvider>
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <TasksDatesRangeProvider>
+          <TasksDateProvider>{children}</TasksDateProvider>
+        </TasksDatesRangeProvider>
+      </Provider>
+    </MemoryRouter>
   );
   const { result } = renderHook(() => useGetTasks(), { wrapper });
   const tasks = sortTasks(result.current);

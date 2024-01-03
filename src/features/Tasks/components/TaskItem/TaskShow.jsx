@@ -4,20 +4,20 @@ import TaskCompleted from "./TaskCompleted";
 
 const TaskShow = ({
   id,
-  content,
+  name,
   priority,
   isCompleted,
   hideActions,
   setOpen,
 }) => {
   if (isCompleted) {
-    return <TaskCompleted taskId={id} content={content} priority={priority} />;
+    return <TaskCompleted taskId={id} name={name} priority={priority} />;
   }
 
   return (
     <TaskActive
       taskId={id}
-      content={content}
+      name={name}
       priority={priority}
       setOpen={setOpen}
       hideActions={hideActions}
@@ -27,7 +27,7 @@ const TaskShow = ({
 
 TaskShow.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  content: PropTypes.string,
+  name: PropTypes.string,
   priority: PropTypes.string,
   isCompleted: PropTypes.bool,
   hideActions: PropTypes.bool,

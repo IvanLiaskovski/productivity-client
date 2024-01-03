@@ -32,7 +32,7 @@ const TaskItem = memo(({ taskId, hideActions, isOpen, setOpen }) => {
       ) : (
         <TaskShow
           id={task?.id}
-          content={task?.content}
+          name={task?.name}
           priority={task?.priority}
           isCompleted={isCompleted}
           setOpen={setOpen}

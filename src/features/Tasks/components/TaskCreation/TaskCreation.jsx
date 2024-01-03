@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createTask } from "../../tasksSlice";
+import { useCreateTask } from "../../hooks/useCreateTask";
 import TaskManagementPanel from "../TaskManagementPanel/TaskManagementPanel";
 
 const TaskCreation = ({
@@ -12,43 +11,42 @@ const TaskCreation = ({
   setIsEmpty,
   onAfterSave = () => {},
 }) => {
-  const dispatch = useDispatch();
-
-  const [content, setContent] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [notes, setNotes] = useState("");
   const [priority, setPriority] = useState("common");
+  const [createTask] = useCreateTask({
+    name,
+    notes,
+    priority,
+    date,
+    type,
+  });
 
-  const handleTaskCreation = () => {
-    if (!content) {
+  const handleTaskCreation = async () => {
+    if (!name) {
       setIsEmpty(true);
       setTimeout(() => setIsEmpty(false), 1000);
 
       return;
     }
 
-    dispatch(
-      createTask({
-        content,
-        description,
-        priority,
-        date,
-        type,
-      }),
-    );
+    console.log({ name, notes, priority, date, type });
+
+    await createTask();
 
     onAfterSave();
-    setContent("");
-    setDescription("");
+    setName("");
+    setNotes("");
   };
 
   return (
     <TaskManagementPanel
-      content={content}
+      name={name}
       priority={priority}
-      setContent={setContent}
+      setName={setName}
       setPriority={setPriority}
-      description={description}
-      setDescription={setDescription}
+      notes={notes}
+      setNotes={setNotes}
       onSave={handleTaskCreation}
       mode={mode}
       priorityBackground={priorityBackground}

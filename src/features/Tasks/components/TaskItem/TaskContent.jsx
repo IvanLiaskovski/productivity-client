@@ -5,7 +5,7 @@ import useCheckTasksURL from "../../hooks/useCheckTasksURL";
 import { useMediaQuery } from "react-responsive";
 import AppearAnimation from "../../../../components/AnimationsHOC/AppearAnimation";
 
-const TaskContent = memo(({ taskId, content = "..." }) => {
+const TaskContent = memo(({ taskId, name = "..." }) => {
   const isMonthOrWeek = useCheckTasksURL(["month", "week"]);
   const isScreenSmall = useMediaQuery({ query: "(max-width: 767px)" });
   const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
@@ -18,31 +18,30 @@ const TaskContent = memo(({ taskId, content = "..." }) => {
       : "px-8 py-2",
   );
 
-  const contentValue =
-    isScreenLarge && isMonthOrWeek && content.length > 52
-      ? `${String(content).slice(0, 52)}...`
-      : !isScreenLarge && isMonthOrWeek && content.length > 12
-      ? `${String(content).slice(0, 12)}...`
-      : content.length > 172
-      ? `${String(content).slice(0, 172)}...`
-      : content;
+  const nameValue =
+    isScreenLarge && isMonthOrWeek && name.length > 52
+      ? `${String(name).slice(0, 52)}...`
+      : !isScreenLarge && isMonthOrWeek && name.length > 12
+      ? `${String(name).slice(0, 12)}...`
+      : name.length > 172
+      ? `${String(name).slice(0, 172)}...`
+      : name;
 
-  const hideTooltip =
-    (content === contentValue && isScreenMedium) || isScreenSmall;
+  const hideTooltip = (name === nameValue && isScreenMedium) || isScreenSmall;
 
   return (
     <AppearAnimation className="relative z-10" animationType="slideDown" reset>
       <pre
         className={styles}
         data-tooltip-id={`tooltip-${taskId}`}
-        data-tooltip-content={content}
+        data-tooltip-name={name}
         data-tooltip-place="bottom-end"
         data-tooltip-position-strategy="absolute"
         data-tooltip-float={true}
         data-tooltip-hidden={hideTooltip}
         data-tooltip-delay-show={500}
       >
-        {contentValue}
+        {nameValue}
       </pre>
     </AppearAnimation>
   );
@@ -52,7 +51,7 @@ TaskContent.displayName = "TaskContent";
 
 TaskContent.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  content: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default TaskContent;

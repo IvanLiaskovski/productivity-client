@@ -21,7 +21,7 @@ export const createFakeTask = (
   date = moment(faker.date.recent).format("YYYY-MM-DD"),
 ) => [
   {
-    content: faker.lorem.word(),
+    name: faker.lorem.word(),
     priority: PRIORITY_ARR[Math.floor(Math.random() * PRIORITY_ARR.length)],
     isCompleted: false,
     order: 1,
@@ -29,7 +29,7 @@ export const createFakeTask = (
     type,
   },
   {
-    content: faker.lorem.word(),
+    name: faker.lorem.word(),
     priority: PRIORITY_ARR[Math.floor(Math.random() * PRIORITY_ARR.length)],
     isCompleted: false,
     order: 1,
@@ -37,7 +37,7 @@ export const createFakeTask = (
     type,
   },
   {
-    content: faker.lorem.word(),
+    name: faker.lorem.word(),
     priority: PRIORITY_ARR[Math.floor(Math.random() * PRIORITY_ARR.length)],
     isCompleted: false,
     order: 1,

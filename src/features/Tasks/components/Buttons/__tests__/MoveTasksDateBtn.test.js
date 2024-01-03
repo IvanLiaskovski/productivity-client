@@ -1,54 +1,37 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router";
 import { TasksDateProvider } from "../../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../../context/TasksDatesRangeContext";
+import useMoveDate from "../../../hooks/useMoveDate";
 import MoveTasksDateBtn from "../MoveTasksDateBtn";
-import moment from "moment";
 
-const mockTasksDateContext = {
-  date: moment().format("YYYY-MM-DD"),
-  setDate: (date) => (mockTasksDateContext.date = date),
-};
+const mockMoveDate = jest.fn();
+
+jest.mock("../../../hooks/useMoveDate", () => jest.fn(() => mockMoveDate));
 
 describe("MoveTasksDateBtn button tests", () => {
   afterEach(() => {
-    mockTasksDateContext.date = moment().format("YYYY-MM-DD");
+    jest.clearAllMocks();
   });
 
-  test("Should move date 1 month forward", async () => {
+  test("Should call moveDate with proper arguments", async () => {
     render(
-      <TasksDateProvider {...mockTasksDateContext}>
-        <MoveTasksDateBtn moveBy={1} moveByUnit="months" />
-      </TasksDateProvider>,
+      <MemoryRouter>
+        <TasksDatesRangeProvider>
+          <TasksDateProvider>
+            <MoveTasksDateBtn moveBy={1} moveByUnit="months" />
+          </TasksDateProvider>
+        </TasksDatesRangeProvider>
+      </MemoryRouter>,
     );
 
     const button = screen.getByRole("button");
-
-    expect(moment(mockTasksDateContext.date).month()).toBe(moment().month());
     expect(button).toBeInTheDocument();
 
     await userEvent.click(button);
 
-    expect(moment(mockTasksDateContext.date).month()).toBe(
-      moment().add(1, "months").month(),
-    );
-  });
-
-  test("Should move date 1 year backward", async () => {
-    render(
-      <TasksDateProvider {...mockTasksDateContext}>
-        <MoveTasksDateBtn moveBy={-1} moveByUnit="years" />
-      </TasksDateProvider>,
-    );
-
-    const button = screen.getByRole("button");
-
-    expect(moment(mockTasksDateContext.date).month()).toBe(moment().month());
-    expect(button).toBeInTheDocument();
-
-    await userEvent.click(button);
-
-    expect(moment(mockTasksDateContext.date).year()).toBe(
-      moment().add(-1, "years").year(),
-    );
+    expect(useMoveDate).toBeCalled();
+    expect(mockMoveDate).toBeCalledWith(1, true, "months");
   });
 });

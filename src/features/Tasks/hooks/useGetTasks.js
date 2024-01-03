@@ -21,7 +21,7 @@ export function useGetTasks(date) {
       : isYear
       ? moment().format("YYYY")
       : moment(date).format("YYYY-MM-DD");
-  });
+  }, [date, isWeek, isMonth, isYear]);
 
   const tasks = useSelector((state) =>
     selectTasksByDate(state, date, isYear ? "year" : "day"),

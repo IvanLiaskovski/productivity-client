@@ -1,6 +1,7 @@
 import { render } from "../../../../../utils/tests/test-util";
 import { screen } from "@testing-library/react";
 import { TasksDateProvider } from "../../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../../context/TasksDatesRangeContext";
 import TasksHeaderControls from "../TasksHeaderControls";
 import { MemoryRouter } from "react-router";
 
@@ -12,9 +13,11 @@ const mockTasksRangeDateContext = {
 test("Change tasks mode", async () => {
   render(
     <MemoryRouter>
-      <TasksDateProvider {...mockTasksRangeDateContext}>
-        <TasksHeaderControls />
-      </TasksDateProvider>
+      <TasksDatesRangeProvider>
+        <TasksDateProvider {...mockTasksRangeDateContext}>
+          <TasksHeaderControls />
+        </TasksDateProvider>
+      </TasksDatesRangeProvider>
     </MemoryRouter>,
   );
 

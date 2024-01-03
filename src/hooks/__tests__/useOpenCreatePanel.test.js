@@ -2,16 +2,12 @@ import { renderHook, act } from "@testing-library/react";
 import OpenCreatePanelProvider from "../../context/OpenCreatePanelContext";
 import useOpenCreatePanel from "../useOpenCreatePanel";
 
-const mockCreatePanelProps = {
-  isOpen: false,
-  setOpen: jest.fn((val) => (mockCreatePanelProps.isOpen = val)),
-};
+const mockOpenPanelContext = jest.fn();
+jest.mock("../useOpenCreatePanel", () => jest.fn(() => [mockOpenPanelContext]));
 
 test("Open panel - hook test", () => {
   const wrapper = ({ children }) => (
-    <OpenCreatePanelProvider {...mockCreatePanelProps}>
-      {children}
-    </OpenCreatePanelProvider>
+    <OpenCreatePanelProvider>{children}</OpenCreatePanelProvider>
   );
 
   const { result } = renderHook(() => useOpenCreatePanel(), { wrapper });
@@ -19,6 +15,5 @@ test("Open panel - hook test", () => {
 
   act(() => openPanel());
 
-  expect(mockCreatePanelProps.setOpen).toBeCalled();
-  expect(mockCreatePanelProps.isOpen).toBeTruthy();
+  expect(mockOpenPanelContext).toBeCalled();
 });

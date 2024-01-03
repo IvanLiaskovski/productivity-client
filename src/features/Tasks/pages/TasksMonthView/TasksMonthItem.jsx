@@ -23,7 +23,6 @@ const TasksMonthItem = ({ date, day, allowTooltip, className }) => {
             tasksDate={date}
             tasksType="day"
             allowTooltip={allowTooltip}
-            cancel={true}
             className="max-h-[400px]"
           />
         </Suspense>
