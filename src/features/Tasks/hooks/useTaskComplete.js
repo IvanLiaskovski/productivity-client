@@ -1,10 +1,9 @@
-import { useDispatch } from "react-redux";
-import { updateTask } from "../tasksSlice";
+import { useUpdateTask } from "./useUpdateTask";
 
 export default function useTaskComplete(id) {
-  const dispatch = useDispatch();
+  const updateTask = useUpdateTask();
 
   return function completeTask() {
-    dispatch(updateTask({ id, isCompleted: true }));
+    updateTask({ id, isCompleted: true });
   };
 }

@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateTask } from "../../tasksSlice";
+import { useUpdateTask } from "../../hooks/useUpdateTask";
 import { twMerge } from "tailwind-merge";
 import { PRIORITY_ARR } from "../../../../data/priorityData";
 
@@ -15,11 +14,11 @@ const TaskEdit = ({
   priority: priorityProps,
   setOpen,
 }) => {
-  const dispatch = useDispatch();
   const [content, setContent] = useState(contentProps);
   const [description, setDescription] = useState(descriptionProps);
   const [priority, setPriority] = useState(priorityProps);
   const [isActionStart, setActionStart] = useState(false);
+  const updateTask = useUpdateTask();
 
   const panelWrapperStyles = twMerge(
     "relative z-20 p-2",
@@ -29,14 +28,12 @@ const TaskEdit = ({
   const closeEdit = () => setOpen(false);
 
   function saveTask() {
-    dispatch(
-      updateTask({
-        id,
-        content,
-        description,
-        priority,
-      }),
-    );
+    updateTask({
+      id,
+      name: content,
+      notes: description,
+      priority: priority,
+    });
 
     closeEdit();
   }

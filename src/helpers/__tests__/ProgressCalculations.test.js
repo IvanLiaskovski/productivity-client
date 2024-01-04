@@ -4,6 +4,8 @@ import progressCalculations from "../progressCalculations";
 import store from "../../app/store";
 import { Provider } from "react-redux";
 import { TasksDateProvider } from "../../features/Tasks/context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../features/Tasks/context/TasksDatesRangeContext";
+import { MemoryRouter } from "react-router";
 
 const mockTasksRangeDateContext = {
   date: new Date(),
@@ -12,11 +14,15 @@ const mockTasksRangeDateContext = {
 
 test("Count the percentage of tasks", () => {
   const wrapper = ({ children }) => (
-    <Provider store={store}>
-      <TasksDateProvider {...mockTasksRangeDateContext}>
-        {children}
-      </TasksDateProvider>
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <TasksDatesRangeProvider>
+          <TasksDateProvider {...mockTasksRangeDateContext}>
+            {children}
+          </TasksDateProvider>
+        </TasksDatesRangeProvider>
+      </Provider>
+    </MemoryRouter>
   );
   const { result } = renderHook(() => useGetTasks(), { wrapper });
   const tasks = result.current.map((item) => {

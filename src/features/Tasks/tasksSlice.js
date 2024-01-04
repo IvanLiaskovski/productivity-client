@@ -3,6 +3,7 @@ import {
   createEntityAdapter,
   createSelector,
 } from "@reduxjs/toolkit";
+import { api } from "../../api/api";
 import { v4 as uuid } from "uuid";
 import { sortTasks } from "./helpers/tasksHelpers";
 import { INITAIAL_TASKS } from "../../data/initialTasksData";
@@ -46,6 +47,26 @@ const tasksSlice = createSlice({
       ...state,
       onlyActive: action.payload,
     }),
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      api.endpoints.getTasks.matchFulfilled,
+      (state, action) => {
+        const tasksData = action.payload?.getTasks
+          ? action.payload.getTasks.tasks
+          : action.payload.tasks;
+        if (!tasksData) return;
+
+        const tasks = tasksData.map(({ id, name, type, date }) => ({
+          id,
+          content: name,
+          type,
+          date: moment(date).format("YYYY-MM-DD"),
+        }));
+
+        tasksAdapter.upsertMany(state, tasks);
+      },
+    );
   },
 });
 

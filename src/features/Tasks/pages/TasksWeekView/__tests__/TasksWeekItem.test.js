@@ -1,4 +1,4 @@
-import { render, screen } from "../../../../../utils/tests/test-util";
+import { render, screen, waitFor } from "../../../../../utils/tests/test-util";
 import moment from "moment";
 import store from "../../../../../app/store";
 import { createTask, removeTask } from "../../../tasksSlice";
@@ -18,8 +18,10 @@ afterAll(() => {
 test("Shoud add three tasks", () => {
   render(<TasksWeekItem tasksDate={moment().format("YYYY-MM-DD")} />);
 
-  tasksData.forEach(({ content }) => {
-    const taskTitle = screen.getByText(content);
-    expect(taskTitle).toBeInTheDocument();
+  waitFor(() => {
+    tasksData.forEach(({ content }) => {
+      const taskTitle = screen.getByText(content);
+      expect(taskTitle).toBeInTheDocument();
+    });
   });
 });

@@ -4,6 +4,8 @@ import store from "../../../../../app/store";
 import { updateTask } from "../../../tasksSlice";
 import { Globals } from "react-spring";
 import { TasksDateProvider } from "../../../context/TasksDateContext";
+import { TasksDatesRangeProvider } from "../../../context/TasksDatesRangeContext";
+import { MemoryRouter } from "react-router";
 import ProductivityBar from "../ProductivityBar";
 
 beforeAll(() => {
@@ -21,9 +23,13 @@ beforeAll(() => {
 
 test("ProductivityBar width depends on completed tasks.", async () => {
   render(
-    <TasksDateProvider>
-      <ProductivityBar />
-    </TasksDateProvider>,
+    <MemoryRouter>
+      <TasksDatesRangeProvider>
+        <TasksDateProvider>
+          <ProductivityBar />
+        </TasksDateProvider>
+      </TasksDatesRangeProvider>
+    </MemoryRouter>,
   );
 
   const percentageInfo = screen.getByTestId("productivity-line");
