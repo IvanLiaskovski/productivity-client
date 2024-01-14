@@ -5,8 +5,9 @@ import { request, gql, ClientError } from "graphql-request";
 const graphqlBaseQuery =
   ({ baseUrl }) =>
   async ({ body, variables }) => {
+    const token = Cookies.get("productivity-token");
     const requestHeaders = {
-      Authorization: `Bearer ${Cookies.get("productivity-token")}`,
+      Authorization: token ? `Bearer ${token}` : `Bearer`,
     };
 
     try {
