@@ -5,9 +5,11 @@ import { useMemo } from "react";
 import Input from "../../../../components/Fields/Input";
 import Modal from "../../../../components/Modals/Modal";
 import Button from "../../../../components/Buttons/Button";
+import TryDemoButton from "../TryDemoButton/TryDemoButton";
+import FormTitle from "./FromTitle/FormTitle";
 
-const UserForm = ({ title, isRegistration }) => {
-  const { signUpUser, loginUser, tryDemo } = useAuth();
+const UserForm = ({ isRegistration }) => {
+  const { signUpUser, loginUser } = useAuth();
 
   const defaultValues = useMemo(() => {
     return isRegistration
@@ -27,9 +29,7 @@ const UserForm = ({ title, isRegistration }) => {
 
   return (
     <Modal isTransparent>
-      <h1 className="mx-auto w-3/4 text-center text-3xl uppercase text-blue-50">
-        {title}
-      </h1>
+      <FormTitle isRegistration={isRegistration} />
       <div
         className="flex-end mt-6 flex w-full flex-col rounded-xl bg-block px-4
     py-7 shadow-[0px_-10px_28px_0px_rgba(0,0,0,0.4)_inset] transition-all duration-500 lg:p-6"
@@ -69,10 +69,15 @@ const UserForm = ({ title, isRegistration }) => {
               />
             )}
           />
-          <Button type="submit" className="mt-4 w-full font-medium">
-            {isRegistration ? "Sign Up" : "Sign In"}
-          </Button>
-          <button onClick={() => tryDemo()}>Try Demo</button>
+          <div className="mt-4 flex gap-3">
+            <Button
+              type="submit"
+              className="w-full font-medium duration-150 hover:opacity-90"
+            >
+              {isRegistration ? "Sign Up" : "Sign In"}
+            </Button>
+            <TryDemoButton />
+          </div>
         </form>
       </div>
     </Modal>
@@ -80,7 +85,6 @@ const UserForm = ({ title, isRegistration }) => {
 };
 
 UserForm.propTypes = {
-  title: PropTypes.string,
   isRegistration: PropTypes.bool,
 };
 
