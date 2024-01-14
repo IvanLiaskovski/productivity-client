@@ -3,6 +3,7 @@ import {
   createEntityAdapter,
   createSelector,
 } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import { api } from "../../api/api";
 import { v4 as uuid } from "uuid";
 import { sortTasks } from "./helpers/tasksHelpers";
@@ -10,9 +11,13 @@ import { INITAIAL_TASKS } from "../../data/initialTasksData";
 import moment from "moment";
 
 const tasksAdapter = createEntityAdapter({});
-const initialTasks = localStorage.getItem("productivityTasks")?.length
-  ? JSON.parse(localStorage.getItem("productivityTasks"))
-  : INITAIAL_TASKS;
+const initialTasks =
+  localStorage.getItem("productivityTasks")?.length &&
+  !Boolean(Cookies.get("productivity-token"))
+    ? JSON.parse(localStorage.getItem("productivityTasks"))
+    : Boolean(Cookies.get("productivity-token"))
+    ? {}
+    : INITAIAL_TASKS;
 
 const initialState = tasksAdapter.getInitialState({
   ...initialTasks,

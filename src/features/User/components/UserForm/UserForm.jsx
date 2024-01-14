@@ -6,7 +6,7 @@ import Input from "../../../../components/Fields/Input";
 import Modal from "../../../../components/Modals/Modal";
 import Button from "../../../../components/Buttons/Button";
 import TryDemoButton from "../TryDemoButton/TryDemoButton";
-import FormTitle from "./FromTitle/FormTitle";
+import FormTitle from "./FormTitle/FormTitle";
 
 const UserForm = ({ isRegistration }) => {
   const { signUpUser, loginUser } = useAuth();
