@@ -5,7 +5,6 @@ import { useCreateTaskMutation } from "../../../api/api";
 
 export function useCreateTask({ name, notes, priority, date, type }) {
   const { user, isDemo } = useCheckAuth();
-
   const dispatch = useDispatch();
   const [createTaskMutation] = useCreateTaskMutation();
 
@@ -20,7 +19,7 @@ export function useCreateTask({ name, notes, priority, date, type }) {
       });
     }
 
-    if (isDemo) {
+    if (isDemo && !user) {
       dispatch(
         createTask({
           name,
