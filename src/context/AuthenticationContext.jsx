@@ -7,7 +7,9 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isDemo, setIsDemo] = useState(false);
+  const [isDemo, setIsDemo] = useState(
+    Boolean(Cookies.get("productivity-demo")),
+  );
   const [signUp] = useSignUpMutation();
   const [logIn] = useLogInMutation();
 
@@ -29,6 +31,8 @@ export const AuthProvider = ({ children }) => {
     await logIn(userData);
     setUser(userData);
     setIsDemo(false);
+
+    Cookies.set("productivity-demo", false);
     Cookies.set("productivity-token", userData);
   };
 
@@ -40,6 +44,7 @@ export const AuthProvider = ({ children }) => {
 
   const tryDemo = () => {
     setIsDemo(true);
+    Cookies.set("productivity-demo", true);
     window.location = "/";
   };
 
