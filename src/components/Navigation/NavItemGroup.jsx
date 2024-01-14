@@ -30,7 +30,7 @@ const navItems = [
 ];
 
 const NavItemGroup = () => {
-  const { user, logout } = useAuth();
+  const { user, logoutUser } = useAuth();
 
   return (
     <IconContextProvider value={{ className: "text-4xl" }}>
@@ -45,7 +45,7 @@ const NavItemGroup = () => {
           ))}
           <li>
             {user ? (
-              <LogOutBtn onClick={() => logout()}>
+              <LogOutBtn onClick={() => logoutUser()}>
                 <CiLogout />
               </LogOutBtn>
             ) : (
