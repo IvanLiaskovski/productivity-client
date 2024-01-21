@@ -18,7 +18,7 @@ const TaskEdit = ({
   const [notes, setNotes] = useState(notesProps);
   const [priority, setPriority] = useState(priorityProps);
   const [isActionStart, setActionStart] = useState(false);
-  const updateTask = useUpdateTask();
+  const [updateTask, errors] = useUpdateTask();
 
   const panelWrapperStyles = twMerge(
     "relative z-20 p-2",
@@ -27,20 +27,21 @@ const TaskEdit = ({
 
   const closeEdit = () => setOpen(false);
 
-  function saveTask() {
-    updateTask({
+  async function saveTask() {
+    const isSuccessful = await updateTask({
       id,
       name,
       notes,
       priority,
     });
 
-    closeEdit();
+    if (isSuccessful) {
+      closeEdit();
+    }
   }
 
   const handleStartAction = () => {
     setActionStart(true);
-    closeEdit();
   };
 
   return (
@@ -55,6 +56,7 @@ const TaskEdit = ({
           setPriority={setPriority}
           onSave={saveTask}
           priorityBackground="dark"
+          errors={errors}
         />
       </div>
       <TaskActions

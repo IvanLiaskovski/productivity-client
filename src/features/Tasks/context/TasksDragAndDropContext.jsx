@@ -15,7 +15,7 @@ const TasksDragAndDropContext = ({
   setActiveTaskId,
   children,
 }) => {
-  const updateTask = useUpdateTask();
+  const [updateTask] = useUpdateTask();
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
