@@ -9,7 +9,7 @@ import TryDemoButton from "../TryDemoButton/TryDemoButton";
 import FormTitle from "./FormTitle/FormTitle";
 
 const UserForm = ({ isRegistration }) => {
-  const { signUpUser, loginUser } = useAuth();
+  const { signUpUser, loginUser, errors } = useAuth();
 
   const defaultValues = useMemo(() => {
     return isRegistration
@@ -69,6 +69,9 @@ const UserForm = ({ isRegistration }) => {
               />
             )}
           />
+          <ul className="text-red-500">
+            {errors.map((error) => error.message)}
+          </ul>
           <div className="mt-4 flex gap-3">
             <Button
               type="submit"
