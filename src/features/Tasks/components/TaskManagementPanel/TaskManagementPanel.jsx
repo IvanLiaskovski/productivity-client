@@ -4,6 +4,7 @@ import { useRef } from "react";
 import SaveBtn from "../../../../components/Buttons/SaveBtn";
 import Textarea from "../../../../components/Fields/Textarea";
 import PriorityPanel from "../Priority/PriorityPanel";
+import TaskErrors from "./TaskErrors/TaskErrors";
 import { FaRegPaperPlane } from "react-icons/fa";
 
 const TaskManagementPanel = ({
@@ -16,6 +17,7 @@ const TaskManagementPanel = ({
   onSave,
   mode,
   priorityBackground,
+  errors,
 }) => {
   const taskNameRef = useRef();
 
@@ -53,6 +55,7 @@ const TaskManagementPanel = ({
         placeholder="Type notes..."
         className="max-h-full md:max-h-max"
       />
+      <TaskErrors errors={errors} />
       <div className="mt-4 flex justify-end">
         <div className="flex gap-1 pr-2">
           <PriorityPanel
@@ -81,6 +84,7 @@ TaskManagementPanel.propTypes = {
   onSave: PropTypes.func,
   mode: PropTypes.string,
   priorityBackground: PropTypes.string,
+  errors: PropTypes.array,
 };
 
 export default TaskManagementPanel;
