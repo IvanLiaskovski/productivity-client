@@ -2,21 +2,40 @@ import { useCheckAuth } from "../../../context/AuthenticationContext";
 import { useDispatch } from "react-redux";
 import { createTask } from "../tasksSlice";
 import { useCreateTaskMutation } from "../../../api/api";
+import { useState } from "react";
 
 export function useCreateTask({ name, notes, priority, date, type }) {
-  const { user, isDemo } = useCheckAuth();
   const dispatch = useDispatch();
+  const { user, isDemo } = useCheckAuth();
   const [createTaskMutation] = useCreateTaskMutation();
+  const [errors, setErrors] = useState([]);
 
   const handleTaskCreation = async () => {
+    let isSuccessful = true;
+
     if (user) {
       await createTaskMutation({
         name,
         notes,
-        priority: 1,
+        priority,
         date,
         type,
-      });
+      })
+        .unwrap()
+        .then(() => setErrors([]))
+        .catch((res) => {
+          isSuccessful = false;
+          if (res?.data?.response?.errors[0]?.errorsPretty?.length) {
+            setErrors(res.data.response.errors[0].errorsPretty);
+          } else {
+            setErrors([
+              {
+                message:
+                  "Something went wrong. Please try again later or reload the page",
+              },
+            ]);
+          }
+        });
     }
 
     if (isDemo && !user) {
@@ -30,7 +49,9 @@ export function useCreateTask({ name, notes, priority, date, type }) {
         }),
       );
     }
+
+    return isSuccessful;
   };
 
-  return [handleTaskCreation];
+  return [handleTaskCreation, errors];
 }

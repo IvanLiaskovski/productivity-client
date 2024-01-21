@@ -14,7 +14,7 @@ const TaskCreation = ({
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
   const [priority, setPriority] = useState("common");
-  const [createTask] = useCreateTask({
+  const [createTask, errors] = useCreateTask({
     name,
     notes,
     priority,
@@ -30,13 +30,13 @@ const TaskCreation = ({
       return;
     }
 
-    console.log({ name, notes, priority, date, type });
+    const isSuccessful = await createTask();
 
-    await createTask();
-
-    onAfterSave();
-    setName("");
-    setNotes("");
+    if (isSuccessful) {
+      onAfterSave();
+      setName("");
+      setNotes("");
+    }
   };
 
   return (
@@ -50,6 +50,7 @@ const TaskCreation = ({
       onSave={handleTaskCreation}
       mode={mode}
       priorityBackground={priorityBackground}
+      errors={errors}
     />
   );
 };
