@@ -9,9 +9,11 @@ const userApi = api.injectEndpoints({
         body: gql`
           mutation Mutation($input: RegisterUserInput!) {
             registerUser(input: $input) {
-              token {
-                accessToken
-                expiresIn
+              auth {
+                token {
+                  accessToken
+                  expiresIn
+                }
               }
             }
           }
@@ -21,11 +23,10 @@ const userApi = api.injectEndpoints({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(data.registerUser.token);
-          const token = data.registerUser.token.accessToken;
-          const expiredTime = data.registerUser.token.expiresIn;
-          console.log(token);
-          Cookies.set("productivity-token", token, 1); // Temporary set to 1 day
+          const token = data.registerUser.auth.token.accessToken;
+          const expiredTime = data.registerUser.auth.token.expiresIn;
+
+          Cookies.set("productivity-token", token, expiredTime);
           window.location = "/";
         } catch (err) {
           console.log("SignUp API error", err);
@@ -37,9 +38,11 @@ const userApi = api.injectEndpoints({
         body: gql`
           mutation Mutation($input: LoginUserInput!) {
             loginUser(input: $input) {
-              token {
-                accessToken
-                expiresIn
+              auth {
+                token {
+                  accessToken
+                  expiresIn
+                }
               }
             }
           }
@@ -49,11 +52,10 @@ const userApi = api.injectEndpoints({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(data.loginUser.token);
-          const token = data.loginUser.token.accessToken;
-          const expiredTime = data.loginUser.token.expiresIn;
-          console.log(token);
-          Cookies.set("productivity-token", token, 1); // Temporary set to 1 day
+          const token = data.loginUser.auth.token.accessToken;
+          const expiredTime = data.loginUser.auth.token.expiresIn;
+
+          Cookies.set("productivity-token", token, expiredTime);
           window.location = "/";
         } catch (err) {
           console.log("SignUp API error", err);

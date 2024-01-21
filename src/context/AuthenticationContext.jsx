@@ -12,28 +12,45 @@ export const AuthProvider = ({ children }) => {
   );
   const [signUp] = useSignUpMutation();
   const [logIn] = useLogInMutation();
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     const user = Cookies.get("productivity-token");
+
     if (user) {
       setUser(user);
     }
   }, []);
 
   const signUpUser = async (userData) => {
-    const { data } = await signUp(userData);
-    if (data) {
-      loginUser(data);
-    }
+    await signUp(userData)
+      .unwrap()
+      .then((data) => {
+        if (data) {
+          setErrors([]);
+          loginUser(data);
+        }
+      })
+      .catch((err) => {
+        const errors = err.data.response.errors[0].errorsPretty;
+        setErrors(errors);
+      });
   };
 
   const loginUser = async (userData) => {
-    await logIn(userData);
-    setUser(userData);
-    setIsDemo(false);
-
-    Cookies.set("productivity-demo", false);
-    Cookies.set("productivity-token", userData);
+    await logIn(userData)
+      .unwrap()
+      .then(() => {
+        setUser(userData);
+        setIsDemo(false);
+        setErrors([]);
+        Cookies.set("productivity-demo", false);
+      })
+      .catch((err) => {
+        if (err.status === 401) {
+          setErrors([{ message: "Invalid email or password" }]);
+        }
+      });
   };
 
   const logoutUser = () => {
@@ -45,6 +62,7 @@ export const AuthProvider = ({ children }) => {
   const tryDemo = () => {
     setIsDemo(true);
     Cookies.set("productivity-demo", true);
+    Cookies.set("productivity-token", null);
     window.location = "/";
   };
 
@@ -66,6 +84,7 @@ export const AuthProvider = ({ children }) => {
         checkLogin,
         isDemo,
         tryDemo,
+        errors,
       }}
     >
       {children}

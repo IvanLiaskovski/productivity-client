@@ -39,6 +39,7 @@ export const api = createApi({
                   id
                   name
                   notes
+                  priority
                   type
                   date
                 }
@@ -98,7 +99,7 @@ export const api = createApi({
           }
         `,
         variables: {
-          input: { id, name, date, notes, isCompleted, priority: 1 },
+          input: { id, name, date, notes, isCompleted, priority },
         },
       }),
       async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
