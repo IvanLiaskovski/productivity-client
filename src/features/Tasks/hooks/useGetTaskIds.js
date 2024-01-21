@@ -11,16 +11,16 @@ export function useGetTaskIds(date, type) {
       : moment(date).format("YYYY-MM-DD");
 
   const { isDemo, user } = useCheckAuth();
-  const { isLoading } = useGetTasksQuery(
+  const { isLoading, isError, error } = useGetTasksQuery(
     {
       start: date,
       end: date,
       view: type,
     },
-    { skip: isDemo && !user },
+    { skip: isDemo || !user },
   );
 
   const tasks = useSelector((state) => selectTaskIdsByDate(state, date, type));
 
-  return { tasks, isLoading };
+  return { tasks, isLoading, isError, error };
 }
