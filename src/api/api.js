@@ -42,6 +42,7 @@ export const api = createApi({
                   priority
                   type
                   date
+                  isCompleted
                 }
               }
             }
@@ -72,12 +73,13 @@ export const api = createApi({
       async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-
-          dispatch(
-            api.util.upsertQueryData("getTasks", id, {
-              tasks: [data.createTask],
-            }),
-          );
+          if (data?.createTask) {
+            dispatch(
+              api.util.upsertQueryData("getTasks", id, {
+                tasks: [data.createTask],
+              }),
+            );
+          }
         } catch {
           console.log("Create task API error");
         }
@@ -106,11 +108,13 @@ export const api = createApi({
         try {
           const { data } = await queryFulfilled;
 
-          dispatch(
-            api.util.upsertQueryData("getTasks", id, {
-              tasks: [data.updateTask],
-            }),
-          );
+          if (data?.updateTask) {
+            dispatch(
+              api.util.upsertQueryData("getTasks", id, {
+                tasks: [data.updateTask],
+              }),
+            );
+          }
         } catch {
           console.log("Update task API error");
         }

@@ -13,9 +13,9 @@ import moment from "moment";
 const tasksAdapter = createEntityAdapter({});
 const initialTasks =
   localStorage.getItem("productivityTasks")?.length &&
-  !Boolean(Cookies.get("productivity-token"))
+  Cookies.get("productivity-token") === "null"
     ? JSON.parse(localStorage.getItem("productivityTasks"))
-    : Boolean(Cookies.get("productivity-token"))
+    : Cookies.get("productivity-token") !== "null"
     ? {}
     : INITAIAL_TASKS;
 
