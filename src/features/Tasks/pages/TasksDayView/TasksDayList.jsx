@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 import TaskItem from "../../components/TaskItem/TaskItem";
 import TaskDraggable from "../../components/TaskItem/TaskDraggable";
 import TaskTooltip from "../../components/TaskTooltip/TaskTooltip";
+import ErrorPopup from "../../../../components/Errors/ErrorPopup/ErrorPopup";
 import Loading from "./Loading";
 
 const TasksDayList = ({
@@ -16,7 +17,11 @@ const TasksDayList = ({
   cancel,
   className,
 }) => {
-  const { isLoading, tasks } = useGetTaskIds(tasksDate, tasksType);
+  const { isLoading, tasks, isError, error } = useGetTaskIds(
+    tasksDate,
+    tasksType,
+  );
+
   const [editableTaskId, setEditableTaskId] = useState("");
 
   const styles = twMerge(
@@ -52,6 +57,8 @@ const TasksDayList = ({
 
   return isLoading ? (
     <Loading />
+  ) : isError ? (
+    <ErrorPopup>{error}</ErrorPopup>
   ) : (
     <div className={styles}>
       {transitions(

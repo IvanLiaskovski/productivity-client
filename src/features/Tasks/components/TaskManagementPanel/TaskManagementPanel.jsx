@@ -4,27 +4,29 @@ import { useRef } from "react";
 import SaveBtn from "../../../../components/Buttons/SaveBtn";
 import Textarea from "../../../../components/Fields/Textarea";
 import PriorityPanel from "../Priority/PriorityPanel";
+import TaskErrors from "./TaskErrors/TaskErrors";
 import { FaRegPaperPlane } from "react-icons/fa";
 
 const TaskManagementPanel = ({
-  content,
-  description,
+  name,
+  notes,
   priority,
-  setContent,
-  setDescription,
+  setName,
+  setNotes,
   setPriority,
   onSave,
   mode,
   priorityBackground,
+  errors,
 }) => {
   const taskNameRef = useRef();
 
-  const handleChangeContent = (e) => {
-    setContent(e.target.value);
+  const handleChangename = (e) => {
+    setName(e.target.value);
   };
 
-  const handleCahngeDescription = (e) => {
-    setDescription(e.target.value);
+  const handleCahngenotes = (e) => {
+    setNotes(e.target.value);
   };
 
   const saveHandle = () => {
@@ -36,8 +38,8 @@ const TaskManagementPanel = ({
     <>
       <Textarea
         title="Name:"
-        value={content}
-        onChange={handleChangeContent}
+        value={name}
+        onChange={handleChangename}
         autoFocus
         mode={mode}
         placeholder="Type task..."
@@ -45,14 +47,15 @@ const TaskManagementPanel = ({
         ref={taskNameRef}
       />
       <Textarea
-        title="Description:"
-        value={description}
-        onChange={handleCahngeDescription}
+        title="Notes:"
+        value={notes}
+        onChange={handleCahngenotes}
         autoFocus
         mode={mode}
-        placeholder="Type description..."
+        placeholder="Type notes..."
         className="max-h-full md:max-h-max"
       />
+      <TaskErrors errors={errors} />
       <div className="mt-4 flex justify-end">
         <div className="flex gap-1 pr-2">
           <PriorityPanel
@@ -72,15 +75,16 @@ const TaskManagementPanel = ({
 };
 
 TaskManagementPanel.propTypes = {
-  content: PropTypes.string,
-  description: PropTypes.string,
+  name: PropTypes.string,
+  notes: PropTypes.string,
   priority: PropTypes.string,
-  setContent: PropTypes.func,
-  setDescription: PropTypes.func,
+  setName: PropTypes.func,
+  setNotes: PropTypes.func,
   setPriority: PropTypes.func,
   onSave: PropTypes.func,
   mode: PropTypes.string,
   priorityBackground: PropTypes.string,
+  errors: PropTypes.array,
 };
 
 export default TaskManagementPanel;

@@ -8,7 +8,7 @@ import TaskActions from "./TaskActions";
 import TaskSlideActions from "./TaskSlideActions";
 import TaskContent from "./TaskContent";
 
-const TaskActive = ({ taskId, content, priority, hideActions, setOpen }) => {
+const TaskActive = ({ taskId, name, priority, hideActions, setOpen }) => {
   const isScreenMedium = useMediaQuery({ query: "(min-width: 768px)" });
   const [isActionStart, setActionStart] = useState(false);
 
@@ -22,7 +22,7 @@ const TaskActive = ({ taskId, content, priority, hideActions, setOpen }) => {
   return (
     <div className={styles} onClick={openTaskHandle}>
       <TaskSlideActions taskId={taskId}>
-        <TaskContent taskId={taskId} content={content} />
+        <TaskContent taskId={taskId} name={name} />
         <PriorityMark taskId={taskId} priority={priority} />
       </TaskSlideActions>
       {isScreenMedium && !hideActions && (
@@ -38,7 +38,7 @@ const TaskActive = ({ taskId, content, priority, hideActions, setOpen }) => {
 
 TaskActive.propTypes = {
   taskId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  content: PropTypes.string,
+  name: PropTypes.string,
   priority: PropTypes.string,
   hideActions: PropTypes.bool,
   setOpen: PropTypes.func,

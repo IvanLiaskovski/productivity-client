@@ -44,8 +44,8 @@ test("Should add all monday and thursday tasks", () => {
   );
 
   waitFor(() => {
-    [...mondayTasks, ...thursdayTasks].forEach(({ content }) => {
-      const task = screen.getByText(content);
+    [...mondayTasks, ...thursdayTasks].forEach(({ name }) => {
+      const task = screen.getByText(name);
 
       expect(task).toBeInTheDocument();
     });

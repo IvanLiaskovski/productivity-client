@@ -19,8 +19,8 @@ test("Shoud add three tasks", () => {
   render(<TasksWeekItem tasksDate={moment().format("YYYY-MM-DD")} />);
 
   waitFor(() => {
-    tasksData.forEach(({ content }) => {
-      const taskTitle = screen.getByText(content);
+    tasksData.forEach(({ name }) => {
+      const taskTitle = screen.getByText(name);
       expect(taskTitle).toBeInTheDocument();
     });
   });

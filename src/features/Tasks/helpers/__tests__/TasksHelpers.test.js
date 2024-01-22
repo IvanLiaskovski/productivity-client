@@ -9,11 +9,6 @@ import { TasksDateProvider } from "../../context/TasksDateContext";
 import { TasksDatesRangeProvider } from "../../context/TasksDatesRangeContext";
 import { MemoryRouter } from "react-router";
 
-const mockTasksRangeDateContext = {
-  date: new Date(),
-  setDate: jest.fn((newDate) => (mockTasksRangeDateContext.date = newDate)),
-};
-
 const currentDate = moment();
 
 test("Create month days array", () => {
@@ -48,9 +43,7 @@ test("Sort tasks by priority", () => {
     <MemoryRouter>
       <Provider store={store}>
         <TasksDatesRangeProvider>
-          <TasksDateProvider {...mockTasksRangeDateContext}>
-            {children}
-          </TasksDateProvider>
+          <TasksDateProvider>{children}</TasksDateProvider>
         </TasksDatesRangeProvider>
       </Provider>
     </MemoryRouter>

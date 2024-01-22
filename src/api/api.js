@@ -1,11 +1,13 @@
+import Cookies from "js-cookie";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { request, gql, ClientError } from "graphql-request";
 
 const graphqlBaseQuery =
   ({ baseUrl }) =>
   async ({ body, variables }) => {
+    const token = Cookies.get("productivity-token");
     const requestHeaders = {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjOWIwOWVkNWEzODdlNDdmYmIwMmUiLCJpYXQiOjE3MDE2MTYzOTN9.R9AVUDrPF6CL3F2fEjDVyHbSLP5eHAr6BuGryWAmxMI`,
+      Authorization: token ? `Bearer ${token}` : `Bearer`,
     };
 
     try {
@@ -34,10 +36,13 @@ export const api = createApi({
               ... on TaskSingleListView {
                 count
                 tasks {
-                  name
                   id
+                  name
+                  notes
+                  priority
                   type
                   date
+                  isCompleted
                 }
               }
             }
@@ -48,7 +53,7 @@ export const api = createApi({
       providesTags: ["Tasks"],
     }),
     createTask: builder.mutation({
-      query: ({ name, type, description, date, priority }) => ({
+      query: ({ name, notes, type, date, priority, isCompleted }) => ({
         body: gql`
           mutation Mutation($input: CreateTaskInput!) {
             createTask(input: $input) {
@@ -62,18 +67,19 @@ export const api = createApi({
           }
         `,
         variables: {
-          input: { name, type, notes: description, date, priority },
+          input: { name, notes, type, date, priority, isCompleted },
         },
       }),
       async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-
-          dispatch(
-            api.util.upsertQueryData("getTasks", id, {
-              tasks: [data.createTask],
-            }),
-          );
+          if (data?.createTask) {
+            dispatch(
+              api.util.upsertQueryData("getTasks", id, {
+                tasks: [data.createTask],
+              }),
+            );
+          }
         } catch {
           console.log("Create task API error");
         }
@@ -95,18 +101,20 @@ export const api = createApi({
           }
         `,
         variables: {
-          input: { id, name, date, notes, isCompleted, priority: 1 },
+          input: { id, name, date, notes, isCompleted, priority },
         },
       }),
       async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
 
-          dispatch(
-            api.util.upsertQueryData("getTasks", id, {
-              tasks: [data.updateTask],
-            }),
-          );
+          if (data?.updateTask) {
+            dispatch(
+              api.util.upsertQueryData("getTasks", id, {
+                tasks: [data.updateTask],
+              }),
+            );
+          }
         } catch {
           console.log("Update task API error");
         }

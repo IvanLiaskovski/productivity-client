@@ -3,6 +3,7 @@ import {
   createEntityAdapter,
   createSelector,
 } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import { api } from "../../api/api";
 import { v4 as uuid } from "uuid";
 import { sortTasks } from "./helpers/tasksHelpers";
@@ -10,9 +11,13 @@ import { INITAIAL_TASKS } from "../../data/initialTasksData";
 import moment from "moment";
 
 const tasksAdapter = createEntityAdapter({});
-const initialTasks = localStorage.getItem("productivityTasks")?.length
-  ? JSON.parse(localStorage.getItem("productivityTasks"))
-  : INITAIAL_TASKS;
+const initialTasks =
+  localStorage.getItem("productivityTasks")?.length &&
+  Cookies.get("productivity-token") === "null"
+    ? JSON.parse(localStorage.getItem("productivityTasks"))
+    : Cookies.get("productivity-token") !== "null"
+    ? {}
+    : INITAIAL_TASKS;
 
 const initialState = tasksAdapter.getInitialState({
   ...initialTasks,
@@ -57,12 +62,17 @@ const tasksSlice = createSlice({
           : action.payload.tasks;
         if (!tasksData) return;
 
-        const tasks = tasksData.map(({ id, name, type, date }) => ({
-          id,
-          content: name,
-          type,
-          date: moment(date).format("YYYY-MM-DD"),
-        }));
+        const tasks = tasksData.map(
+          ({ id, name, notes, type, date, isCompleted, priority }) => ({
+            id,
+            name,
+            notes,
+            type,
+            date: moment(date).format("YYYY-MM-DD"),
+            isCompleted,
+            priority,
+          }),
+        );
 
         tasksAdapter.upsertMany(state, tasks);
       },

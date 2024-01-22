@@ -9,13 +9,11 @@ import { TasksDatesRangeProvider } from "../../../context/TasksDatesRangeContext
 import { MemoryRouter } from "react-router";
 import TasksDayList from "../TasksDayList";
 
-const testTaskContents = ["Test", "Test1", "Test2"];
+const testTasknames = ["Test", "Test1", "Test2"];
 const testTaskIds = [];
 
 beforeAll(() => {
-  testTaskContents.forEach((content) =>
-    testTaskIds.push(createTestTask(content)),
-  );
+  testTasknames.forEach((name) => testTaskIds.push(createTestTask(name)));
 });
 
 afterAll(() => {
@@ -34,8 +32,8 @@ test("TasksDayList render tasks list", () => {
   );
 
   waitFor(() => {
-    testTaskContents.forEach((content) => {
-      expect(screen.getByText(content)).toBeInTheDocument();
+    testTasknames.forEach((name) => {
+      expect(screen.getByText(name)).toBeInTheDocument();
     });
   });
 });

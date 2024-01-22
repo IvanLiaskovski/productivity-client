@@ -3,39 +3,39 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TaskManagementPanel from "../TaskManagementPanel";
 
-const testContent = "Test task";
-const testDescription = "Test description";
+const testName = "Test task";
+const testNotes = "Test notes";
 const mockTypeTextEvent = jest.fn();
 const mockSaveEvent = jest.fn();
 
-test("Type and save content", async () => {
+test("Type and save name", async () => {
   render(
     <TaskManagementPanel
-      content={testContent}
-      description={testDescription}
-      setContent={mockTypeTextEvent}
+      name={testName}
+      notes={testNotes}
+      setname={mockTypeTextEvent}
       onSave={mockSaveEvent}
     />,
   );
 
-  const contentField = screen.getByRole("textbox", { name: /name:/i });
-  const descriptionField = screen.getByRole("textbox", {
-    name: /description:/i,
+  const nameField = screen.getByRole("textbox", { name: /name:/i });
+  const notesField = screen.getByRole("textbox", {
+    name: /notes:/i,
   });
   const saveBtn = screen.getByTitle("Save");
 
-  expect(contentField).toBeInTheDocument();
+  expect(nameField).toBeInTheDocument();
   expect(saveBtn).toBeInTheDocument();
-  expect(contentField.value).toBe(testContent);
-  expect(descriptionField.value).toBe(testDescription);
+  expect(nameField.value).toBe(testName);
+  expect(notesField.value).toBe(testNotes);
 
   await userEvent.click(saveBtn);
   expect(mockSaveEvent).toBeCalled();
 });
 
 test("Text color", async () => {
-  render(<TaskManagementPanel content={testContent} textColor="mode" />);
+  render(<TaskManagementPanel name={testName} textColor="mode" />);
 
-  const contentField = screen.getByRole("textbox", { name: /name:/i });
-  expect(contentField).toHaveClass("text-blue-100");
+  const nameField = screen.getByRole("textbox", { name: /name:/i });
+  expect(nameField).toHaveClass("text-blue-100");
 });

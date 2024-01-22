@@ -9,10 +9,10 @@ import { updateTask } from "../../../tasksSlice";
 import TaskUnDo from "../TaskUnDo";
 
 let testTaskId;
-const content = "Test task content";
+const name = "Test task name";
 
 beforeAll(() => {
-  testTaskId = createTestTask(content);
+  testTaskId = createTestTask(name);
   store.dispatch(
     updateTask({
       id: testTaskId,

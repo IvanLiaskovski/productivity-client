@@ -6,16 +6,12 @@ import { TasksDateProvider } from "../../context/TasksDateContext";
 import { TasksDatesRangeProvider } from "../../context/TasksDatesRangeContext";
 import { useGetTasks } from "../useGetTasks";
 
-
-
-test("Ensure useGetTasks retrieves tasks contents from Redux store accurately", () => {
+test("Ensure useGetTasks retrieves tasks names from Redux store accurately", () => {
   const wrapper = ({ children }) => (
     <MemoryRouter>
       <Provider store={store}>
         <TasksDatesRangeProvider>
-        <TasksDateProvider>
-          {children}
-        </TasksDateProvider>
+          <TasksDateProvider>{children}</TasksDateProvider>
         </TasksDatesRangeProvider>
       </Provider>
     </MemoryRouter>
@@ -23,5 +19,5 @@ test("Ensure useGetTasks retrieves tasks contents from Redux store accurately", 
   const { result } = renderHook(() => useGetTasks(), { wrapper });
 
   expect(result.current).toHaveLength(3);
-  expect(result.current[0].content).not.toBeUndefined();
+  expect(result.current[0].name).not.toBeUndefined();
 });

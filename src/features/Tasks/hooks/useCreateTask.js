@@ -1,37 +1,63 @@
+import { useCheckAuth } from "../../../context/AuthenticationContext";
 import { useDispatch } from "react-redux";
 import { createTask } from "../tasksSlice";
 import { useCreateTaskMutation } from "../../../api/api";
+import { useState } from "react";
+import moment from "moment";
 
-export function useCreateTask({ content, description, priority, date, type }) {
-  //ToDo Login
-  const isLogin = true;
+export function useCreateTask({ name, notes, priority, date, type }) {
+  date =
+    type === "year"
+      ? moment(date).format("YYYY")
+      : moment(date).format("YYYY-MM-DD");
 
   const dispatch = useDispatch();
+  const { user, isDemo } = useCheckAuth();
   const [createTaskMutation] = useCreateTaskMutation();
+  const [errors, setErrors] = useState([]);
 
   const handleTaskCreation = async () => {
-    if (isLogin) {
+    let isSuccessful = true;
+
+    if (user) {
       await createTaskMutation({
-        name: content,
-        notes: description,
-        priority: 1,
+        name,
+        notes,
+        priority,
         date,
         type,
-      });
+      })
+        .unwrap()
+        .then(() => setErrors([]))
+        .catch((res) => {
+          isSuccessful = false;
+          if (res?.data?.response?.errors[0]?.errorsPretty?.length) {
+            setErrors(res.data.response.errors[0].errorsPretty);
+          } else {
+            setErrors([
+              {
+                message:
+                  "Something went wrong. Please try again later or reload the page",
+              },
+            ]);
+          }
+        });
     }
 
-    if (!isLogin) {
+    if (isDemo && !user) {
       dispatch(
         createTask({
-          content,
-          description,
-          priority,
+          name,
+          notes,
           date,
+          priority,
           type,
         }),
       );
     }
+
+    return isSuccessful;
   };
 
-  return [handleTaskCreation];
+  return [handleTaskCreation, errors];
 }
