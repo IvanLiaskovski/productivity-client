@@ -21,6 +21,7 @@ const TasksDayList = ({
     tasksDate,
     tasksType,
   );
+
   const [editableTaskId, setEditableTaskId] = useState("");
 
   const styles = twMerge(
