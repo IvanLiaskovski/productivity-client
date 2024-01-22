@@ -8,14 +8,14 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isDemo, setIsDemo] = useState(
-    Boolean(Cookies.get("productivity-demo")),
+    JSON.parse(Cookies.get("productivity-demo") || "false"),
   );
   const [signUp] = useSignUpMutation();
   const [logIn] = useLogInMutation();
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    const user = Cookies.get("productivity-token");
+    const user = Cookies.get("productivity-token") !== "null";
 
     if (user) {
       setUser(user);
