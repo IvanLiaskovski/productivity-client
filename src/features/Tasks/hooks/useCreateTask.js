@@ -3,8 +3,14 @@ import { useDispatch } from "react-redux";
 import { createTask } from "../tasksSlice";
 import { useCreateTaskMutation } from "../../../api/api";
 import { useState } from "react";
+import moment from "moment";
 
 export function useCreateTask({ name, notes, priority, date, type }) {
+  date =
+    type === "year"
+      ? moment(date).format("YYYY")
+      : moment(date).format("YYYY-MM-DD");
+
   const dispatch = useDispatch();
   const { user, isDemo } = useCheckAuth();
   const [createTaskMutation] = useCreateTaskMutation();
