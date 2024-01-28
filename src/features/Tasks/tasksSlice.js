@@ -68,7 +68,10 @@ const tasksSlice = createSlice({
             name,
             notes,
             type,
-            date: moment(date).format("YYYY-MM-DD"),
+            date:
+              type === "year"
+                ? moment(date).format("YYYY")
+                : moment(date).format("YYYY-MM-DD"),
             isCompleted,
             priority,
           }),
