@@ -3,12 +3,19 @@ import { useState } from "react";
 import { useMemo } from "react";
 import { createMonthDatesRange } from "../../helpers/tasksHelpers";
 import { useTasksDateContext } from "../../context/TasksDateContext";
+import { useFetchTasks } from "../../hooks/useFetchTasks";
 import TasksMonthItem from "./TasksMonthItem";
 import TasksDragAndDropContext from "../../context/TasksDragAndDropContext";
 
 const TasksMonthItemsGroup = () => {
   const { date } = useTasksDateContext();
   const [activeTaskId, setActiveTaskId] = useState(null);
+
+  const { isLoading, isError, error } = useFetchTasks(
+    moment(date).clone().startOf("month").format("YYYY-MM-DD"),
+    moment(date).clone().endOf("month").format("YYYY-MM-DD"),
+    "day",
+  );
 
   const monthDays = useMemo(
     () => createMonthDatesRange(moment(date).format("YYYY-MM-DD")),
@@ -31,6 +38,9 @@ const TasksMonthItemsGroup = () => {
             date={itemDate}
             day={day}
             allowTooltip={allowTooltip}
+            isLoading={isLoading}
+            isError={isError}
+            error={error}
           />
         ))}
       </div>

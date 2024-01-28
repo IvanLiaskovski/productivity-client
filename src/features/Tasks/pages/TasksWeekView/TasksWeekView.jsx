@@ -1,5 +1,4 @@
 import { Suspense, lazy } from "react";
-import { useTasksDateContext } from "../../context/TasksDateContext";
 import TasksWeekItemGroup from "./TasksWeekItemGroup";
 
 const TasksWeekSlider = lazy(() =>
@@ -11,14 +10,12 @@ const SlideWeekItem = lazy(() =>
 import Loading from "../../components/TasksWeekSlider/Loading";
 
 const TasksWeekView = () => {
-  const { date } = useTasksDateContext();
-
   return (
     <>
       <Suspense fallback={<Loading />}>
         <TasksWeekSlider SlideItem={SlideWeekItem} />
       </Suspense>
-      <TasksWeekItemGroup datesRange={date} />
+      <TasksWeekItemGroup />
     </>
   );
 };

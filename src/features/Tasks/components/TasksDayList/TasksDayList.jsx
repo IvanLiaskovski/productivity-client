@@ -4,9 +4,9 @@ import { useGetTaskIds } from "../../hooks/useGetTaskIds";
 import { useTransition, animated } from "react-spring";
 import { twMerge } from "tailwind-merge";
 
-import TaskItem from "../../components/TaskItem/TaskItem";
-import TaskDraggable from "../../components/TaskItem/TaskDraggable";
-import TaskTooltip from "../../components/TaskTooltip/TaskTooltip";
+import TaskItem from "../TaskItem/TaskItem";
+import TaskDraggable from "../TaskItem/TaskDraggable";
+import TaskTooltip from "../TaskTooltip/TaskTooltip";
 import ErrorPopup from "../../../../components/Errors/ErrorPopup/ErrorPopup";
 import Loading from "./Loading";
 
@@ -15,12 +15,12 @@ const TasksDayList = ({
   tasksType = "day",
   allowTooltip = true,
   cancel,
+  isLoading,
+  isError,
+  error,
   className,
 }) => {
-  const { isLoading, tasks, isError, error } = useGetTaskIds(
-    tasksDate,
-    tasksType,
-  );
+  const { tasks } = useGetTaskIds(tasksDate, tasksType);
 
   const [editableTaskId, setEditableTaskId] = useState("");
 
