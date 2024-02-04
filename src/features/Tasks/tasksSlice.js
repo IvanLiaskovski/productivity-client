@@ -4,7 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { api } from "../../api/api";
+import { tasksAPI } from "../../api/tasks/tasks";
 import { v4 as uuid } from "uuid";
 import { sortTasks } from "./helpers/tasksHelpers";
 import { INITAIAL_TASKS } from "../../data/initialTasksData";
@@ -55,7 +55,7 @@ const tasksSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      api.endpoints.getTasks.matchFulfilled,
+      tasksAPI.endpoints.getTasks.matchFulfilled,
       (state, action) => {
         const tasksData = action.payload?.getTasks
           ? action.payload.getTasks.tasks

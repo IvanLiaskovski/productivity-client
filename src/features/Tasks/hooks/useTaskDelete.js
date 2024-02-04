@@ -1,5 +1,5 @@
 import { useCheckAuth } from "../../../context/AuthenticationContext";
-import { useDeleteTaskMutation } from "../../../api/api";
+import { useDeleteTaskMutation } from "../../../api/tasks/tasks";
 import { useDispatch } from "react-redux";
 import { removeTask } from "../tasksSlice";
 

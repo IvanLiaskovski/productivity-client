@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useCheckAuth } from "../../../context/AuthenticationContext";
-import { useUpdateTaskMutation } from "../../../api/api";
+import { useUpdateTaskMutation } from "../../../api/tasks/tasks";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../tasksSlice";
 
