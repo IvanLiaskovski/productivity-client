@@ -6,10 +6,19 @@ import CreateBtn from "../../../../components/Buttons/CreateBtn";
 import { FaPlus } from "react-icons/fa";
 import TaskCreationModal from "../../components/Modals/TaskCreationModal";
 
-const TasksDayList = lazy(() => import("../TasksDayView/TasksDayList"));
-import Loading from "../TasksDayView/Loading";
+const TasksDayList = lazy(() =>
+  import("../../components/TasksDayList/TasksDayList"),
+);
+import Loading from "../../components/TasksDayList/Loading";
 
-const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
+const TasksWeekItem = ({
+  tasksDate,
+  allowTooltip,
+  isLoading,
+  isError,
+  error,
+  className,
+}) => {
   const { isOver, setNodeRef } = useDroppable({ id: tasksDate });
 
   const styles = twMerge(
@@ -25,7 +34,13 @@ const TasksWeekItem = ({ tasksDate, allowTooltip, className }) => {
           <FaPlus />
         </CreateBtn>
         <Suspense fallback={<Loading q={2} />}>
-          <TasksDayList tasksDate={tasksDate} allowTooltip={allowTooltip} />
+          <TasksDayList
+            tasksDate={tasksDate}
+            isLoading={isLoading}
+            isError={isError}
+            error={error}
+            allowTooltip={allowTooltip}
+          />
         </Suspense>
       </TaskCreationModal>
     </div>
