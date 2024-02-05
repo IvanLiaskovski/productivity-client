@@ -25,7 +25,7 @@ const TasksDayList = ({
   const [editableTaskId, setEditableTaskId] = useState("");
 
   const styles = twMerge(
-    "scrollbar-hide max-h-[50vh] md:max-w-[60vh] w-full overflow-x-auto overflow-y-visible",
+    "scrollbar-hide max-h-[50vh] md:max-h-[60vh] w-full overflow-x-auto overflow-y-visible",
     className,
   );
 
