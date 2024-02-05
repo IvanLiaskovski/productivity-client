@@ -1,3 +1,4 @@
+import { useMediaQuery } from "react-responsive";
 import { useAuth } from "../../context/AuthenticationContext";
 import NavItem from "./NavItem";
 import LogOutBtn from "./LogOutBtn";
@@ -31,6 +32,7 @@ const navItems = [
 
 const NavItemGroup = () => {
   const { user, logoutUser } = useAuth();
+  const isScreenMedium = useMediaQuery({ query: "(min-width: 724px)" });
 
   return (
     <IconContextProvider value={{ className: "text-4xl" }}>
@@ -44,15 +46,15 @@ const NavItemGroup = () => {
             </li>
           ))}
           <li>
-            {user ? (
+            {user && isScreenMedium ? (
               <LogOutBtn onClick={() => logoutUser()}>
                 <CiLogout />
               </LogOutBtn>
-            ) : (
+            ) : isScreenMedium ? (
               <NavItem url="/user/login">
                 <CiLogin />
               </NavItem>
-            )}
+            ) : null}
           </li>
         </ul>
       </nav>
