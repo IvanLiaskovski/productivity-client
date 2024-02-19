@@ -9,6 +9,7 @@ import TaskDraggable from "../TaskItem/TaskDraggable";
 import TaskTooltip from "../TaskTooltip/TaskTooltip";
 import ErrorPopup from "../../../../components/Errors/ErrorPopup/ErrorPopup";
 import Loading from "./Loading";
+import LoadMore from "./LoadMore/LoadMore";
 
 const TasksDayList = ({
   tasksDate,
@@ -80,6 +81,7 @@ const TasksDayList = ({
             </div>
           ),
       )}
+      <LoadMore date={tasksDate} page={1} nextPageProp={2} />
     </div>
   );
 };
