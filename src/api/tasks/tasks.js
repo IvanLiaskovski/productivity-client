@@ -10,6 +10,7 @@ export const tasksAPI = api.injectEndpoints({
             getTasks(params: $params) {
               ... on TaskSingleListView {
                 count
+                date
                 tasks {
                   id
                   name
@@ -21,6 +22,35 @@ export const tasksAPI = api.injectEndpoints({
                 }
                 page
                 nextPage
+              }
+            }
+          }
+        `,
+        variables: { params: { view, start, end, page } },
+      }),
+      providesTags: ["Tasks"],
+    }),
+    getTasksAggregated: builder.query({
+      query: ({ view, start, end, page }) => ({
+        body: gql`
+          query Query($params: TasksQueryParams!) {
+            getTasks(params: $params) {
+              ... on TaskAggregatedListView {
+                tasks {
+                  count
+                  date
+                  tasks {
+                    id
+                    name
+                    notes
+                    priority
+                    type
+                    date
+                    isCompleted
+                  }
+                  page
+                  nextPage
+                }
               }
             }
           }
@@ -112,6 +142,7 @@ export const tasksAPI = api.injectEndpoints({
 
 export const {
   useGetTasksQuery,
+  useGetTasksAggregatedQuery,
   useLazyGetTasksQuery,
   useCreateTaskMutation,
   useUpdateTaskMutation,
