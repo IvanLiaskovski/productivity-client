@@ -54,32 +54,62 @@ const tasksSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      tasksAPI.endpoints.getTasks.matchFulfilled,
-      (state, action) => {
-        const tasksData = action.payload?.getTasks
-          ? action.payload.getTasks.tasks
-          : action.payload.tasks;
-        if (!tasksData) return;
+    builder
+      .addMatcher(
+        tasksAPI.endpoints.getTasks.matchFulfilled,
+        (state, action) => {
+          const tasksData = action.payload?.getTasks
+            ? action.payload.getTasks.tasks
+            : action.payload.tasks;
 
-        const tasks = tasksData.map(
-          ({ id, name, notes, type, date, isCompleted, priority }) => ({
-            id,
-            name,
-            notes,
-            type,
-            date:
-              type === "year"
-                ? moment(date).format("YYYY")
-                : moment(date).format("YYYY-MM-DD"),
-            isCompleted,
-            priority,
-          }),
-        );
+          if (!tasksData) return;
 
-        tasksAdapter.upsertMany(state, tasks);
-      },
-    );
+          const tasks = tasksData.map(
+            ({ id, name, notes, type, date, isCompleted, priority }) => ({
+              id,
+              name,
+              notes,
+              type,
+              date:
+                type === "year"
+                  ? moment(date).format("YYYY")
+                  : moment(date).format("YYYY-MM-DD"),
+              isCompleted,
+              priority,
+            }),
+          );
+
+          tasksAdapter.upsertMany(state, tasks);
+        },
+      )
+      .addMatcher(
+        tasksAPI.endpoints.getTasksAggregated.matchFulfilled,
+        (state, action) => {
+          const tasksAggregatedData = action.payload?.getTasks
+            ? action.payload.getTasks.tasks
+            : action.payload.tasks;
+
+          if (!tasksAggregatedData) return;
+
+          const tasks = tasksAggregatedData
+            .map(({ tasks }) => tasks)
+            .flat()
+            .map(({ id, name, notes, type, date, isCompleted, priority }) => ({
+              id,
+              name,
+              notes,
+              type,
+              date:
+                type === "year"
+                  ? moment(date).format("YYYY")
+                  : moment(date).format("YYYY-MM-DD"),
+              isCompleted,
+              priority,
+            }));
+
+          tasksAdapter.upsertMany(state, tasks);
+        },
+      );
   },
 });
 
