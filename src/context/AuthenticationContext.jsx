@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useSignUpMutation } from "../api/user/userApi";
 import { useLogInMutation } from "../api/user/userApi";
 import Cookies from "js-cookie";
@@ -7,7 +8,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(
-    Cookies.get("productivity-token") !== "null",
+    Cookies.get("productivity-token") !== "null" &&
+      Cookies.get("productivity-token"),
   );
   const [isDemo, setIsDemo] = useState(
     JSON.parse(Cookies.get("productivity-demo") || "false"),
@@ -86,6 +88,8 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+AuthProvider.propTypes = { children: PropTypes.node };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

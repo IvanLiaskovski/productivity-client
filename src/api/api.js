@@ -14,10 +14,15 @@ const graphqlBaseQuery =
       const result = await request(baseUrl, body, variables, requestHeaders);
       return { data: result };
     } catch (error) {
-      if (error instanceof ClientError) {
-        return { error: { status: error.response.status, data: error } };
+      if (error.response.errors[0].message?.includes("jwt")) {
+        console.log("Token expired");
+        Cookies.remove("productivity-token");
       }
-      return { error: { status: 500, data: error } };
+
+      if (error instanceof ClientError) {
+        return { error: `Status: ${error.response.status}. Error: ${error}` };
+      }
+      return { error: `Status: 500. Error: ${error}` };
     }
   };
 
@@ -27,5 +32,5 @@ export const api = createApi({
   }),
   tagTypes: ["Tasks"],
 
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
 });
