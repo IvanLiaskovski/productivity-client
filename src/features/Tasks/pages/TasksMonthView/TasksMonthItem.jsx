@@ -11,6 +11,7 @@ import TaskCreationModal from "../../components/Modals/TaskCreationModal";
 const TasksMonthItem = ({
   date,
   day,
+  nextPage,
   allowTooltip,
   isLoading,
   isError,
@@ -32,6 +33,7 @@ const TasksMonthItem = ({
           <TasksDayList
             tasksDate={date}
             tasksType="day"
+            nextPage={nextPage}
             allowTooltip={allowTooltip}
             isLoading={isLoading}
             isError={isError}
@@ -47,6 +49,10 @@ const TasksMonthItem = ({
 TasksMonthItem.propTypes = {
   date: PropTypes.string,
   day: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  nextPage: PropTypes.number,
+  isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  error: PropTypes.string,
   allowTooltip: PropTypes.bool,
   className: PropTypes.string,
 };
