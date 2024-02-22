@@ -65,3 +65,15 @@ export function sortTasks(tasks) {
     )
     .sort((a, b) => a.isCompleted - b.isCompleted);
 }
+
+export function retrieveAggregatedData(tasks) {
+  const tasksAggregatedData = {};
+  if (!tasks?.length) return tasksAggregatedData;
+
+  tasks.forEach((item) => {
+    const { date, ...rest } = item;
+    tasksAggregatedData[date] = rest;
+  });
+
+  return tasksAggregatedData;
+}
