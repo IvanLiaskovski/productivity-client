@@ -10,8 +10,6 @@ const TasksDayViewItem = () => {
     "day",
   );
 
-  console.log("Next page", nextPage);
-
   return (
     <TasksDayList
       tasksDate={date}
