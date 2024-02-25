@@ -7,8 +7,14 @@ export function useFetchTasksAggregated(start, end, type) {
   const { isDemo, user } = useCheckAuth();
   const { data, isLoading, isError, error } = useGetTasksAggregatedQuery(
     {
-      start: type === "year" ? moment(start).format("YYYY") : start,
-      end: type === "year" ? moment(end).format("YYYY") : end,
+      start:
+        type === "year"
+          ? moment(start).format("YYYY")
+          : moment(start).format("YYYY-MM-DD"),
+      end:
+        type === "year"
+          ? moment(end).format("YYYY")
+          : moment(end).format("YYYY-MM-DD"),
       view: type,
     },
     { skip: isDemo || !user },
