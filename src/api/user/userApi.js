@@ -26,7 +26,9 @@ const userApi = api.injectEndpoints({
           const token = data.registerUser.auth.token.accessToken;
           const expiredTime = data.registerUser.auth.token.expiresIn;
 
-          Cookies.set("productivity-token", token, expiredTime / 60 / 60);
+          Cookies.set("productivity-token", token, {
+            expires: expiredTime / 3600000 / 24,
+          });
           window.location = "/";
         } catch (err) {
           console.log("SignUp API error", err);
@@ -55,7 +57,9 @@ const userApi = api.injectEndpoints({
           const token = data.loginUser.auth.token.accessToken;
           const expiredTime = data.loginUser.auth.token.expiresIn;
 
-          Cookies.set("productivity-token", token, expiredTime / 60 / 60);
+          Cookies.set("productivity-token", token, {
+            expires: expiredTime / 3600000 / 24,
+          });
           window.location = "/";
         } catch (err) {
           console.log("SignIn API error", err);
