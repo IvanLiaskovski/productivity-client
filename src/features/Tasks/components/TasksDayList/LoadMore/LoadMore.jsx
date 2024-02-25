@@ -2,12 +2,16 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { useCheckAuth } from "../../../../../context/AuthenticationContext";
 import { useLazyFetchTasks } from "../../../hooks/useLazyFetchTasks";
+import {
+  getStepsCookies,
+  setStepsCookies,
+} from "../../../helpers/tasksHelpers";
 
 import Loading from "../Loading";
 import ErrorPopup from "../../../../../components/Errors/ErrorPopup/ErrorPopup";
 
 const LoadMore = ({ date, nextPageProp }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(getStepsCookies(date) || 1);
   const [clicked, setClicked] = useState(false);
 
   const { user } = useCheckAuth();
@@ -20,18 +24,26 @@ const LoadMore = ({ date, nextPageProp }) => {
 
   useEffect(() => {
     setClicked(false);
+    setCurrentPage(getStepsCookies(date) || 1);
   }, [date]);
 
+  useEffect(() => {
+    if (clicked) {
+      setStepsCookies(date, !nextPage ? nextPage : currentPage);
+    }
+  }, [currentPage, nextPage, clicked]);
+
   const handleFetchTasks = () => {
+    fetchTasks(currentPage + 1);
+    setCurrentPage((prev) => prev + 1);
     if (!clicked) {
       setClicked(true);
     }
-
-    setCurrentPage((prev) => prev + 1);
-    fetchTasks(currentPage);
   };
 
-  const isDisplay = (nextPageProp > 0 && !clicked) || (nextPage > 0 && clicked);
+  const isDisplay =
+    ((nextPageProp > 0 && !clicked) || (nextPage > 0 && clicked)) &&
+    (!clicked ? getStepsCookies(date) !== 0 : true);
 
   return (
     <>
