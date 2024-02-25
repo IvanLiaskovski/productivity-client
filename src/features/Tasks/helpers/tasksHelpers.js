@@ -1,4 +1,5 @@
 import moment from "moment/moment";
+import Cookies from "js-cookie";
 import { PRIORITY_PRECIOUS } from "../../../data/priorityData";
 
 export function createWeekDatesRange(date, onlyDates) {
@@ -76,4 +77,14 @@ export function retrieveAggregatedData(tasks) {
   });
 
   return tasksAggregatedData;
+}
+
+export function setStepsCookies(date, page) {
+  Cookies.set(`productivity-${date}-fetch-step`, page, {
+    expires: 1 / 1440,
+  });
+}
+
+export function getStepsCookies(date) {
+  return Number(Cookies.get(`productivity-${date}-fetch-step`));
 }
