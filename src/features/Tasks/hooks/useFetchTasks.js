@@ -1,4 +1,4 @@
-import { useGetTasksQuery } from "../../../api/api";
+import { useGetTasksQuery } from "../../../api/tasks/tasks";
 import { useCheckAuth } from "../../../context/AuthenticationContext";
 import moment from "moment";
 

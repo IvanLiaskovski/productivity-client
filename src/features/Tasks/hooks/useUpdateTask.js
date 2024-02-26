@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useCheckAuth } from "../../../context/AuthenticationContext";
-import { useUpdateTaskMutation } from "../../../api/api";
+import { useUpdateTaskMutation } from "../../../api/tasks/tasks";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../tasksSlice";
 
 export function useUpdateTask() {
   const dispatch = useDispatch();
-  const { isDemo, user } = useCheckAuth();
+  const { user } = useCheckAuth();
 
   const [serverUpdate] = useUpdateTaskMutation();
   const [errors, setErrors] = useState([]);
@@ -20,6 +20,18 @@ export function useUpdateTask() {
     priority,
   }) {
     let isSuccessful = true;
+
+    //Optimistic update
+    dispatch(
+      updateTask({
+        id,
+        ...(name !== undefined && { name }),
+        ...(notes !== undefined && { notes }),
+        ...(date !== undefined && { date }),
+        ...(isCompleted !== undefined && { isCompleted }),
+        ...(priority !== undefined && { priority }),
+      }),
+    );
 
     if (user) {
       await serverUpdate({ id, name, notes, date, isCompleted, priority })
@@ -39,18 +51,7 @@ export function useUpdateTask() {
           }
         });
     }
-    if (isDemo && !user) {
-      dispatch(
-        updateTask({
-          id,
-          ...(name !== undefined && { name }),
-          ...(notes !== undefined && { notes }),
-          ...(date !== undefined && { date }),
-          ...(isCompleted !== undefined && { isCompleted }),
-          ...(priority !== undefined && { priority }),
-        }),
-      );
-    }
+
     return isSuccessful;
   }
 

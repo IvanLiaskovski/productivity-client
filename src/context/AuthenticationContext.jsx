@@ -6,21 +6,16 @@ import Cookies from "js-cookie";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    Cookies.get("productivity-token") !== "null",
+  );
   const [isDemo, setIsDemo] = useState(
     JSON.parse(Cookies.get("productivity-demo") || "false"),
   );
-  const [signUp] = useSignUpMutation();
-  const [logIn] = useLogInMutation();
   const [errors, setErrors] = useState([]);
 
-  useEffect(() => {
-    const user = Cookies.get("productivity-token") !== "null";
-
-    if (user) {
-      setUser(user);
-    }
-  }, []);
+  const [signUp] = useSignUpMutation();
+  const [logIn] = useLogInMutation();
 
   const signUpUser = async (userData) => {
     await signUp(userData)
@@ -105,7 +100,7 @@ export const useCheckAuth = () => {
 
   useEffect(() => {
     checkLogin();
-  }, [checkLogin]);
+  }, []);
 
   return { user, isDemo };
 };
