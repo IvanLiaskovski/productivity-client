@@ -19,6 +19,8 @@ export const tasksAPI = api.injectEndpoints({
                   date
                   isCompleted
                 }
+                page
+                nextPage
               }
             }
           }
@@ -110,6 +112,7 @@ export const tasksAPI = api.injectEndpoints({
 
 export const {
   useGetTasksQuery,
+  useLazyGetTasksQuery,
   useCreateTaskMutation,
   useUpdateTaskMutation,
   useDeleteTaskMutation,
