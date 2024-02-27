@@ -1,9 +1,7 @@
 import { useLazyGetTasksQuery } from "../../../api/tasks/tasks";
-import { useCheckAuth } from "../../../context/AuthenticationContext";
 import moment from "moment";
 
 export function useLazyFetchTasks(start, end, type) {
-  const { isDemo, user } = useCheckAuth();
   const [trigger, result] = useLazyGetTasksQuery();
 
   function fetchTasks(page) {

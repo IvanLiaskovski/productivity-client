@@ -14,6 +14,7 @@ import LoadMore from "./LoadMore/LoadMore";
 const TasksDayList = ({
   tasksDate,
   tasksType = "day",
+  nextPage,
   allowTooltip = true,
   cancel,
   isLoading,
@@ -81,13 +82,17 @@ const TasksDayList = ({
             </div>
           ),
       )}
-      <LoadMore date={tasksDate} page={1} nextPageProp={2} />
+      <LoadMore date={tasksDate} nextPageProp={nextPage} />
     </div>
   );
 };
 
 TasksDayList.propTypes = {
   tasksDate: PropTypes.string,
+  nextPage: PropTypes.number,
+  isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  error: PropTypes.string,
   tasksType: PropTypes.oneOf(["day", "year"]),
   allowTooltip: PropTypes.bool,
   cancel: PropTypes.bool,

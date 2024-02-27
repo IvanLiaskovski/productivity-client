@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
 import { useTasksDateContext } from "../../context/TasksDateContext";
-import { useFetchTasks } from "../../hooks/useFetchTasks";
+import { useFetchTasksAggregated } from "../../hooks/useFetchTasksAggregated";
 import { createWeekDatesRange } from "../../helpers/tasksHelpers";
 import TasksWeekItem from "./TasksWeekItem";
 import TasksDragAndDropContext from "../../context/TasksDragAndDropContext";
@@ -12,10 +12,10 @@ const TasksWeekItemGroup = () => {
   const { date } = useTasksDateContext();
   const allowTooltip = !activeId;
 
-  const { isLoading, isError, error } = useFetchTasks(
+  const { aggregatedData, isLoading, isError, error } = useFetchTasksAggregated(
     moment(date).startOf("isoWeek"),
     moment(date).endOf("isoWeek"),
-    "day",
+    "week",
   );
 
   const dateItems = useMemo(
@@ -33,6 +33,7 @@ const TasksWeekItemGroup = () => {
           <TasksWeekItem
             key={item.itemDate}
             tasksDate={item.itemDate}
+            nextPage={aggregatedData[item.itemDate]?.nextPage}
             isLoading={isLoading}
             isError={isError}
             error={error}

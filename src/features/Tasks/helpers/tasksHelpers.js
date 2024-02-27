@@ -1,4 +1,5 @@
 import moment from "moment/moment";
+import Cookies from "js-cookie";
 import { PRIORITY_PRECIOUS } from "../../../data/priorityData";
 
 export function createWeekDatesRange(date, onlyDates) {
@@ -64,4 +65,26 @@ export function sortTasks(tasks) {
       (a, b) => PRIORITY_PRECIOUS[b.priority] - PRIORITY_PRECIOUS[a.priority],
     )
     .sort((a, b) => a.isCompleted - b.isCompleted);
+}
+
+export function retrieveAggregatedData(tasks) {
+  const tasksAggregatedData = {};
+  if (!tasks?.length) return tasksAggregatedData;
+
+  tasks.forEach((item) => {
+    const { date, ...rest } = item;
+    tasksAggregatedData[date] = rest;
+  });
+
+  return tasksAggregatedData;
+}
+
+export function setStepsCookies(date, page) {
+  Cookies.set(`productivity-${date}-fetch-step`, page, {
+    expires: 1 / 1440,
+  });
+}
+
+export function getStepsCookies(date) {
+  return Number(Cookies.get(`productivity-${date}-fetch-step`));
 }

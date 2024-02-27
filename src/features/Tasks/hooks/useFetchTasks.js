@@ -4,7 +4,7 @@ import moment from "moment";
 
 export function useFetchTasks(start, end, type) {
   const { isDemo, user } = useCheckAuth();
-  const { isLoading, isError, error } = useGetTasksQuery(
+  const { data, isLoading, isError, error } = useGetTasksQuery(
     {
       start: type === "year" ? moment(start).format("YYYY") : start,
       end: type === "year" ? moment(end).format("YYYY") : end,
@@ -13,5 +13,7 @@ export function useFetchTasks(start, end, type) {
     { skip: isDemo || !user },
   );
 
-  return { isLoading, isError, error };
+  const nextPage = data?.getTasks?.nextPage;
+
+  return { nextPage, isLoading, isError, error };
 }

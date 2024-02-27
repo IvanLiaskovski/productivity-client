@@ -13,6 +13,7 @@ import Loading from "../../components/TasksDayList/Loading";
 
 const TasksWeekItem = ({
   tasksDate,
+  nextPage,
   allowTooltip,
   isLoading,
   isError,
@@ -36,6 +37,7 @@ const TasksWeekItem = ({
         <Suspense fallback={<Loading q={2} />}>
           <TasksDayList
             tasksDate={tasksDate}
+            nextPage={nextPage}
             isLoading={isLoading}
             isError={isError}
             error={error}
@@ -49,6 +51,10 @@ const TasksWeekItem = ({
 
 TasksWeekItem.propTypes = {
   tasksDate: PropTypes.string,
+  nextPage: PropTypes.number,
+  isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  error: PropTypes.string,
   allowTooltip: PropTypes.bool,
   className: PropTypes.string,
 };

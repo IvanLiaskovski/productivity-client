@@ -1,7 +1,6 @@
-import PropTypes from "prop-types";
 import { useParams } from "react-router";
 
-const FormTitle = ({ isRegistration }) => {
+const FormTitle = () => {
   const { "*": authenticationType } = useParams();
 
   const styles =
@@ -24,10 +23,6 @@ const FormTitle = ({ isRegistration }) => {
       </a>
     </div>
   );
-};
-
-PropTypes.FormTitle = {
-  isRegistration: PropTypes.bool.isRequired,
 };
 
 export default FormTitle;

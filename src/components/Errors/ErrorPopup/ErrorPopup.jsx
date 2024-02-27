@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import Button from "../../Buttons/Button";
 import { RxCross2 } from "react-icons/rx";
 
@@ -22,6 +22,10 @@ const ErrorPopup = ({ children }) => {
       </Button>
     </div>
   );
+};
+
+ErrorPopup.propTypes = {
+  children: PropTypes.node,
 };
 
 export default ErrorPopup;

@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import Button from "../../Buttons/Button";
 
 const GlobalError = ({ error, resetErrorBoundary }) => {
@@ -337,6 +337,11 @@ const GlobalError = ({ error, resetErrorBoundary }) => {
       </div>
     </div>
   );
+};
+
+GlobalError.propTypes = {
+  error: PropTypes.object,
+  resetErrorBoundary: PropTypes.func,
 };
 
 export default GlobalError;
