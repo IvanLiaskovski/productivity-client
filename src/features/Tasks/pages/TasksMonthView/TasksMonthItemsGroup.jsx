@@ -12,8 +12,8 @@ const TasksMonthItemsGroup = () => {
   const [activeTaskId, setActiveTaskId] = useState(null);
 
   const { aggregatedData, isLoading, isError, error } = useFetchTasksAggregated(
-    moment(date).clone().startOf("month").format("YYYY-MM-DD"),
-    moment(date).clone().endOf("month").format("YYYY-MM-DD"),
+    moment(date).clone().startOf("month").startOf("week").format("YYYY-MM-DD"),
+    moment(date).clone().endOf("month").endOf("week").format("YYYY-MM-DD"),
     "month",
   );
 
