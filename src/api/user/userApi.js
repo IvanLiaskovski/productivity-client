@@ -1,6 +1,6 @@
-import { api } from "../api";
 import { gql } from "graphql-request";
 import Cookies from "js-cookie";
+import { api } from "../api";
 
 const userApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -58,7 +58,7 @@ const userApi = api.injectEndpoints({
           const expiredTime = data.loginUser.auth.token.expiresIn;
 
           Cookies.set("productivity-token", token, {
-            expires: expiredTime / 3600000 / 24,
+            expires: expiredTime / 3600 / 24,
           });
           window.location = "/";
         } catch (err) {
